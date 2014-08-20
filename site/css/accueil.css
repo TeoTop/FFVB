@@ -1,0 +1,36 @@
+/*=============== Accueil ==================*/
+table {
+	width: 100%;
+}
+
+
+
+.annee{
+	width:988px;
+	margin-top: 10px;
+	margin-bottom: 55px;
+	margin-left: 65px;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.categorie {
+	position: relative;
+	width: 400px;
+	font-family: Verdana, Georgia, Arial;
+	font-size: 18px;
+	color: white;
+	background-color: green;
+	margin-left: 45px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	padding: 20px;
+}
+
+.categorie button {
+	position: absolute;
+	font-size: 13px;
+	width: 100px;
+	right: 20px;
+}
+/* ==================================*/

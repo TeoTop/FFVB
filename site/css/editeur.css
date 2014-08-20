@@ -1,0 +1,205 @@
+/*=============== Zone ==================*/
+.haut{
+	position: relative;
+	top: -20px;
+	height: 480px;
+	padding: 20px;
+}
+
+.liste{
+	display: inline-block;
+	vertical-align: top;
+	width: 220px;
+	height: 440px;
+	padding: 20px 10px;
+	overflow: auto;
+	background-color: white;
+}
+
+.edition{
+	display: inline-block;
+	vertical-align: top;
+	width: 700px;
+	height: 440px;
+	margin-left: 20px;
+}
+
+.competition {
+	height: 70px;
+	font-family: Verdana, Georgia, Arial;
+	font-size: 18px;
+	background-color: white;
+	padding: 20px 30px;
+}
+
+.critere { 
+	height: 350px;
+	padding: 20px 10px;
+	margin-top: 20px;
+	font-family: Verdana, Georgia, Arial;
+	font-size: 18px;
+	background-color: white;
+}
+
+.overflow{
+	overflow: auto;
+}
+
+.equipe{
+	position: relative;
+	top: -20px;
+	width: 945px;
+	height: 300px;
+	margin-left: 20px;
+	padding: 20px 10px;
+	overflow: auto;
+	background-color: white;
+}
+
+.poule{
+	position: relative;
+	top: -20px;
+	width: 945px;
+	height: 300px;
+	padding: 20px 10px;
+	margin-top: 20px;
+	margin-left: 20px; 
+	background-color: white;
+}
+
+/*================== Menu déroulant ===================*/
+
+span {
+	display:block;
+	color: #0000FF;
+}
+
+input, select, span, tr {
+	cursor: pointer;
+}
+
+.recherche{
+	padding:0px !important;
+}
+
+.form-control + .glyphicon {
+    position: absolute;
+    right: 0;
+    padding: 8px 10px;
+    color:black;
+}
+
+
+/* ================ Contenue competition ==================*/
+
+/* on améliore le positionnement des select*/
+.competition select {
+	position: relative;
+	left:-20px;
+}
+
+
+/* ================ Contenue critere ==================*/
+
+/*on courcuite bootstrap*/
+label {
+	font-weight: 300;
+}
+
+
+/*on courcuite bootstrap*/
+.critere .form-group {
+	margin: 20px 0px 40px 0px !important;
+}
+
+.exempteTourPrcd{
+	position: relative;
+	top: -7px;
+}
+
+.petiteEquipe{
+	position: relative;
+	left: -10px;
+}
+
+.nombreReception{
+	position: relative;
+	left: -20px;
+}
+
+.equipeEngage{
+	position: relative;
+	left: -30px;
+}
+
+.posPrcd{
+	position: relative;
+	left: -30px;
+}
+
+.equipeForte{
+	position: relative;
+	left: -80px;
+}
+
+.distance {
+	position: relative;
+	left:-10px;
+}
+
+.avba{
+	position: relative;
+	left: -10px;
+}
+
+
+
+/* ================ Editeur poule ==================*/
+hr {
+	border-top: 2px solid #D0D0D0 !important;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+}
+
+.th-equipe{
+	width: 170px;
+}
+
+.th-lieu{
+	width: 170px;
+}
+
+
+
+
+
+/* ================ Liste equipe critere ==================*/
+
+
+
+/* ================ Modaux ==================*/
+.attention {
+	background-color: #F2E7B3;
+}
+
+.attention .modal-footer {
+	border-top: 1px solid #EDD053 !important;
+}
+
+.attention .modal-header {
+	border-bottom: 1px solid #EDD053 !important;
+}
+
+
+.information {
+	background-color: #B7D7E8;
+}
+
+.information .modal-footer {
+	border-top: 1px solid #59B6E5 !important;
+}
+
+.information .modal-header {
+	border-bottom: 1px solid #59B6E5 !important;
+}
+

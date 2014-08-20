@@ -1,0 +1,54 @@
+body {
+	background-color: #DDDDDD !important;
+}
+
+div, .liste, .bas div{
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+}
+
+/* ================ Menu ==================*/
+nav
+{
+    display: inline-block;
+    width: 988px;
+    height: 60px;
+    background-color: #1C3C79;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+nav ul
+{
+    list-style-type: none;
+}
+
+nav li
+{
+	padding-top: 2px;
+	padding-left: 25px;
+	padding-right: 50px;
+    display: inline-block;
+}
+
+
+/* ==================================*/
+
+
+
+/*=============== Fond ==================*/
+#container {
+	width: 988px;
+	margin: auto;
+	margin-bottom: 20px;
+	background-color: white;
+	border-radius: 0px;
+}
+
+#content {
+	background-image: url('../img/fond.png');
+	max-height: 1136px;
+	border-radius: 0px;
+}
+/* ==================================*/
