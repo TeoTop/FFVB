@@ -1,16 +1,13 @@
 /*=============== Zone ==================*/
 .haut{
-	position: relative;
-	top: -20px;
 	height: 480px;
-	padding: 20px;
 }
 
 .liste{
 	display: inline-block;
 	vertical-align: top;
 	width: 220px;
-	height: 440px;
+	height: 460px;
 	padding: 20px 10px;
 	overflow: auto;
 	background-color: white;
@@ -19,7 +16,7 @@
 .edition{
 	display: inline-block;
 	vertical-align: top;
-	width: 700px;
+	width: 704px;
 	height: 440px;
 	margin-left: 20px;
 }
@@ -33,7 +30,7 @@
 }
 
 .critere { 
-	height: 350px;
+	height: 370px;
 	padding: 20px 10px;
 	margin-top: 20px;
 	font-family: Verdana, Georgia, Arial;
@@ -41,29 +38,19 @@
 	background-color: white;
 }
 
-.overflow{
-	overflow: auto;
-}
-
 .equipe{
-	position: relative;
-	top: -20px;
 	width: 945px;
-	height: 300px;
-	margin-left: 20px;
+	height: 280px;
 	padding: 20px 10px;
-	overflow: auto;
 	background-color: white;
 }
 
+
 .poule{
-	position: relative;
-	top: -20px;
 	width: 945px;
-	height: 300px;
-	padding: 20px 10px;
+	height: 310px;
 	margin-top: 20px;
-	margin-left: 20px; 
+	padding: 20px 10px;
 	background-color: white;
 }
 
@@ -161,12 +148,48 @@ hr {
 	margin-bottom: 10px !important;
 }
 
-.th-equipe{
-	width: 170px;
+/*width: 925px;*/
+
+.equipe thead{
+	display: block;
 }
 
-.th-lieu{
-	width: 170px;
+.equipe tbody{
+	display: block;
+	height: 195px;
+	overflow: auto;
+}
+
+.equipe tr{
+	height: 50px;
+}
+
+.t-equipe{
+	min-width: 207px;
+}
+
+.t-lieu{
+	min-width: 207px;
+}
+
+.t-commite{
+	min-width: 132px;
+}
+
+.t-region{
+	min-width: 149px;
+}
+
+.t-km{
+	width: 60px;
+}
+
+.t-coupe{
+	width: 79px;
+}
+
+.t-cfvb{
+	width: 91px;
 }
 
 

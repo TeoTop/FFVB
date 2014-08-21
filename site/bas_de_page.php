@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 /**
 *
 * Créer par : CHAPON Théo
@@ -17,9 +17,6 @@
 * page. 
 *
 **/
-
-
-
 ?>
 
 <footer>

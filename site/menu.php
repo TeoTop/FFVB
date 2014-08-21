@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 /*
 *
 * Créer par : CHAPON Théo
@@ -39,4 +39,3 @@
         </a></li>
     </ul>
 </nav>
-

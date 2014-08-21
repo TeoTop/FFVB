@@ -14,10 +14,6 @@
 * Information : page permettant de gérer les objets coupe dans la base de données
 *
 */
-?>
-
-<?php
-
 
 class CoupeManager{
 
@@ -50,7 +46,7 @@ class CoupeManager{
 		//recupération des données et création des objets
 		if($donnee = $q->fetch(PDO::FETCH_ASSOC))
 		{	
-			$coupe = new Coupe($donnee['id_coupe'], $donnee['sexe'], $donnee['age'], $donnee['annee']);;
+			$coupe = new Coupe($donnee['id_coupe'], $donnee['sexe'], $donnee['age'], $donnee['annee']);
 		}
 
 		return $coupe;
@@ -95,6 +91,25 @@ class CoupeManager{
 		}
 
 		return $annees;
+	}
+
+
+	//permet de vérifier si l'id de coupe existe et si un tour est créé pour cette coupe
+	public function existe($id)
+	{
+		//requete SQL
+		$q = $this->_db->prepare('SELECT `coupe` FROM `tour` WHERE `coupe` = :id');
+
+		$q->bindValue(':id', $id, PDO::PARAM_INT);
+		$q->execute();
+		
+		//recupération des données et création des objets
+		if ($donnee = $q->fetch(PDO::FETCH_ASSOC))
+		{	
+			return true;
+		}
+
+		return false;
 	}
 }
 

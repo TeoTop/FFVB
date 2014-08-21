@@ -14,28 +14,10 @@
 * Information : page d'accueil du site pour les clients.
 * Page d'accueil de l'application
 *
-* Chaque page php peut potentiellement être découpé en deux partie : une pour son chargement normal, l'autre lorsque celle-ci
-* est rechargé par l'intermèdiaire de l'AJAX.
 */
 ?>
 
 <?php
-    //ouverture d'un session
-    session_start();
-
-    // permet de savoir si cette page a été recharger à partir d'une requete AJAX
-    if(isset($_POST['ajax']) && $_POST['ajax'] == true){
-        function chargerClasseAccueil($classe)
-        {
-            require '../model/' . $classe . '.class.php'; // On inclut la classe correspondante au paramètre passé.
-        }
-
-        spl_autoload_register('chargerClasseAccueil');
-
-        require '../bdd.php';
-    }
-
-
 
     // permet de définir l'année actuel, si non définie, pour récupérer les coupes.
     if (!isset($_SESSION['annee'])) {
@@ -112,12 +94,3 @@
     ?>
 
 </table>
-
-
-
-<?php
-    //si on recharge la page avec de l'AJAX, le script associé n'est plus actif, il faut donc le recharger lui aussi.
-    if(isset($_POST['ajax']) && $_POST['ajax'] == true){
-        echo '<script type="text/javascript" src="site/js/accueil.js"></script>';
-    }
-?>

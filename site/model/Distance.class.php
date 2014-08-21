@@ -14,9 +14,6 @@
 * Information : page permettant de gérer la distance entre les villes
 *
 */
-?>
-
-<?php
 
 class Distance{
 

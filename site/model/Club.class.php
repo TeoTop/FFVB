@@ -14,9 +14,6 @@
 * Information : page permettant de gérer les objets club
 *
 */
-?>
-
-<?php
 
 class Club{
 
@@ -83,32 +80,32 @@ class Club{
 
 	public function setNom($nom)
 	{
-		$this->_nom = $nom;
+		$this->_nom = (String) $nom;
 	}
 
 	public function setVille($ville)
 	{
-		$this->_ville = $ville;
+		$this->_ville = (String) $ville;
 	}
 
 	public function setCommite($commite)
 	{
-		$this->_commite = $commite;
+		$this->_commite = (String) $commite;
 	}
 
 	public function setRegion($region)
 	{
-		$this->_region = $region;
+		$this->_region = (String) $region;
 	}
 
 	public function setDistance($distance)
 	{
-		$this->_distance = $distance;
+		$this->_distance = (int) $distance;
 	}
 
 	public function setVilleDistance($ville, $distance)
 	{
-		$this->_ville = $ville.' - '.$distance;
+		$this->_ville = (String) $ville.' - '.$distance;
 	}
 }
 

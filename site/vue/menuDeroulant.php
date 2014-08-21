@@ -11,15 +11,11 @@
 * Information sur la page :
 * Nom : menuDeroulant.php
 * Chemin abs : site\vue\
-* Information : page permettant d'afficher les equipes et les poules sélectionnables
+* Information : page permettant d'afficher les equipes et les poules sélectionnables sous forme de menu déroulant
 *
-* Chaque page php peut potentiellement être découpé en deux partie : une pour son chargement normal, l'autre lorsque celle-ci
-* est rechargé par l'intermèdiaire de l'AJAX.
 *
 */
-?>
 
-<?php
     // on récupère les équipes qualifiées pour le tour de coupe
     $manager = new EquipeManager();
     $equipes = $manager->equipesTour($_SESSION['tour']->id());
@@ -38,12 +34,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#equipe" onclick="$('#affListe').attr('value','equipe')">
+                <a data-toggle="collapse" data-parent="#accordion" href="#menuEquipe" onclick="changerMenu('equipe')">
                     Equipes
                 </a>
             </h4>
         </div>
-        <div id="equipe" class="panel-collapse collapse <?php echo ($affListe=='equipe') ? 'in':''; ?>">
+        <div id="menuEquipe" class="panel-collapse collapse <?php echo ($_SESSION['liste']=='equipe') ? 'in':''; ?>">
             <div class="panel-body" id="equipeSearch">
                 <?php
                     foreach ($equipes as $key => $equipe) {
@@ -56,12 +52,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#poule" onclick="$('#affListe').attr('value','poule')">
+                <a data-toggle="collapse" data-parent="#accordion" href="#menuPoule" onclick="changerMenu('poule')">
                     Poules
                 </a>
             </h4>
         </div>
-        <div id="poule" class="panel-collapse collapse <?php echo ($affListe=='poule') ? 'in':''; ?>">
+        <div id="menuPoule" class="panel-collapse collapse <?php echo ($_SESSION['liste']=='poule') ? 'in':''; ?>">
             <div class="panel-body" id="equipeSearch">
                 <span onclick="chargerPoule('')">Exemptée</span>
                 <?php
@@ -73,3 +69,7 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#search').quicksearch('#equipeSearch span');
+</script>

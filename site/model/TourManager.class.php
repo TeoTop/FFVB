@@ -14,9 +14,7 @@
 * Information : page permettant de gérer les objets tour dans la base de données
 *
 */
-?>
 
-<?php
 
 class TourManager{
 
@@ -112,6 +110,26 @@ class TourManager{
 		}
 
 		return $tours;
+	}
+
+
+	//permet de vérifier si l'association id coupe et id tour existe
+	public function existe($coupe, $id)
+	{
+		//requete SQL
+		$q = $this->_db->prepare('SELECT `id_tour` FROM `tour` WHERE `id_tour` = :id AND `coupe` = :coupe');
+
+		$q->bindValue(':id', $id, PDO::PARAM_INT);
+		$q->bindValue(':coupe', $coupe, PDO::PARAM_INT);
+		$q->execute();
+		
+		//recupération des données et création des objets
+		if ($donnee = $q->fetch(PDO::FETCH_ASSOC))
+		{	
+			return true;
+		}
+
+		return false;
 	}
 }
 

@@ -9,12 +9,13 @@
 /*
 *
 * Information sur la page :
-* Nom : chargerEquipe.php
+* Nom : chargerEditionPoule.php
 * Chemin abs : site/ajax
-* Information : page permettant de savoir si il faut charger une poule ou ajouter une équipe
+* Information : page permettant de recharger l'éditeur de poule à partir de la poule passé en POST
 *
 **/
 
+	define('V', '../vue/');
 	define('M', '../model/');
 
 	//page contenant les fonctions associées à la base de données
@@ -33,20 +34,21 @@
 
 
 
-	// on regarde si l'équipe est déjà dans une poule
-    $manager = new EquipeManager();
-    $resultat = $manager->dansPoule($_POST['equipe'], $_SESSION['tour']->id());
-    
-	if(isset($resultat)){
-		echo json_encode(['action' => true, 'poule' => $resultat]);
-	} else {
-		$resultat = $manager->dansExempter($_POST['equipe'], $_SESSION['tour']->id());
-		if($resultat){
-			echo json_encode(['action' => true, 'poule' => '']);
-		} else {
-			echo json_encode(['action' => false]);
-		}
-	}
-	    
+	// on récupère les poules du tour de coupe pour l'affichage
+    $manager = new PouleManager();
+    $poules = $manager->poules($_SESSION['tour']->id());
 
+    //récupération de la poule à afficher, si il n'y en a pas, on affiche la poule exempté
+    if(isset($_POST['poule'])){
+    
+        if($_POST['poule'] != ''){
+            $_SESSION['poule'] = $manager->poule($_POST['poule']);
+        } else {
+            $_SESSION['poule'] = '';
+        }
+
+    }
+    
+	include V . 'editionPoule.php';
+   
 ?>

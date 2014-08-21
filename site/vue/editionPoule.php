@@ -13,8 +13,6 @@
 * Chemin abs : site\vue\
 * Information : page permettant d'afficher l'éditeur de poule qui permettra d'effectuer des modifications
 *
-* Chaque page php peut potentiellement être découpé en deux partie : une pour son chargement normal, l'autre lorsque celle-ci
-* est rechargé par l'intermèdiaire de l'AJAX.
 *
 */
 ?>
@@ -22,9 +20,9 @@
 <?php
     // on récupère les équipes dans la poule si une poule est définie
     $equipesPoule = array();
+    $manager = new EquipeManager();
 
     if($_SESSION['poule'] != ''){
-        $manager = new EquipeManager();
         $equipesPoule = $manager->equipesPoule($_SESSION['poule']->id());
     } else {
         $equipesPoule = $manager->equipesExempte($_SESSION['tour']->id());
@@ -40,16 +38,18 @@
     
     <div class="col-md-3">
         <?php 
-        if($_SESSION['poule'] == '') echo '<fieldset disabled>';
-            echo '<a class="btn btn-danger active" role="button" id="supprimerPouleBtn">Supprimer</a>';
-        if($_SESSION['poule'] == '') echo '</fieldset>';
+            if($_SESSION['poule'] == '') {
+                echo '<a class="btn btn-danger active" role="button" onclick="retirerEquipe(\'all\')">Supprimer</a>';
+            } else {
+                echo '<a class="btn btn-danger active" role="button" id="supprimerPouleBtn">Supprimer</a>';
+            }
         ?>
     </div>
     
 
     <div class="col-md-5">
         <select name="selectPoule" class="form-control" id="selectPoule">
-            <option value="-1" <?php echo ($_SESSION['poule'] == '' ) ? 'selected' : '' ; ?> >Exemptée</option>
+            <option value="" <?php echo ($_SESSION['poule'] == '' ) ? 'selected' : '' ; ?> >Exemptée</option>
             <?php
                 foreach ($poules as $key => $poule) {
                     if($_SESSION['poule'] == ''){
@@ -71,14 +71,14 @@
 <table class="table table-striped" id="tablePoule">
 <thead>
 <tr>
-<th class="th-equipe">Equipe</th>
-<th class="th-lieu">Lieu/Distance</th>
-<th class="th-commite">Commité</th>
-<th class="th-region">Region</th>
-<th class="th-km">Km parcouru</th>
-<th class="th-coupe">Clmt CFVB</th>
-<th class="th-cfvb">Clmt Coupe</th>
-<th class="th-suppr">Supp</th>
+<th class="t-equipe">Equipe</th>
+<th class="t-lieu">Lieu/Distance</th>
+<th class="t-commite">Commité</th>
+<th class="t-region">Region</th>
+<th class="t-km">Km</th>
+<th class="t-coupe">CFVB</th>
+<th class="t-cfvb">Coupe</th>
+<th >Supp</th>
 </tr>
 </thead>
 <tbody>

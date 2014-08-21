@@ -11,10 +11,8 @@
 * Information sur la page :
 * Nom : tourSelect.php
 * Chemin abs : site\vue\
-* Information : page permettant d'afficher les coupes et tours séectionnables
+* Information : page permettant d'afficher les coupes et tours sélectionnables
 *
-* Chaque page php peut potentiellement être découpé en deux partie : une pour son chargement normal, l'autre lorsque celle-ci
-* est rechargé par l'intermèdiaire de l'AJAX.
 *
 */
 ?>

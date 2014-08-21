@@ -9,14 +9,11 @@
 /*
 *
 * Information sur la page :
-* Nom : poupe.php
+* Nom : poule.php
 * Chemin abs : site\modele\
 * Information : page permettant de gérer les objets poule
 *
 */
-?>
-
-<?php
 
 class Poule{
 

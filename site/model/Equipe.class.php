@@ -14,9 +14,6 @@
 * Information : page permettant de gérer les objets equipe
 *
 */
-?>
-
-<?php
 
 class Equipe{
 

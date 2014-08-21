@@ -2,19 +2,20 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 14/08/2013
+* Date de modification : 09/08/2013
 *
 **/
 
 /*
 *
 * Information sur la page :
-* Nom : modifierCritere.php
+* Nom : chargerMenu.php
 * Chemin abs : site/ajax
-* Information : page permettant de modifier la valeur d'un critère
+* Information : page permettant de recharger la partie menu déroulant
 *
 **/
-
+	
+	define('V', '../vue/');
 	define('M', '../model/');
 
 	//page contenant les fonctions associées à la base de données
@@ -31,9 +32,11 @@
 	//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
 	session_start();
 
-	// on modifie le critère en fonction du tour, du critère et de ça valeur
-    $manager = new CritereManager();
-	$manager->modifierCritere($_SESSION['tour']->id(), $_POST['critere'], $_POST['valeur']);
-	    
 
+	// on récupère les poules du tour de coupe
+    $manager = new PouleManager();
+    $poules = $manager->poules($_SESSION['tour']->id());
+
+
+	include V . 'menuDeroulant.php'
 ?>

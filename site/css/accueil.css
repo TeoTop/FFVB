@@ -3,12 +3,10 @@ table {
 	width: 100%;
 }
 
-
-
 .annee{
 	width:988px;
 	margin-top: 10px;
-	margin-bottom: 55px;
+	margin-bottom: 75px;
 	margin-left: 65px;
 	font-size: 25px;
 	font-weight: bold;
@@ -17,13 +15,11 @@ table {
 .categorie {
 	position: relative;
 	width: 400px;
+	margin: 22px 37px;
 	font-family: Verdana, Georgia, Arial;
 	font-size: 18px;
 	color: white;
 	background-color: green;
-	margin-left: 45px;
-	margin-top: 20px;
-	margin-bottom: 30px;
 	padding: 20px;
 }
 

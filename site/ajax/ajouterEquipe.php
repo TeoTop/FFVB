@@ -11,7 +11,7 @@
 * Information sur la page :
 * Nom : ajouterEquipe.php
 * Chemin abs : site/ajax
-* Information : page permttant d'ajouter une équipe à une poule
+* Information : page permettant d'ajouter une équipe passé en POST à une poule en SESSION
 *
 **/
 
@@ -28,10 +28,9 @@
 	// On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
 	spl_autoload_register('chargerClasse'); 
 
+	//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
 	session_start();
-?>
 
-<?php 
 
 	$equipesPoule = array();
 	$distance = NULL;
@@ -48,10 +47,10 @@
 
 	$manager = new PouleManager();
 
-	if($_POST['poule'] != -1){
+	if($_SESSION['poule'] != ''){
 		
 		// on ajoute l'équipe à la poule
-		$manager->ajouterEquipe($_POST['equipe'], $_POST['poule'], $distance);
+		$manager->ajouterEquipe($_POST['equipe'], $_SESSION['poule']->id(), $distance);
 
 	} else {
 

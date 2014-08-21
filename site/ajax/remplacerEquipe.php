@@ -27,13 +27,14 @@
 
 	// On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
 	spl_autoload_register('chargerClasse'); 
-?>
 
-<?php 
+	//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
+	session_start();
+
 
 	// on ajoute l'équipe à la poule
     $manager = new PouleManager();
-	$manager->modifierDomicile($_POST['equipe'], $_POST['poule']);
+	$manager->modifierDomicile($_POST['equipe'], $_SESSION['poule']->id());
 	    
 
 ?>

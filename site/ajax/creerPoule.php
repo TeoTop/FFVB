@@ -11,7 +11,7 @@
 * Information sur la page :
 * Nom : creerPoule.php
 * Chemin abs : siteajax
-* Information : page permttant de creer une poule
+* Information : page permttant de creer une poule à 
 *
 **/
 
@@ -27,28 +27,30 @@
 
 	// On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
 	spl_autoload_register('chargerClasse'); 
-?>
 
-<?php
+	//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
+	session_start();
+
+
 	// on récupère la coupe pour créer le nom de la poule
 	$manager = new CoupeManager();
-    $coupe = $manager->coupe($_POST['coupe']);
+    $coupe = $manager->coupe($_SESSION['coupe']->id());
     
-    $pouleAff; //permet de retourner la poule qu'il faudra afficher    
-
 	// on récupère la dernière poule
     $manager = new PouleManager();
 
     //on regarde si il manque une poule
-    $poule = $manager->pouleManquante($_POST['tour']);
+    $poule = $manager->premierePouleManquante($_SESSION['tour']->id());
 
     //traitement pour créer la poule manque
     if(isset($poule)){
-    	$pouleAff = $manager->premierePouleManquante($_POST['tour']);
-    	$manager->creerPouleId($poule->id(), $poule->nom(), $_POST['tour']);
+
+    	$manager->creerPouleId($poule->id(), $poule->nom(), $_SESSION['tour']->id());
     	$manager->supprimerPouleManquante($poule->id());
+
     } else {
-    	$poule = $manager->dernierePoule($_POST['tour']);
+
+    	$poule = $manager->dernierePoule($_SESSION['tour']->id());
 
 	    //traitement pour créer le nouveau nom de la poule à partir de la dernière poule existante dans la base
 	    if(!isset($poule)){
@@ -58,9 +60,13 @@
 	    	$nom = $poule->nouveauNom();
 	    }
 
-	    $manager->creerPoule($nom, $_POST['tour']);
-	    $pouleAff = $manager->dernierePoule($_POST['tour']);
+	    //on créer la poule
+	    $manager->creerPoule($nom, $_SESSION['tour']->id());
+
+	    //on récupère la poule que l'on vient de créer
+	    $poule = $manager->dernierePoule($_SESSION['tour']->id());
+
     }
 
-    echo json_encode(['poule' => $pouleAff->id()]);
+    echo json_encode(['poule' => $poule->id()]);
 ?>

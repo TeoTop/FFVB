@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 /*
 *
 * Créer par : CHAPON Théo
@@ -16,13 +16,15 @@
 * 
 *
 */
-	$action = $_GET['a'];
-	
-	if ($action == 'editeur') {
-		include V . 'editeur.php';	
-	} else if ($action == 'generateur') {
-		include V . 'generateur.php';	
-	} else if ($action == 'verificateur') {
-		include V . 'verificateur.php';	
-	}
+
+$action = $_GET['a'];
+
+if ($action == 'editeur') {
+	include V . 'editeur.php';	
+} else if ($action == 'generateur') {
+	include V . 'generateur.php';	
+} else if ($action == 'verificateur') {
+	include V . 'verificateur.php';	
+}
+
 ?>

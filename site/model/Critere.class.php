@@ -14,9 +14,6 @@
 * Information : page permettant de gérer les objets critere et classifier
 *
 */
-?>
-
-<?php
 
 class Critere{
 

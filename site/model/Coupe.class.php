@@ -14,9 +14,6 @@
 * Information : page permettant de gérer les objets coupe
 *
 */
-?>
-
-<?php
 
 class Coupe{
 
@@ -91,11 +88,11 @@ class Coupe{
 	{
 		$age = (int) $age;
 		if($age == 13 || $age == 15 || $age == 17 || $age == 20){
-			$this->_age = $age;
+			$this->_age = (int) $age;
 		}
 	}
 
-	public function setEquipe($equipe)
+	public function setEquipe(Equipe $equipe)
 	{
 		$this->_equipe = $equipe;
 	}

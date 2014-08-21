@@ -14,9 +14,7 @@
 * Information : page permettant de gérer les objets equipe et equipe supprimée provenant de la base de données
 *
 */
-?>
 
-<?php
 
 class EquipeManager{
 
@@ -62,36 +60,7 @@ class EquipeManager{
 		return $equipes;
 	}
 
-
-	//retourne la liste des equipes qualifier pour ce tour triées selon l'ordre indiqué
-	/*public function equipesTourOrdre($tour, $ordre)
-	{
-		$equipes = array();
-
-		//requete SQL avec argument :tour
-		$q = $this->_db->prepare('SELECT `id_equipe`,`club`, `nom`, `ville`, `commite`, `region` FROM `equipe` 
-			JOIN `club` ON `id_club` = `club`  
-			WHERE `id_equipe` in ( 
-				SELECT `equipe` FROM `resultat` WHERE `tour` = :tour 
-			) ORDER BY :ordre');
-
-		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
-		$q->bindValue(':ordre', $ordre, PDO::PARAM_INT);
-
-		$q->execute();
-
-		//recupération des valeurs et création des objets
-		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
-		{
-			$club = new Club($donnees['club'], $donnees['nom'], $donnees['ville'], $donnees['commite'], $donnees['region']);
-			$equipes[] = new Equipe($donnees['id_equipe'], $club);
-		}
-
-
-		return $equipes;
-	}*/
-
-
+	
 	public function tourPrecedent($tour)
 	{
 		$tourPrc = -1;

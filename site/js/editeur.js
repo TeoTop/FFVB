@@ -14,52 +14,45 @@
 *
 **/
 
-//permet de charger le trie sur les colonnes dans les tables présentant les équipes en fonction des critères
-$(function(){
-  $('#tableEquipe').tablesorter(); 
-});
-
-
-$('#search').quicksearch('#equipeSearch span');
-
 
 /********************* Modifier la coupe et le tour ***************************/
 
 //fonction permettant de recharger la page si une coupe est sélectionnée
-$( '#selectCoupe' ).change(function () {
+$('#content').on('change', '#selectCoupe', function() {
 
-  	//on recharge une partie de la page en passant des données en POST. (on indique que la page est recharger ajax = true)
-  	$('#content').load('site/vue/editeur.php', { coupe: $( '#selectCoupe' ).val(), ajax: true });
+    //on recharge une partie de la page en passant des données en POST.
+    $('#content').load('site/ajax/chargerEditeur.php', { coupe: $( '#selectCoupe' ).val() });
 
-  	// !!! cela ne doit pas servir de référence, cette action permet juste de faire suivre l'adresse url 
+    // !!! cela ne doit pas servir de référence, cette action permet juste de faire suivre l'adresse url 
     //avec le contenu de la page, ce n'est que de l'affichage. Les données à transférer sont passé en POST
-  	history.pushState({ path: this.path }, '', 'http://localhost/ffvbsolo/index.php?m=navigation&a=editeur&c=' + $( '#selectCoupe' ).val());
+    history.pushState({ path: this.path }, '', 
+        'http://localhost/ffvb/index.php?m=navigation&a=editeur&c=' + $( '#selectCoupe' ).val());
 });
 
 
 
 //fonction permettant de recharger la page si un tour est sélectionné
-$( '#selectTour' ).change(function () {
-	
-  	//pas besoin d'indiquer la coupe, celle-ci est stocké en variable de session.
-  	$('#content').load('site/vue/editeur.php', { tour: $( '#selectTour' ).val(), ajax: true });
-  	
-  	history.pushState({ path: this.path }, '', 
-  		'http://localhost/ffvbsolo/index.php?m=navigation&a=editeur&c=' + $( '#selectCoupe' ).val() + '&t=' + $( '#selectTour' ).val());
-  });
+$('#content').on('change', '#selectTour', function() {
+    
+    //pas besoin d'indiquer la coupe, celle-ci est stocké en variable de session.
+    $('#content').load('site/ajax/chargerEditeur.php', { coupe: $( '#selectCoupe' ).val(), tour: $( '#selectTour' ).val() });
+    
+    history.pushState({ path: this.path }, '', 
+        'http://localhost/ffvb/index.php?m=navigation&a=editeur&c=' + $( '#selectCoupe' ).val() + '&t=' + $( '#selectTour' ).val());
+});
 
 
 
 /********************* Menu equipe et poule ******************************/
 
 
-//cette fonction est activé lorsque l'on clique sur un poule située dans le menu déroulant (onclick="chargerPoule(poule_id)")
+//cette fonction est activé lorsque l'on clique sur un poule située dans le menu déroulant (onclick="chargerEditionPoule(poule_id)")
 function chargerPoule(poule_id) {
     
-    $('#content').load('site/vue/editeur.php', { 
-        poule: poule_id, 
-        ajax: true 
-    });
+    $('#poule').load('site/ajax/chargerEditionPoule.php', { poule: poule_id });
+
+    $('#equipe').load('site/ajax/chargerEquipesCritere.php');
+
 }
 
 
@@ -70,7 +63,7 @@ function chargerEquipe(equipe_id) {
     $.ajax({
         type: 'POST',
         url: 'site/ajax/chargerEquipe.php',
-        data: { equipe: equipe_id, tour: $( '#selectTour' ).val() },
+        data: { equipe: equipe_id },
         dataType: 'json',
         timeout: 3000,
         
@@ -92,43 +85,54 @@ function chargerEquipe(equipe_id) {
 }
 
 
+//cette fonction est activé lorsque l'on clique sur un onglet du menu déroulant
+function changerMenu(type) {
+    
+    $.ajax({
+        type: 'POST',
+        url: 'site/ajax/changerMenu.php',
+        data: { liste: type },
+        timeout: 3000,
+        
+        success: function(data) {
+        },
+
+        error: function() {
+            console.log('La requête de modification de menu n\'a pas abouti'); 
+        },
+    });
+}
+
+
+
 /********************* Editeur de poule *******************************/
 
 
 //fonction permettant de recharger la page si une poule est sélectionnée
-$( '#selectPoule' ).change(function () {
-    
-    var poule = null;
+$('#content').on('change', '#selectPoule', function() {
 
-    if($( '#selectPoule' ).val() != -1 ) poule = $( '#selectPoule' ).val();
+    chargerPoule($( '#selectPoule' ).val());
 
-    $('#content').load('site/vue/editeur.php', { 
-        poule: poule, 
-        liste: $( '#affListe' ).val(), 
-        critere: $( '#affCritere' ).val(), 
-        ajax: true 
-    });
 });
 
-//fonction permettant de créer une nouvelle poule
-$( '#creerPoule' ).click(function () {
 
-  	// requete HTML à partir d'AJAX : method post vers la page php ajouterPoule situé dans le dossier ajax.
-  	$.ajax({
+//fonction permettant de créer une nouvelle poule
+$('#content').on('click', '#creerPoule', function() {
+
+    // requete HTML à partir d'AJAX : method post vers la page php ajouterPoule situé dans le dossier ajax.
+    $.ajax({
         type: 'POST',
         url: 'site/ajax/creerPoule.php',
-        data: { coupe: $( '#selectCoupe' ).val(), tour: $( '#selectTour' ).val() },
         dataType: 'json',
         timeout: 3000,
         
         success: function(json) {
-			$('#content').load('site/vue/editeur.php', { 
-                poule: json.poule, 
-                liste: $( '#affListe' ).val(), 
-                critere: $( '#affCritere' ).val(),
-                ajax: true 
-            });
-    	},
+
+            chargerPoule(json.poule);
+
+            $('#liste').load('site/ajax/chargerMenu.php');
+
+        },
         
         error: function() {
             console.log('La requête de création de poule n\'a pas abouti'); 
@@ -139,24 +143,21 @@ $( '#creerPoule' ).click(function () {
 
 
 //fonction permettant de supprimer la poule affichée
-$( '#supprimerPoule' ).click(function () {
+$('#content').on('click', '#supprimerPoule', function() {
 
-  	// requete HTML à partir d'AJAX : method post vers la page php supprimerPoule situé dans le dossier ajax.
-  	$.ajax({
+    // requete HTML à partir d'AJAX : method post vers la page php supprimerPoule situé dans le dossier ajax.
+    $.ajax({
         type: 'POST',
         url: 'site/ajax/supprimerPoule.php',
-        data: { poule: $( '#selectPoule' ).val(), tour: $( '#selectTour' ).val() },
         dataType: 'json',
         timeout: 3000,
         
         success: function(json) {
+            //le set timeout permet de laissé le temps au modal de se supprimer
             setTimeout(function(){
-            	$('#content').load('site/vue/editeur.php', { 
-                    poule: json.poule, 
-                    liste: $( '#affListe' ).val(),
-                    critere: $( '#affCritere' ).val(), 
-                    ajax: true 
-                });
+                chargerPoule(json.poule);
+                console.log(json.poule);
+                $('#liste').load('site/ajax/chargerMenu.php');
             }, 300);
         },
         
@@ -175,41 +176,18 @@ $( '#supprimerPoule' ).click(function () {
 
 //cette fonction est activé lorsque l'on clique sur un onglet des critères
 function changerCriteres(type) {
+
+    $('#affCritere').attr( 'value', type );
     
-    var poule = null;
-
-    $('#affCritere').attr('value',type);
-
-    /*if(type!='exempter'){
-        poule = $( '#selectPoule' ).val();
-    }*/
-
-    $('#content').load('site/vue/editeur.php', {
-        //poule: poule, 
-        liste: $( '#affListe' ).val(), 
-        critere: $( '#affCritere' ).val(),
-        ajax: true 
-    });
-}
-
-
-
-// fonction permattant de modifier la valeur d'un critere
-function modifierCritere(id, valeur) {
-    // requete HTML à partir d'AJAX : method post vers la page php retirerEquipe situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/modifierCritere.php',
-        data: { critere: id, valeur: valeur, tour: $( '#selectTour' ).val() },
+        url: 'site/ajax/changerCriteres.php',
+        data: { critere: type },
         timeout: 3000,
         
         success: function(data) {
             setTimeout(function(){
-                $('#content').load('site/vue/editeur.php', { 
-                    liste: $( '#affListe' ).val(), 
-                    critere: $( '#affCritere' ).val(),
-                    ajax: true 
-                });
+                $('#equipe').load('site/ajax/chargerEquipesCritere.php');
             }, 300);
         },
 
@@ -220,8 +198,31 @@ function modifierCritere(id, valeur) {
 }
 
 
-// détecte le change de critère pour une checkbox
-$('.form-horizontal :checkbox').change(function(e){
+
+// fonction permattant de modifier la valeur d'un critere
+function modifierCritere(id, valeur) {
+    // requete HTML à partir d'AJAX : method post vers la page php modifierCritere situé dans le dossier ajax.
+    $.ajax({
+        type: 'POST',
+        url: 'site/ajax/modifierCritere.php',
+        data: { critere: id, valeur: valeur },
+        timeout: 3000,
+        
+        success: function(data) {
+            setTimeout(function(){
+                $('#equipe').load('site/ajax/chargerEquipesCritere.php');
+            }, 300);
+        },
+
+        error: function() {
+            console.log('La requête de modification de critère n\'a pas abouti'); 
+        },
+    });
+}
+
+
+// détecte le changement de critère pour une checkbox
+$('#content').on('change', '.form-horizontal :checkbox', function(e) {
 
     var valeur;
 
@@ -233,7 +234,7 @@ $('.form-horizontal :checkbox').change(function(e){
 
 
 //détecte le changement de critère pour un select
-$('.form-horizontal select').change(function(e){
+$('#content').on('change', '.form-horizontal select', function(e) {
 
     modifierCritere(e.target.id, e.target.value)
 
@@ -253,11 +254,12 @@ function actionAjouterEquipe(equipe_id, chargement) {
     var critere = $('#affCritere').val();
     var poule = $( '#selectPoule' ).val();
 
+    //l'ajout provient des équipes triées
     if(typeof(chargement)==='undefined'){
         
         if(critere == 'domicile'){
             
-            if(poule == -1){
+            if(poule == ''){
                 $( '#informationTitle' ).text( "Equipe éxempté" );
                 $( '#informationBody' ).text( "Vous ne pouvez ajouter d'équipe dans la poule éxempté à partir des critères DOMICILE" );
                 $( '#informationModal' ).modal();
@@ -270,7 +272,7 @@ function actionAjouterEquipe(equipe_id, chargement) {
             }
 
         } else if(critere == 'exterieur') {
-            if(poule == -1){
+            if(poule == ''){
                 $( '#informationTitle' ).text( "Equipe éxempté" );
                 $( '#informationBody' ).text( "Vous ne pouvez ajouter d'équipe dans la poule éxempté à partir des critères EXTERIEUR" );
                 $( '#informationModal' ).modal();
@@ -289,7 +291,7 @@ function actionAjouterEquipe(equipe_id, chargement) {
             }
 
         } else {
-            if(poule != -1){
+            if(poule != ''){
                 $( "#informationTitle" ).text( "Equipe éxempté" );
                 $( "#informationBody" ).text( "Un exempté ne peut être placé que dans la \"poule\" exempté." );
                 $('#informationModal').modal();
@@ -298,6 +300,7 @@ function actionAjouterEquipe(equipe_id, chargement) {
             }
         }
        
+    //l'ajout provient du menu déroulant
     } else {
 
         if(lignes < 5){
@@ -317,16 +320,13 @@ function ajouterEquipe(equipe_id){
     $.ajax({
         type: 'POST',
         url: 'site/ajax/ajouterEquipe.php',
-        data: { poule: $( '#selectPoule' ).val(), equipe: equipe_id },
+        data: { equipe: equipe_id },
         timeout: 3000,
         
         success: function(data) {
-            // !!! on doit indiqué le tour car sinon on chargera le tour le plus récent de la coupe. Le tour est l'indicateur ultime (le plus précis) d'une page
-            $('#content').load('site/vue/editeur.php', { 
-                liste: $( '#affListe' ).val(), 
-                critere: $( '#affCritere' ).val(),
-                ajax: true 
-            });
+            $('#poule').load('site/ajax/chargerEditionPoule.php');
+
+            $('#equipe').load('site/ajax/chargerEquipesCritere.php');
         },
 
         error: function() {
@@ -339,21 +339,18 @@ function ajouterEquipe(equipe_id){
 //cette fonction s'applique lorsque les critères de sélection pour DOMICILE sont actifs et qu'il y a une équipe déjà présente
 //dans la poule
 function remplacerEquipe(equipe_id){
-    console.log('aye');
-    // requete HTML à partir d'AJAX : method post vers la page php ajouterEquipe situé dans le dossier ajax.
+
+    // requete HTML à partir d'AJAX : method post vers la page php remplacerEquipe situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
         url: 'site/ajax/remplacerEquipe.php',
-        data: { poule: $( '#selectPoule' ).val(), equipe: equipe_id },
+        data: { equipe: equipe_id },
         timeout: 3000,
         
         success: function(data) {
-            // !!! on doit indiqué le tour car sinon on chargera le tour le plus récent de la coupe. Le tour est l'indicateur ultime (le plus précis) d'une page
-            $('#content').load('site/vue/editeur.php', { 
-                liste: $( '#affListe' ).val(), 
-                critere: $( '#affCritere' ).val(),
-                ajax: true 
-            });
+            $('#poule').load('site/ajax/chargerEditionPoule.php');
+
+            $('#equipe').load('site/ajax/chargerEquipesCritere.php');
         },
 
         error: function(data) {
@@ -370,16 +367,14 @@ function retirerEquipe(equipe_id) {
     $.ajax({
         type: 'POST',
         url: 'site/ajax/retirerEquipe.php',
-        data: { poule: $( '#selectPoule' ).val(), equipe: equipe_id },
+        data: { equipe: equipe_id },
         timeout: 3000,
         
         success: function(data) {
             setTimeout(function(){
-                $('#content').load('site/vue/editeur.php', { 
-                    liste: $( '#affListe' ).val(), 
-                    critere: $( '#affCritere' ).val(),
-                    ajax: true 
-                });
+                $('#poule').load('site/ajax/chargerEditionPoule.php');
+
+                $('#equipe').load('site/ajax/chargerEquipesCritere.php');
             }, 300);
         },
 
@@ -396,7 +391,7 @@ function retirerEquipe(equipe_id) {
 
 
 //s'applique sur le bouton suppression de poule
-$( '#supprimerPouleBtn' ).click( function() {
+$('#content').on('click', '#supprimerPouleBtn', function() {
 
     //si il y a au moins une ligne dans la poule, on demande une confirmation.
     var lignes = $("#tablePoule > tbody > tr").length;
@@ -416,7 +411,7 @@ function retirerEquipeModal(equipe_id, position) {
     var lignes = $("#tablePoule > tbody > tr").length;
 
     //si on retire une équipe à domicile et qu'il y a déjà des équipes exterieurs, on demande confirmation
-    if( position == 0 && lignes > 1 && $( '#selectPoule' ).val() != -1){
+    if( position == 0 && lignes > 1 && $( '#selectPoule' ).val() != ''){
         $('#retirerEquipeModal').modal();
     } else {
         retirerEquipe(equipe_id);

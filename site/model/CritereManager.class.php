@@ -14,9 +14,6 @@
 * Information : page permettant de gérer les objets critere et classifier dans la base de données
 *
 */
-?>
-
-<?php
 
 class CritereManager{
 
@@ -39,7 +36,7 @@ class CritereManager{
 	{
 		$criteres = array();
 
-		//requete SQL
+		//requete SQL, valeur != -1 => critère actif
 		$q = $this->_db->prepare('SELECT `critere`, `valeur`, `requete` FROM `classifier` 
 				JOIN `critere` ON `id_critere` = `critere` 
 				WHERE `type` LIKE :type AND `tour` = :tour AND `valeur` != -1');

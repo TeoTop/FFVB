@@ -11,7 +11,7 @@
 * Information sur la page :
 * Nom : retirerEquipe.php
 * Chemin abs : site/ajax
-* Information : page permttant de retirer une équipe d'une poule
+* Information : page permettant de retirer l'équipe passé en POST d'une poule
 *
 **/
 
@@ -28,26 +28,32 @@
 	// On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
 	spl_autoload_register('chargerClasse'); 
 
+	//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
 	session_start();
-?>
 
-<?php 
+
 
 	$manager = new PouleManager();
 
-	if($_POST['poule'] != -1){
+	if($_SESSION['poule'] != ''){
 
 		if($_POST['equipe'] !== 'all'){
 			//on retire toutes une équipe de la poule
-			$manager->retirerEquipe($_POST['equipe'], $_POST['poule']);
+			$manager->retirerEquipe($_POST['equipe'], $_SESSION['poule']->id());
 		} else {
 			//on retire toutes les équipes de la poule
-			$manager->retirerEquipes($_POST['poule']);
+			$manager->retirerEquipes($_SESSION['poule']->id());
 		}
 
 	} else {
 
-		//on retire toutes une équipe éxemptée
-		$manager->retirerExempter($_POST['equipe'], $_SESSION['tour']->id());
+		if($_POST['equipe'] !== 'all'){
+			//on retire une équipe éxemptée
+			$manager->retirerExempte($_POST['equipe'], $_SESSION['tour']->id());
+		} else {
+			//on retire une équipe éxemptée
+			$manager->retirerExemptes($_SESSION['tour']->id());
+		}
+
 	}
 ?>

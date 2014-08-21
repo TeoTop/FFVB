@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 /**
 *
@@ -17,36 +17,35 @@
 *
 **/
 
-
-	function ouvre_base() {
-		
-		$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-		try{
-			$bdd = new PDO('mysql:host=localhost;dbname=ffvb_gpa', 'root', '', $pdo_options);
-		}
-		catch(PDOException $e)
-		{
-			echo ($e->getMessage());
-		 }
-		
-		$bdd->query('SET NAMES utf8');
-		return $bdd;
-	}
+function ouvre_base() {
 	
-	
-	function reArrayFiles(&$file_post) {
-
-		$file_ary = array();
-		$file_count = count($file_post['name']);
-		$file_keys = array_keys($file_post);
-
-		for ($i=0; $i<$file_count; $i++) {
-			foreach ($file_keys as $key) {
-				$file_ary[$i][$key] = $file_post[$key][$i];
-			}
-		}
-
-		return $file_ary;
+	$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
+	try{
+		$bdd = new PDO('mysql:host=localhost;dbname=ffvb_gpa', 'root', '', $pdo_options);
 	}
+	catch(PDOException $e)
+	{
+		echo ($e->getMessage());
+	 }
+	
+	$bdd->query('SET NAMES utf8');
+	return $bdd;
+}
+
+
+function reArrayFiles(&$file_post) {
+
+	$file_ary = array();
+	$file_count = count($file_post['name']);
+	$file_keys = array_keys($file_post);
+
+	for ($i=0; $i<$file_count; $i++) {
+		foreach ($file_keys as $key) {
+			$file_ary[$i][$key] = $file_post[$key][$i];
+		}
+	}
+
+	return $file_ary;
+}
 
 ?>

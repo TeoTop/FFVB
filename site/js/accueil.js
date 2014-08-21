@@ -15,7 +15,6 @@
 **/
 
 //fonction permettant de recharger les catégories si l'année est modifié
-$( '#selectAnnee' ).change(function () {
-	$('#content').load('site/vue/accueil.php', { annee: $( '#selectAnnee' ).val(), ajax: true });
-    console.log('Rechargement de la page d\'accueil');
+$('#content').on('change', '#selectAnnee', function() {
+	$('#content').load('site/ajax/chargerAccueil.php', { annee: $( '#selectAnnee' ).val() });
 });

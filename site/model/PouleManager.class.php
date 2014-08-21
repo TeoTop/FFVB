@@ -14,9 +14,6 @@
 * Information : page permettant de gérer les objets poule dans la base de données
 *
 */
-?>
-
-<?php
 
 class PouleManager{
 
@@ -52,10 +49,10 @@ class PouleManager{
 		//recupération des données et création des objets
 		if($donnees = $q->fetch(PDO::FETCH_ASSOC))
 		{
-			$poules = new Poule($donnees['id_poule'], $donnees['nom']);
+			$poule = new Poule($donnees['id_poule'], $donnees['nom']);
 		}
 
-		return $poules;
+		return $poule;
 	}
 
 	//permet de récupérer toutes les coupes de l'année passée en parametre
@@ -82,7 +79,7 @@ class PouleManager{
 
 
 
-
+	//on crée une nouvelle poule
 	public function creerPoule($nom, $tour){
 		$q = $this->_db->prepare('INSERT INTO `poule`(`tour`, `nom`) VALUES (:tour,:nom)');
 		
@@ -91,6 +88,7 @@ class PouleManager{
 		$q->execute();
 	}
 
+	//on remet dans la table des poules, la poule que l'on a récupéré à partir de la table des poules manquantes
 	public function creerPouleId($id, $nom, $tour){
 		$q = $this->_db->prepare('INSERT INTO `poule`(`id_poule`, `tour`, `nom`) VALUES (:id, :tour,:nom)');
 		
@@ -100,6 +98,7 @@ class PouleManager{
 		$q->execute();
 	}
 
+	//on ajoute la poule que l'on veut de supprimer à la table des poules manquantes
 	public function creerPouleManquante($id, $nom, $tour){
 		$q = $this->_db->prepare('INSERT INTO `poulesupprimer`(`id_poule`, `tour`, `nom`) VALUES (:id, :tour,:nom)');
 		
@@ -121,7 +120,7 @@ class PouleManager{
 		$q->execute();
 	}
 
-	//on supprime la poule indiquée par id
+	//on supprime la poule indiquée par id dans la table des poules manquantes
 	public function supprimerPouleManquante($id){
 		
 		$q = $this->_db->prepare('DELETE FROM `poulesupprimer` WHERE `id_poule` = :id_poule');
@@ -141,7 +140,7 @@ class PouleManager{
 
 
 
-	//retourne la derniere poule existante du tour. NULL si aucune poule n'existe dans ce tour
+	//retourne l'id de la dernière poule existante du tour. NULL si aucune poule n'existe dans ce tour
 	public function dernierePoule($tour){
 		$poule = NULL;
 
@@ -156,18 +155,22 @@ class PouleManager{
 
 		return $poule;
 	}
+	
 
 	//retourne la poule situé juste avant celle qui vient d'être supprimé
-	public function affichageSuppression($id){
+	public function affichageSuppression($id, $tour){
 		$poule = NULL;
 
-		$q = $this->_db->prepare('SELECT `id_poule` FROM `poule` WHERE `id_poule` < :id ORDER BY `id_poule` DESC LIMIT 1');
+		$q = $this->_db->prepare('SELECT `id_poule` FROM `poule` 
+			WHERE `id_poule` < :id AND `tour` = :tour
+			ORDER BY `id_poule` DESC LIMIT 1');
 		
 		$q->bindValue(':id', $id, PDO::PARAM_INT);
+		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
 		$q->execute();
 
 		if($donnees = $q->fetch(PDO::FETCH_ASSOC)){
-			$poule = new Poule($donnees['id_poule']);
+			$poule = $donnees['id_poule'];
 		}
 
 		return $poule;
@@ -178,22 +181,6 @@ class PouleManager{
 	public function premierePouleManquante($tour){
 		$poule = NULL;
 
-		$q = $this->_db->prepare('SELECT `id_poule`, `nom` FROM `poulesupprimer` WHERE `tour` = :tour ORDER BY `id_poule` LIMIT 1');
-		
-		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
-		$q->execute();
-
-		if($donnees = $q->fetch(PDO::FETCH_ASSOC)){
-			$poule = new Poule($donnees['id_poule'], $donnees['nom']);
-		}
-
-		return $poule;
-	}
-
-	//retourne la première poule manquante du tour. NULL si aucune ne manque
-	public function pouleManquante($tour){
-		$poule = NULL;
-		
 		$q = $this->_db->prepare('SELECT `id_poule`, `nom` FROM `poulesupprimer` WHERE `tour` = :tour ORDER BY `id_poule` LIMIT 1');
 		
 		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
@@ -265,12 +252,22 @@ class PouleManager{
 
 
 
-	//retire l'équipe de la poule
-	public function retirerExempter($equipe, $tour){
+	//retire l'équipe des exemptées
+	public function retirerExempte($equipe, $tour){
 	
 		$q = $this->_db->prepare('DELETE FROM `exempter` WHERE `equipe` = :equipe AND `tour` = :tour');
 		
 		$q->bindValue(':equipe', $equipe, PDO::PARAM_INT);
+		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
+		$q->execute();
+	}
+
+
+	//retire toutes les équipes exemptées du tour
+	public function retirerExemptes($tour){
+	
+		$q = $this->_db->prepare('DELETE FROM `exempter` WHERE `tour` = :tour');
+		
 		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
 		$q->execute();
 	}

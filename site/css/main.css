@@ -38,17 +38,21 @@ nav li
 
 
 /*=============== Fond ==================*/
-#container {
-	width: 988px;
+.container {
+	max-width: 1018px;
 	margin: auto;
-	margin-bottom: 20px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 	background-color: white;
 	border-radius: 0px;
 }
 
-#content {
+.content {
 	background-image: url('../img/fond.png');
 	max-height: 1136px;
+	padding: 20px;
 	border-radius: 0px;
 }
+
+
 /* ==================================*/

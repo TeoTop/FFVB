@@ -13,13 +13,10 @@
 * Chemin abs : site\vue\
 * Information : page permettant d'afficher les critères pour sélectionner l'équipe qui va jouer à domicile
 *
-* Chaque page php peut potentiellement être découpé en deux partie : une pour son chargement normal, l'autre lorsque celle-ci
-* est rechargé par l'intermèdiaire de l'AJAX.
 *
 */
-?>
 
-<?php
+
 	// on récupère les critères utilsées pour ce tour de coupe et ce type de critère
     $manager = new CritereManager();
     $critereDomicile = $manager->criteresType($_SESSION['tour']->id(), 'domicile');
