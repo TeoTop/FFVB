@@ -118,10 +118,10 @@ class EquipeManager{
 		foreach ($criteres as $key => $critere) {
 			if ($critere->id() == 1 || $critere->id() == 3) $q->bindValue(':tourPrcd', $tourPrcd, PDO::PARAM_INT);
 			if ($critere->id() == 2) $q->bindValue(':dateTour', $tour->dateTour(), PDO::PARAM_STR);
-			if ($critere->id() == 4) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 4 || $critere->id() == 20) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 5) $q->bindValue(':nbEquipe', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 6) $q->bindValue(':nbDomicile', $critere->valeur(), PDO::PARAM_INT);
-			if ($critere->id() == 12) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 12 || $critere->id() == 16) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 13){
 				$q->bindValue(':age', $tour->coupe()->age(), PDO::PARAM_INT);
 				$q->bindValue(':sexe', $tour->coupe()->sexe(), PDO::PARAM_STR);
@@ -133,6 +133,8 @@ class EquipeManager{
 				$q->bindValue(':anneeAnt', $tour->coupe()->anneeAnt(), PDO::PARAM_INT);
 			}
 			if ($critere->id() == 15) $q->bindValue(':distanceMin', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 17) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 21) $q->bindValue(':coupe', $tour->coupe()->id(), PDO::PARAM_INT);
 		}
 		
 		$q->execute();
@@ -168,8 +170,31 @@ class EquipeManager{
 				)
 			)';
 
+
 		foreach ($criteres as $key => $critere) {
-			$requete = $requete . $critere->requete();
+		
+			if ($critere->id() == 9) {
+				
+				$requete = $requete . $critere->requete();
+
+				foreach ($equipes as $key => $equipe) {
+					if($key != 0){
+						$requete = $requete . ' OR `equipe` = ';
+					}
+					$requete = $requete . ':equipe' . $key;
+				}
+
+				$requete = $requete . '))';
+				
+			} else if ($critere->id() == 10) {
+				
+				foreach ($equipes as $key => $equipe) {
+					$requete = $requete . $critere->requete() . ':commite' . $key;
+				}
+				
+			} else {
+				$requete = $requete . $critere->requete();
+			}
 		}
 
 
@@ -187,50 +212,18 @@ class EquipeManager{
 			}
 			if ($critere->id() == 8) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 9) {
-				switch (count($equipes)) {
-					case 1:
-						$q->bindValue(':equipe1', $equipes[0]->id(), PDO::PARAM_INT);
-						$q->bindValue(':equipe2', $equipes[0]->id(), PDO::PARAM_INT);
-						$q->bindValue(':equipe3', $equipes[0]->id(), PDO::PARAM_INT);
-						break;
-					case 2:
-						$q->bindValue(':equipe1', $equipes[0]->id(), PDO::PARAM_INT);
-						$q->bindValue(':equipe2', $equipes[1]->id(), PDO::PARAM_INT);
-						$q->bindValue(':equipe3', $equipes[0]->id(), PDO::PARAM_INT);
-						break;
-					case 3:
-						$q->bindValue(':equipe1', $equipes[0]->id(), PDO::PARAM_INT);
-						$q->bindValue(':equipe2', $equipes[1]->id(), PDO::PARAM_INT);
-						$q->bindValue(':equipe3', $equipes[2]->id(), PDO::PARAM_INT);
-						break;
-					default:
-						break;
+				foreach ($equipes as $key => $equipe) {
+					$q->bindValue(':equipe' . $key, $equipes[0]->id(), PDO::PARAM_INT);
 				}
 			}
 			if ($critere->id() == 10) {
-				switch (count($equipes)) {
-					case 1:
-						$q->bindValue(':commite1', $equipes[0]->club()->commite(), PDO::PARAM_INT);
-						$q->bindValue(':commite2', $equipes[0]->club()->commite(), PDO::PARAM_INT);
-						$q->bindValue(':commite3', $equipes[0]->club()->commite(), PDO::PARAM_INT);
-						break;
-					case 2:
-						$q->bindValue(':commite1', $equipes[0]->club()->commite(), PDO::PARAM_INT);
-						$q->bindValue(':commite2', $equipes[1]->club()->commite(), PDO::PARAM_INT);
-						$q->bindValue(':commite3', $equipes[0]->club()->commite(), PDO::PARAM_INT);
-						break;
-					case 3:
-						$q->bindValue(':commite1', $equipes[0]->club()->commite(), PDO::PARAM_INT);
-						$q->bindValue(':commite2', $equipes[1]->club()->commite(), PDO::PARAM_INT);
-						$q->bindValue(':commite3', $equipes[2]->club()->commite(), PDO::PARAM_INT);
-						break;
-					default:
-						break;
+				foreach ($equipes as $key => $equipe) {
+					$q->bindValue(':commite' . $key, $equipes[0]->club()->commite(), PDO::PARAM_INT);
 				}
 			}
-			if ($critere->id() == 11) {
-				$q->bindValue(':distanceClub', $critere->valeur(), PDO::PARAM_INT);
-			}
+			if ($critere->id() == 11) $q->bindValue(':distanceClub', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 18) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 19) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
 		}
 		
 		$q->execute();
@@ -451,6 +444,8 @@ class EquipeManager{
 			if ($critere->id() == 4) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 5) $q->bindValue(':nbEquipe', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 6) $q->bindValue(':nbDomicile', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 16) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
+if 			if ($critere->id() == 17) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
 		}
 		
 		$q->execute();
@@ -526,9 +521,9 @@ class EquipeManager{
 					$q->bindValue(':commite' . $key, $equipes[0]->club()->commite(), PDO::PARAM_INT);
 				}
 			}
-			if ($critere->id() == 11) {
-				$q->bindValue(':distanceClub', $critere->valeur(), PDO::PARAM_INT);
-			}
+			if ($critere->id() == 11) {$q->bindValue(':distanceClub', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 18) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 19) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
 		}
 
 		$q->execute();
@@ -576,6 +571,8 @@ class EquipeManager{
 				$q->bindValue(':anneeAnt', $tour->coupe()->anneeAnt(), PDO::PARAM_INT);
 			}
 			if ($critere->id() == 15) $q->bindValue(':distanceMin', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 20) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
+if 			if ($critere->id() == 21) $q->bindValue(':coupe', $tour->coupe()->id(), PDO::PARAM_INT);
 		}
 		
 		$q->execute();

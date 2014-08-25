@@ -105,7 +105,7 @@ class Club{
 
 	public function setVilleDistance($ville, $distance)
 	{
-		$this->_ville = (String) $ville.' - '.$distance;
+		$this->_ville = (String) $distance.' - '.$ville;
 	}
 }
 

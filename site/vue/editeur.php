@@ -119,7 +119,7 @@
     $poules = $manager->poules($_SESSION['tour']->id());
 
     //récupération de la poule à afficher, si il n'y en a pas, on affiche la poule exempté
-    if(!isset($_SESSION['poule'])){
+    if(!isset($_SESSION['poule']) || $change){
         if(!empty($poules)){
 
             $_SESSION['poule'] = reset($poules);

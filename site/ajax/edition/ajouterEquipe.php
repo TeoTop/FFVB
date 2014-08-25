@@ -35,8 +35,9 @@
 	$equipesPoule = array();
 	$distance = NULL;
 
+	$manager = new EquipeManager();
+	
     if($_SESSION['poule'] != ''){
-        $manager = new EquipeManager();
         $equipesPoule = $manager->equipesPoule($_SESSION['poule']->id());
     }
 

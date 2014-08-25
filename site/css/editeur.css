@@ -104,19 +104,24 @@ label {
 	top: -7px;
 }
 
-.petiteEquipe{
-	position: relative;
-	left: -10px;
-}
-
-.nombreReception{
+.nbKm{
 	position: relative;
 	left: -20px;
 }
 
-.equipeEngage{
+.cls{
+	position: relative;
+	left: -50px;
+}
+
+.nombreReception{
 	position: relative;
 	left: -30px;
+}
+
+.equipeEngage{
+	position: relative;
+	left: -40px;
 }
 
 .posPrcd{
@@ -124,19 +129,14 @@ label {
 	left: -30px;
 }
 
-.equipeForte{
-	position: relative;
-	left: -80px;
-}
-
 .distance {
 	position: relative;
 	left:-10px;
 }
 
-.avba{
+.equipeIsolee{
 	position: relative;
-	left: -10px;
+	left: -20px;
 }
 
 
@@ -150,7 +150,7 @@ hr {
 
 /*width: 925px;*/
 
-.equipe thead{
+.equipe thead, .poule thead{
 	display: block;
 }
 
@@ -160,8 +160,10 @@ hr {
 	overflow: auto;
 }
 
-.equipe tr{
-	height: 50px;
+.poule tbody{
+	display: block;
+	height: 175px;
+	overflow: auto;
 }
 
 .t-equipe{

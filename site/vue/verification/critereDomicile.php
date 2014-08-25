@@ -17,20 +17,21 @@
 */
 
 	$manager = new CritereManager();
+    $aideDomicile = $manager->criteresTypeAll($_SESSION['tour']->id(), 'domicile');
 
 ?>
 
 <form class="form-horizontal" role="form" id="domicileForm">
 	<div class="form-group">
 		<div class="col-md-6">
-			<label class="checkbox-inline">
+			<label class="checkbox-inline" title="<?php echo $manager->aide($aideDomicile, 1); ?>">
 				<input type="checkbox" name="tourPrcd" id="1" value="true"
 					<?php echo ($manager->selectionner($critereDomicile, 1)) ? 'checked' : '' ; ?> > Reçu tour précédent
 			</label>
 		</div>
 
 		<div class="col-md-6">
-			<label class="checkbox-inline">
+			<label class="checkbox-inline" title="<?php echo $manager->aide($aideDomicile, 2); ?>">
 				<input type="checkbox" name="clubRecpetion" id="2"
 					<?php echo ($manager->selectionner($critereDomicile, 2)) ? 'checked' : '' ; ?> > Club en réception
 			</label>
@@ -39,16 +40,68 @@
 
 	<div class="form-group">
 		<div class="col-md-6 exempteTourPrcd">
-			<label class="checkbox-inline">
+			<label class="checkbox-inline" title="<?php echo $manager->aide($aideDomicile, 3); ?>">
 				<input type="checkbox" name="exempteTourPrcd" id="3"
-				<?php echo ($manager->selectionner($critereDomicile, 3)) ? 'checked' : '' ; ?> > Exempté tour prcd
+				<?php echo ($manager->selectionner($critereDomicile, 3)) ? 'checked' : '' ; ?> > Exempté tour précédent
 			</label>
 		</div>
 
 		
-			<label for="petiteEquipe" class="col-md-3">Petite equipe :</label>
+		<label for="nbKm" class="col-md-3" title="<?php echo $manager->aide($aideDomicile, 17); ?>">Km parcouru :</label>
 		<div class="col-md-3">
-			<select name="petiteEquipe" class="form-control petiteEquipe" id="4">
+			<select name="nbKm" class="form-control nbKm" id="17">
+				<option value="-1" <?php echo ($manager->selectionnerOption($critereDomicile, 17, -1)) ? 'selected' : '' ; ?> >
+				</option>
+				<option value="200" <?php echo ($manager->selectionnerOption($critereDomicile, 17, 200)) ? 'selected' : '' ; ?> >
+					200
+				</option>
+				<option value="500" <?php echo ($manager->selectionnerOption($critereDomicile, 17, 500)) ? 'selected' : '' ; ?>>
+					500
+				</option>
+				<option value="700" <?php echo ($manager->selectionnerOption($critereDomicile, 17, 700)) ? 'selected' : '' ; ?>>
+					700
+				</option>
+				<option value="1000" <?php echo ($manager->selectionnerOption($critereDomicile, 17, 1000)) ? 'selected' : '' ; ?>>
+					1000
+				</option>
+				<option value="1400" <?php echo ($manager->selectionnerOption($critereDomicile, 17, 1400)) ? 'selected' : '' ; ?>>
+					1400
+				</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="clsCoupe" class="col-md-3" title="<?php echo $manager->aide($aideDomicile, 16); ?>">Cls coupe :</label>
+		<div class="col-md-3">
+			<select name="clsCoupe" class="form-control cls" id="16">
+				<option value="-1" <?php echo ($manager->selectionnerOption($critereDomicile, 16, -1)) ? 'selected' : '' ; ?> >
+				</option>
+				<option value="300" <?php echo ($manager->selectionnerOption($critereDomicile, 16, 300)) ? 'selected' : '' ; ?> >
+					300
+				</option>
+				<option value="500" <?php echo ($manager->selectionnerOption($critereDomicile, 16, 500)) ? 'selected' : '' ; ?>>
+					500
+				</option>
+				<option value="600" <?php echo ($manager->selectionnerOption($critereDomicile, 16, 600)) ? 'selected' : '' ; ?>>
+					600
+				</option>
+				<option value="700" <?php echo ($manager->selectionnerOption($critereDomicile, 16, 700)) ? 'selected' : '' ; ?>>
+					700
+				</option>
+				<option value="800" <?php echo ($manager->selectionnerOption($critereDomicile, 16, 800)) ? 'selected' : '' ; ?>>
+					800
+				</option>
+				<option value="900" <?php echo ($manager->selectionnerOption($critereDomicile, 16, 900)) ? 'selected' : '' ; ?>>
+					900
+				</option>
+			</select>
+		</div>
+
+		
+		<label for="clsCFVB" class="col-md-3" title="<?php echo $manager->aide($aideDomicile, 4); ?>">Cls CFVB :</label>
+		<div class="col-md-3">
+			<select name="clsCFVB" class="form-control cls" id="4">
 				<option value="-1" <?php echo ($manager->selectionnerOption($critereDomicile, 4, -1)) ? 'selected' : '' ; ?> >
 				</option>
 				<option value="500" <?php echo ($manager->selectionnerOption($critereDomicile, 4, 500)) ? 'selected' : '' ; ?> >
@@ -69,11 +122,14 @@
 				<option value="3000" <?php echo ($manager->selectionnerOption($critereDomicile, 4, 3000)) ? 'selected' : '' ; ?>>
 					3000
 				</option>
+				<option value="4000" <?php echo ($manager->selectionnerOption($critereDomicile, 4, 4000)) ? 'selected' : '' ; ?>>
+					4000
+				</option>
 			</select>
 		</div>
 	</div>
 
-	<label for="equipeEngage" class="col-md-4">Equipes engagés :</label>
+	<label for="equipeEngage" class="col-md-4" title="<?php echo $manager->aide($aideDomicile, 5); ?>">Equipes engagés :</label>
 		<div class="col-md-2">
 			<select name="equipeEngage" class="form-control equipeEngage" id="5">
 				<option value="-1" <?php echo ($manager->selectionnerOption($critereDomicile, 5, -1)) ? 'selected' : '' ; ?> >
@@ -106,7 +162,7 @@
 		</div>
 
 	<div class="form-group">
-		<label for="nombreReception" class="col-md-4">Nombre réception :</label>
+		<label for="nombreReception" class="col-md-4" title="<?php echo $manager->aide($aideDomicile, 6); ?>">Nombre réception :</label>
 		<div class="col-md-2">
 			<select name="nombreReception" class="form-control nombreReception" id="6">
 				<option value="-1" <?php echo ($manager->selectionnerOption($critereDomicile, 6, -1)) ? 'selected' : '' ; ?> >

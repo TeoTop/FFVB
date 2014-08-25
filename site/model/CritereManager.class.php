@@ -56,6 +56,31 @@ class CritereManager{
 	}
 
 
+	//permet de récupérer les criteres et leur valeur selon le tour et le type
+	public function criteresTypeAll($tour, $type)
+	{
+		$criteres = array();
+
+		//requete SQL
+		$q = $this->_db->prepare('SELECT `critere`, `description` FROM `classifier` 
+				JOIN `critere` ON `id_critere` = `critere` 
+				WHERE `type` LIKE :type AND `tour` = :tour');
+		
+		$q->bindValue(':type', $type, PDO::PARAM_STR);
+		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
+		$q->execute();
+
+
+		//recupération des données et création des objets
+		while($donnee = $q->fetch(PDO::FETCH_ASSOC))
+		{	
+			$criteres[] = new Critere($donnee['critere'], $donnee['description']);
+		}
+
+		return $criteres;
+	}
+
+
 	//modifie la valeur d'un critere
 	public function modifierCritere($tour, $critere, $valeur)
 	{
@@ -89,6 +114,18 @@ class CritereManager{
 		}
 
 		return ($value == -1) ? true : false;
+	}
+
+
+	public function aide($criteres, $id)
+	{
+		foreach ($criteres as $key => $critere) {
+			if($critere->id() == $id){
+				return '+ '.$critere->description();
+			}
+		}
+
+		return '';
 	}
 }
 

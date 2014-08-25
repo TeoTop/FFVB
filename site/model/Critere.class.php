@@ -23,7 +23,6 @@ class Critere{
 	private $_type;
 	private $_valeur;
 	private $_requete;
-	private $_tour;
 
 	//constructeur
 	public function __construct()
@@ -38,7 +37,7 @@ class Critere{
 		        break;
 		    case 2:
 		        $this->setId($args[0]);
-		        $this->setValeur($args[1]);
+		        $this->setDescription($args[1]);
 		        break;
 		    case 3:
 		        $this->setId($args[0]);
@@ -57,7 +56,6 @@ class Critere{
 	public function type(){ return $this->_type; }
 	public function valeur(){ return $this->_valeur; }
 	public function requete(){ return $this->_requete; }
-	public function tour(){ return $this->_tour; }
 
 	//setter
 	public function setId($id)
@@ -90,10 +88,6 @@ class Critere{
 		$this->_requete = (String) $requete;
 	}
 
-	public function setDistance(Tour $tour)
-	{
-		$this->_tour = $tour;
-	}
 
 	public function comparer($id, $value)
 	{

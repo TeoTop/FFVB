@@ -85,13 +85,13 @@
     <?php
         foreach ($equipesPoule as $key => $equipe) {
             echo '<tr>
-                <td>'.$equipe->club()->nom().'</td>
-                <td>'.$equipe->club()->ville().'</td>
-                <td>'.$equipe->club()->commite().'</td>
-                <td>'.$equipe->club()->region().'</td>
-                <td align="center">'.$equipe->nbKmParcouru().'</td>
-                <td align="center">'.$equipe->classementCFVB().'</td>
-                <td align="center">'.$equipe->classementCoupe().'</td>
+                <td class="t-equipe">'.$equipe->club()->nom().'</td>
+                <td class="t-lieu">'.$equipe->club()->ville().'</td>
+                <td class="t-commite">'.$equipe->club()->commite().'</td>
+                <td class="t-region">'.$equipe->club()->region().'</td>
+                <td align="center" class="t-km">'.$equipe->nbKmParcouru().'</td>
+                <td align="center" class="t-coupe">'.$equipe->classementCFVB().'</td>
+                <td align="center" class="t-cfvb">'.$equipe->classementCoupe().'</td>
                 <td align="center">
                     <button type="button" class="btn btn-danger btn-xs" onclick="retirerEquipeModal('.$equipe->id().','.$key.')">
                         X
