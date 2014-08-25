@@ -16,5 +16,5 @@
 
 //fonction permettant de recharger les catégories si l'année est modifié
 $('#content').on('change', '#selectAnnee', function() {
-	$('#content').load('site/ajax/chargerAccueil.php', { annee: $( '#selectAnnee' ).val() });
+	$('#content').load('site/ajax/accueil/chargerAccueil.php', { annee: $( '#selectAnnee' ).val() });
 });

@@ -141,7 +141,7 @@ label {
 
 
 
-/* ================ Editeur poule ==================*/
+/* ================ Editeur poule et equipe par critere ==================*/
 hr {
 	border-top: 2px solid #D0D0D0 !important;
 	margin-top: 10px !important;
@@ -191,12 +191,6 @@ hr {
 .t-cfvb{
 	width: 91px;
 }
-
-
-
-
-
-/* ================ Liste equipe critere ==================*/
 
 
 

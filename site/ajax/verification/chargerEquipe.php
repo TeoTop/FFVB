@@ -2,7 +2,7 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2013
+* Date de modification : 09/08/2014
 *
 **/
 
@@ -10,15 +10,15 @@
 *
 * Information sur la page :
 * Nom : chargerEquipe.php
-* Chemin abs : site/ajax
+* Chemin abs : site/ajax/verification
 * Information : page permettant de savoir si il faut charger une poule ou ajouter une équipe
 *
 **/
 
-	define('M', '../model/');
+	define('M', '../../model/');
 
 	//page contenant les fonctions associées à la base de données
- 	require '../bdd.php';
+ 	require '../../bdd.php';
  	
  	function chargerClasse($classe)
 	{

@@ -1,0 +1,223 @@
+/*=============== Zone ==================*/
+.haut{
+	height: 480px;
+}
+
+.liste{
+	display: inline-block;
+	vertical-align: top;
+	width: 220px;
+	height: 460px;
+	padding: 20px 10px;
+	overflow: auto;
+	background-color: white;
+}
+
+.edition{
+	display: inline-block;
+	vertical-align: top;
+	width: 704px;
+	height: 440px;
+	margin-left: 20px;
+}
+
+.competition {
+	height: 70px;
+	font-family: Verdana, Georgia, Arial;
+	font-size: 18px;
+	background-color: white;
+	padding: 20px 30px;
+}
+
+.critere { 
+	height: 370px;
+	padding: 20px 10px;
+	margin-top: 20px;
+	font-family: Verdana, Georgia, Arial;
+	font-size: 18px;
+	background-color: white;
+}
+
+.poule{
+	width: 945px;
+	height: 310px;
+	padding: 20px 10px;
+	background-color: white;
+}
+
+.indicateur{
+	width: 945px;
+	height: 280px;
+	margin-top: 20px;
+	padding: 20px 10px;
+	overflow: auto;
+	background-color: white;
+}
+
+
+/*================== Menu déroulant ===================*/
+
+span {
+	display:block;
+	color: #0000FF;
+}
+
+input, select, span, tr {
+	cursor: pointer;
+}
+
+.recherche{
+	padding:0px !important;
+}
+
+.form-control + .glyphicon {
+    position: absolute;
+    right: 0;
+    padding: 8px 10px;
+    color:black;
+}
+
+
+/* ================ Contenue competition ==================*/
+
+/* on améliore le positionnement des select*/
+.competition select {
+	position: relative;
+	left:-20px;
+}
+
+
+/* ================ Contenue critere ==================*/
+
+/*on courcuite bootstrap*/
+label {
+	font-weight: 300;
+}
+
+
+/*on courcuite bootstrap*/
+.critere .form-group {
+	margin: 20px 0px 40px 0px !important;
+}
+
+.exempteTourPrcd{
+	position: relative;
+	top: -7px;
+}
+
+.petiteEquipe{
+	position: relative;
+	left: -10px;
+}
+
+.nombreReception{
+	position: relative;
+	left: -20px;
+}
+
+.equipeEngage{
+	position: relative;
+	left: -30px;
+}
+
+.posPrcd{
+	position: relative;
+	left: -30px;
+}
+
+.equipeForte{
+	position: relative;
+	left: -80px;
+}
+
+.distance {
+	position: relative;
+	left:-10px;
+}
+
+.avba{
+	position: relative;
+	left: -10px;
+}
+
+
+
+/* ================ Editeur poule ==================*/
+hr {
+	border-top: 2px solid #D0D0D0 !important;
+	margin-top: 10px !important;
+	margin-bottom: 10px !important;
+}
+
+/*width: 925px;*/
+
+.equipe thead{
+	display: block;
+}
+
+.equipe tbody{
+	display: block;
+	height: 195px;
+	overflow: auto;
+}
+
+.equipe tr{
+	height: 50px;
+}
+
+.t-equipe{
+	min-width: 207px;
+}
+
+.t-lieu{
+	min-width: 207px;
+}
+
+.t-commite{
+	min-width: 132px;
+}
+
+.t-region{
+	min-width: 149px;
+}
+
+.t-km{
+	width: 60px;
+}
+
+.t-coupe{
+	width: 79px;
+}
+
+.t-cfvb{
+	width: 91px;
+}
+
+
+
+/* ================ Modaux ==================*/
+.attention {
+	background-color: #F2E7B3;
+}
+
+.attention .modal-footer {
+	border-top: 1px solid #EDD053 !important;
+}
+
+.attention .modal-header {
+	border-bottom: 1px solid #EDD053 !important;
+}
+
+
+.information {
+	background-color: #B7D7E8;
+}
+
+.information .modal-footer {
+	border-top: 1px solid #59B6E5 !important;
+}
+
+.information .modal-header {
+	border-bottom: 1px solid #59B6E5 !important;
+}
+

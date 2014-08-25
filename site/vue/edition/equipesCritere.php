@@ -17,11 +17,11 @@
 */
 
 if($_SESSION['critere']=='domicile'){
-    include V . 'equipeCritereDomicile.php';
+    include V . 'edition/equipeCritereDomicile.php';
 } else if($_SESSION['critere']=='exterieur'){
-    include V . 'equipeCritereExterieur.php';
+    include V . 'edition/equipeCritereExterieur.php';
 } else {
-    include V . 'equipeCritereExempter.php';
+    include V . 'edition/equipeCritereExempter.php';
 }
 
 ?>

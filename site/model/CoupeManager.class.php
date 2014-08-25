@@ -111,6 +111,7 @@ class CoupeManager{
 
 		return false;
 	}
+
 }
 
 ?>

@@ -26,8 +26,6 @@ define('M', 'site/model/');
 date_default_timezone_set('Europe/Paris') or die();
 error_reporting(-1);
 
-session_start();
-
 ?>
 
 <!DOCTYPE HTML>
@@ -75,6 +73,9 @@ session_start();
 
 			// On enregistre la fonction en autoload pour qu'elle soit appelée dès qu'on instanciera une classe non déclarée.
 			spl_autoload_register('chargerClasse'); 
+
+			//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
+			session_start();
 	    ?>	
 
 		<div class="container"> <!--div principale-->

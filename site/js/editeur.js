@@ -21,7 +21,7 @@
 $('#content').on('change', '#selectCoupe', function() {
 
     //on recharge une partie de la page en passant des données en POST.
-    $('#content').load('site/ajax/chargerEditeur.php', { coupe: $( '#selectCoupe' ).val() });
+    $('#content').load('site/ajax/edition/chargerEditeur.php', { coupe: $( '#selectCoupe' ).val() });
 
     // !!! cela ne doit pas servir de référence, cette action permet juste de faire suivre l'adresse url 
     //avec le contenu de la page, ce n'est que de l'affichage. Les données à transférer sont passé en POST
@@ -35,7 +35,7 @@ $('#content').on('change', '#selectCoupe', function() {
 $('#content').on('change', '#selectTour', function() {
     
     //pas besoin d'indiquer la coupe, celle-ci est stocké en variable de session.
-    $('#content').load('site/ajax/chargerEditeur.php', { coupe: $( '#selectCoupe' ).val(), tour: $( '#selectTour' ).val() });
+    $('#content').load('site/ajax/edition/chargerEditeur.php', { coupe: $( '#selectCoupe' ).val(), tour: $( '#selectTour' ).val() });
     
     history.pushState({ path: this.path }, '', 
         'http://localhost/ffvb/index.php?m=navigation&a=editeur&c=' + $( '#selectCoupe' ).val() + '&t=' + $( '#selectTour' ).val());
@@ -49,9 +49,9 @@ $('#content').on('change', '#selectTour', function() {
 //cette fonction est activé lorsque l'on clique sur un poule située dans le menu déroulant (onclick="chargerEditionPoule(poule_id)")
 function chargerPoule(poule_id) {
     
-    $('#poule').load('site/ajax/chargerEditionPoule.php', { poule: poule_id });
+    $('#poule').load('site/ajax/edition/chargerEditionPoule.php', { poule: poule_id });
 
-    $('#equipe').load('site/ajax/chargerEquipesCritere.php');
+    $('#equipe').load('site/ajax/edition/chargerEquipesCritere.php');
 
 }
 
@@ -62,7 +62,7 @@ function chargerEquipe(equipe_id) {
     // requete HTML à partir d'AJAX : method post vers la page php chargerEquipe situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/chargerEquipe.php',
+        url: 'site/ajax/edition/chargerEquipe.php',
         data: { equipe: equipe_id },
         dataType: 'json',
         timeout: 3000,
@@ -90,7 +90,7 @@ function changerMenu(type) {
     
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/changerMenu.php',
+        url: 'site/ajax/edition/changerMenu.php',
         data: { liste: type },
         timeout: 3000,
         
@@ -122,7 +122,7 @@ $('#content').on('click', '#creerPoule', function() {
     // requete HTML à partir d'AJAX : method post vers la page php ajouterPoule situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/creerPoule.php',
+        url: 'site/ajax/edition/creerPoule.php',
         dataType: 'json',
         timeout: 3000,
         
@@ -130,7 +130,7 @@ $('#content').on('click', '#creerPoule', function() {
 
             chargerPoule(json.poule);
 
-            $('#liste').load('site/ajax/chargerMenu.php');
+            $('#liste').load('site/ajax/edition/chargerMenu.php');
 
         },
         
@@ -148,7 +148,7 @@ $('#content').on('click', '#supprimerPoule', function() {
     // requete HTML à partir d'AJAX : method post vers la page php supprimerPoule situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/supprimerPoule.php',
+        url: 'site/ajax/edition/supprimerPoule.php',
         dataType: 'json',
         timeout: 3000,
         
@@ -157,7 +157,7 @@ $('#content').on('click', '#supprimerPoule', function() {
             setTimeout(function(){
                 chargerPoule(json.poule);
                 console.log(json.poule);
-                $('#liste').load('site/ajax/chargerMenu.php');
+                $('#liste').load('site/ajax/edition/chargerMenu.php');
             }, 300);
         },
         
@@ -181,13 +181,13 @@ function changerCriteres(type) {
     
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/changerCriteres.php',
+        url: 'site/ajax/edition/changerCriteres.php',
         data: { critere: type },
         timeout: 3000,
         
         success: function(data) {
             setTimeout(function(){
-                $('#equipe').load('site/ajax/chargerEquipesCritere.php');
+                $('#equipe').load('site/ajax/edition/chargerEquipesCritere.php');
             }, 300);
         },
 
@@ -204,13 +204,13 @@ function modifierCritere(id, valeur) {
     // requete HTML à partir d'AJAX : method post vers la page php modifierCritere situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/modifierCritere.php',
+        url: 'site/ajax/edition/modifierCritere.php',
         data: { critere: id, valeur: valeur },
         timeout: 3000,
         
         success: function(data) {
             setTimeout(function(){
-                $('#equipe').load('site/ajax/chargerEquipesCritere.php');
+                $('#equipe').load('site/ajax/edition/chargerEquipesCritere.php');
             }, 300);
         },
 
@@ -253,6 +253,7 @@ function actionAjouterEquipe(equipe_id, chargement) {
     var lignes = $("#tablePoule > tbody > tr").length + 1;
     var critere = $('#affCritere').val();
     var poule = $( '#selectPoule' ).val();
+    var numero = $( '#numeroTour' ).val();
 
     //l'ajout provient des équipes triées
     if(typeof(chargement)==='undefined'){
@@ -264,7 +265,7 @@ function actionAjouterEquipe(equipe_id, chargement) {
                 $( '#informationBody' ).text( "Vous ne pouvez ajouter d'équipe dans la poule éxempté à partir des critères DOMICILE" );
                 $( '#informationModal' ).modal();
             } else {
-                if(lignes == 1){
+                if(numero == 7 || lignes == 1){
                     ajouterEquipe(equipe_id);
                 } else {
                     remplacerEquipe(equipe_id);
@@ -277,11 +278,15 @@ function actionAjouterEquipe(equipe_id, chargement) {
                 $( '#informationBody' ).text( "Vous ne pouvez ajouter d'équipe dans la poule éxempté à partir des critères EXTERIEUR" );
                 $( '#informationModal' ).modal();
             } else {
-                if(lignes == 5){
+                if(numero != 7 && lignes == 5){
                     $( "#informationTitle" ).text( "Poule complète" );
                     $( "#informationBody" ).text( "Une poule ne peut pas contenir plus de quatre equipes." );
                     $('#informationModal').modal();
-                } else if (lignes == 1){
+                } else if(numero == 7 && lignes == 7){
+                    $( "#informationTitle" ).text( "Poule complète" );
+                    $( "#informationBody" ).text( "Une poule de final ne peut pas contenir plus de six equipes." );
+                    $('#informationModal').modal();
+                } else if (numero != 7 && lignes == 1){
                     $( "#informationTitle" ).text( "Poule non domiciliée" );
                     $( "#informationBody" ).text( "Cette poule ne possède pas encore d\'équipe devant jouer à domicile. Veuillez choisir une équipe à partir des critères DOMICILE" );
                     $('#informationModal').modal();
@@ -305,10 +310,14 @@ function actionAjouterEquipe(equipe_id, chargement) {
 
         if(lignes < 5){
             ajouterEquipe(equipe_id);
-        } else {
-            $( '#informationTitle' ).text( "Poule complète" );
-            $( '#informationBody' ).text( "Une poule ne peut pas contenir plus de quatre equipes." );
-            $( '#informationModal' ).modal();
+        } else if(numero != 7 && lignes == 5){
+            $( "#informationTitle" ).text( "Poule complète" );
+            $( "#informationBody" ).text( "Une poule ne peut pas contenir plus de quatre equipes." );
+            $('#informationModal').modal();
+        } else if(numero == 7 && lignes == 7){
+            $( "#informationTitle" ).text( "Poule complète" );
+            $( "#informationBody" ).text( "Une poule de final ne peut pas contenir plus de six equipes." );
+            $('#informationModal').modal();
         }
     }
 }
@@ -319,14 +328,14 @@ function ajouterEquipe(equipe_id){
     // requete HTML à partir d'AJAX : method post vers la page php ajouterEquipe situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/ajouterEquipe.php',
+        url: 'site/ajax/edition/ajouterEquipe.php',
         data: { equipe: equipe_id },
         timeout: 3000,
         
         success: function(data) {
-            $('#poule').load('site/ajax/chargerEditionPoule.php');
+            $('#poule').load('site/ajax/edition/chargerEditionPoule.php');
 
-            $('#equipe').load('site/ajax/chargerEquipesCritere.php');
+            $('#equipe').load('site/ajax/edition/chargerEquipesCritere.php');
         },
 
         error: function() {
@@ -343,14 +352,14 @@ function remplacerEquipe(equipe_id){
     // requete HTML à partir d'AJAX : method post vers la page php remplacerEquipe situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/remplacerEquipe.php',
+        url: 'site/ajax/edition/remplacerEquipe.php',
         data: { equipe: equipe_id },
         timeout: 3000,
         
         success: function(data) {
-            $('#poule').load('site/ajax/chargerEditionPoule.php');
+            $('#poule').load('site/ajax/edition/chargerEditionPoule.php');
 
-            $('#equipe').load('site/ajax/chargerEquipesCritere.php');
+            $('#equipe').load('site/ajax/edition/chargerEquipesCritere.php');
         },
 
         error: function(data) {
@@ -366,15 +375,15 @@ function retirerEquipe(equipe_id) {
     // requete HTML à partir d'AJAX : method post vers la page php retirerEquipe situé dans le dossier ajax.
     $.ajax({
         type: 'POST',
-        url: 'site/ajax/retirerEquipe.php',
+        url: 'site/ajax/edition/retirerEquipe.php',
         data: { equipe: equipe_id },
         timeout: 3000,
         
         success: function(data) {
             setTimeout(function(){
-                $('#poule').load('site/ajax/chargerEditionPoule.php');
+                $('#poule').load('site/ajax/edition/chargerEditionPoule.php');
 
-                $('#equipe').load('site/ajax/chargerEquipesCritere.php');
+                $('#equipe').load('site/ajax/edition/chargerEquipesCritere.php');
             }, 300);
         },
 

@@ -2,23 +2,23 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2013
+* Date de modification : 14/08/2013
 *
 **/
 
 /*
 *
 * Information sur la page :
-* Nom : remplacerEquipe.php
+* Nom : modifierCritere.php
 * Chemin abs : site/ajax
-* Information : page permettant de modifier l'équipe qui reçoit à domicile
+* Information : page permettant de modifier la valeur d'un critère
 *
 **/
 
-	define('M', '../model/');
+	define('M', '../../model/');
 
 	//page contenant les fonctions associées à la base de données
- 	require '../bdd.php';
+ 	require '../../bdd.php';
  	
  	function chargerClasse($classe)
 	{
@@ -31,10 +31,9 @@
 	//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
 	session_start();
 
-
-	// on ajoute l'équipe à la poule
-    $manager = new PouleManager();
-	$manager->modifierDomicile($_POST['equipe'], $_SESSION['poule']->id());
+	// on modifie le critère en fonction du tour, du critère et de ça valeur
+    $manager = new CritereManager();
+	$manager->modifierCritere($_SESSION['tour']->id(), $_POST['critere'], $_POST['valeur']);
 	    
 
 ?>

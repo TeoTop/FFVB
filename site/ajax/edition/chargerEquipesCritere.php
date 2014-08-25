@@ -15,11 +15,11 @@
 *
 **/
 	
-	define('V', '../vue/');
-	define('M', '../model/');
+	define('V', '../../vue/');
+	define('M', '../../model/');
 
 	//page contenant les fonctions associées à la base de données
- 	require '../bdd.php';
+ 	require '../../bdd.php';
  	
  	function chargerClasse($classe)
 	{
@@ -39,17 +39,17 @@
     if($_SESSION['critere'] == 'domicile'){
 
     	$critereDomicile = $manager->criteresType($_SESSION['tour']->id(), 'domicile');
-    	include V . 'equipeCritereDomicile.php';
+    	include V . 'edition/equipeCritereDomicile.php';
 
 	} else if($_SESSION['critere'] == 'exterieur'){
 
     	$critereExterieur = $manager->criteresType($_SESSION['tour']->id(), 'exterieur');
-    	include V . 'equipeCritereExterieur.php';
+    	include V . 'edition/equipeCritereExterieur.php';
 
 	} else {
 
 		$critereExempter = $manager->criteresType($_SESSION['tour']->id(), 'exempter');
-		include V . 'equipeCritereExempter.php';
+		include V . 'edition/equipeCritereExempter.php';
 
 	}
 ?>

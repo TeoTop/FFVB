@@ -67,7 +67,7 @@
         if( $loop%2 == 0 ) echo '<tr>';
 
         echo '<td>
-            <div class="categorie">
+            <div class="categorie" id="'.$categorie->id().'">
                 Catégorie : '.$categorie->coupe()->categorie().'
                 <button type="button" class="btn btn-default btn-xs" 
                 onclick="self.location.href=\'?m=navigation&a=editeur&c='.$categorie->coupe()->id().'&t='.$categorie->id().'\'"
@@ -94,3 +94,31 @@
     ?>
 
 </table>
+
+
+<script>
+    $(function() {
+        $(".categorie").each(function() {
+
+            var categorie = this.id;
+
+            $.ajax({
+                type: 'POST',
+                url: 'site/ajax/accueil/categorieIncomplete.php',
+                data: { categorie: categorie },
+                dataType: 'json',
+                timeout: 3000,
+                
+                success: function(json) {
+                    if(json.reponse){
+                        $("#" + categorie).css("background-color", "red");
+                    };
+                },
+
+                error: function() {
+                    console.log('La requête de chargement de vérification n\'a pas abouti'); 
+                },
+            });   
+        });
+    });
+</script>

@@ -9,17 +9,17 @@
 /*
 *
 * Information sur la page :
-* Nom : chargerAccueil.php
+* Nom : chargerMenu.php
 * Chemin abs : site/ajax
-* Information : page permettant de recharger la page d'accueil
+* Information : page permettant de recharger la partie menu déroulant
 *
 **/
 	
-	define('V', '../vue/');
-	define('M', '../model/');
+	define('V', '../../vue/');
+	define('M', '../../model/');
 
 	//page contenant les fonctions associées à la base de données
- 	require '../bdd.php';
+ 	require '../../bdd.php';
  	
  	function chargerClasse($classe)
 	{
@@ -33,5 +33,10 @@
 	session_start();
 
 
-	include V . 'accueil.php'
+	// on récupère les poules du tour de coupe
+    $manager = new PouleManager();
+    $poules = $manager->poules($_SESSION['tour']->id());
+
+
+	include V . 'edition/menuDeroulant.php'
 ?>

@@ -33,7 +33,7 @@ class PouleManager{
 
 
 
-	//permet de récupérer toutes les coupes de l'année passée en parametre
+	//permet de récupérer la poule en fonction de l'id
 	public function poule($id)
 	{
 		$poule = NULL;
@@ -55,7 +55,7 @@ class PouleManager{
 		return $poule;
 	}
 
-	//permet de récupérer toutes les coupes de l'année passée en parametre
+	//permet de récupérer toutes les poules à partir du tour
 	public function poules($tour)
 	{
 		$poules = array();
@@ -76,7 +76,6 @@ class PouleManager{
 
 		return $poules;
 	}
-
 
 
 	//on crée une nouvelle poule

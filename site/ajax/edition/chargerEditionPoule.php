@@ -15,11 +15,11 @@
 *
 **/
 
-	define('V', '../vue/');
-	define('M', '../model/');
+	define('V', '../../vue/');
+	define('M', '../../model/');
 
 	//page contenant les fonctions associées à la base de données
- 	require '../bdd.php';
+ 	require '../../bdd.php';
  	
  	function chargerClasse($classe)
 	{
@@ -49,6 +49,6 @@
 
     }
     
-	include V . 'editionPoule.php';
+	include V . 'edition/editionPoule.php';
    
 ?>

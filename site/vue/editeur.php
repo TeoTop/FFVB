@@ -35,6 +35,7 @@
     // on récupère les coupes présentent dans la base pour telle année
     $coupes = $manager->coupes($_SESSION['annee']);
 
+    $change = true;
 
     //on test les valeurs qui sont envoyées
     if(isset($_GET['c'])){                      //on récupère la coupe passée en GET ( depuis l'accueil )
@@ -45,14 +46,19 @@
        
         $coupe = $_POST['coupe'];
     
-    } else {          // on charge la première coupe si on arrive sur la page ( chargement régulier depuis l'index )
+    } else if(!isset($_SESSION['coupe'])){          // on charge la première coupe si on arrive sur la page ( chargement régulier depuis l'index )
         
         $coupe = current($coupes)->id();
+    
+    } else {
+        $coupe = $_SESSION['coupe']->id();
+        $change = false;
     }
 
 
     // si coupe n'est pas numeric et qu'elle ne figure pas dans la base, on affice la page d'erreur
     if( !(is_numeric($coupe) && $manager->existe($coupe)) ){
+        unset($_SESSION);
         include V . 'erreur.php';
         die();
     }
@@ -74,6 +80,7 @@
 
         //on ne peut pas avoir de tour si la coupe n'est pas sélectionner avec GET
         if(!isset($_GET['c'])){     
+            unset($_SESSION);
             include V . 'erreur.php';
             die();
         }
@@ -84,14 +91,18 @@
        
         $tour = $_POST['tour'];
     
-    } else {    //on vient de modifier la coupe ou de passer la uniquement la coupe en param
-	    
+    } else if( !isset($_SESSION['tour']) || $change ){    //on vient de modifier la coupe ou de passer la uniquement la coupe en param
+        
         $tour = end($tours)->id();
+
+    } else {
+        $tour = $_SESSION['tour']->id();
     }
 
 
     // si coupe n'est pas un int et qu'elle ne figure pas dans la base, on affice la page d'erreur
     if( !(is_numeric($tour) && $manager->existe($coupe, $tour)) ){
+        unset($_SESSION);
         include V . 'erreur.php';
         die();
     }
@@ -108,14 +119,16 @@
     $poules = $manager->poules($_SESSION['tour']->id());
 
     //récupération de la poule à afficher, si il n'y en a pas, on affiche la poule exempté
-    if(!empty($poules)){
+    if(!isset($_SESSION['poule'])){
+        if(!empty($poules)){
 
-        $_SESSION['poule'] = reset($poules);
+            $_SESSION['poule'] = reset($poules);
 
-    } else {
+        } else {
 
-        $_SESSION['poule'] = '';
+            $_SESSION['poule'] = '';
 
+        }
     }
 
 
@@ -124,17 +137,22 @@
 /////////////////// gestion de l'affichage //////////////////////////
 
     //récupération de l'affichage au niveau des critères
-    $_SESSION['critere'] = 'domicile';
+    if(!isset($_SESSION['critere'])){
+        $_SESSION['critere'] = 'domicile';
+    }
 
 
 
     //récupération de l'affichage au niveau du menu déroulant
-    $_SESSION['liste'] = 'equipe';
+    if(!isset($_SESSION['liste'])){
+        $_SESSION['liste'] = 'equipe';
+    }
 
 ?>
 
 <!-- pour le javascript -->
 <input type="hidden" id="affCritere" value="<?php echo $_SESSION['critere'] ?>">
+<input type="hidden" id="numeroTour" value="<?php echo $_SESSION['tour']->numero() ?>">
 
 <!-- Modal permettant de signaler la suppression d'une poule non vide -->
 <div class="modal fade" id="supprimerPouleModal" role="dialog">
@@ -196,20 +214,20 @@
 
     <div class="liste" id="liste">
     	<?php
-    		include V . 'menuDeroulant.php';
+    		include V . 'edition/menuDeroulant.php';
         ?>
     </div>
     
     <div class="edition">
         <div class="competition">
             <?php
-        		include V . 'tourSelect.php';
+        		include V . 'edition/tourSelect.php';
             ?>
         </div>
         
         <div class="critere">
         	<?php
-                include V . 'criteres.php';
+                include V . 'edition/criteres.php';
             ?>
         </div>
             
@@ -218,12 +236,12 @@
 
 <div class="equipe" id="equipe">
     <?php
-        include V . 'equipesCritere.php';
+        include V . 'edition/equipesCritere.php';
     ?>
 </div>
 
 <div class="poule" id="poule">
     <?php
-        include V . 'editionPoule.php';
+        include V . 'edition/editionPoule.php';
     ?>
 </div>

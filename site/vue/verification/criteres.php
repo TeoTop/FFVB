@@ -2,7 +2,7 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
+* Date de modification : 06/08/2014
 *
 */
 
@@ -10,7 +10,7 @@
 *
 * Information sur la page :
 * Nom : criteres.php
-* Chemin abs : site\vue\
+* Chemin abs : site\vue\verification
 * Information : page permettant de gérer l'affichage des critères
 *
 *
@@ -41,19 +41,19 @@
 
 	<div class="tab-pane fade <?php echo ($_SESSION['critere']=='domicile') ? 'in active':''; ?>" id="domicile">
 		<?php
-    		include V . 'critereDomicile.php';
+    		include V . 'verification/critereDomicile.php';
         ?>
 	</div>
 
 	<div class="tab-pane fade <?php echo ($_SESSION['critere']=='exterieur') ? 'in active':''; ?>" id="exterieur">
 		<?php
-    		include V . 'critereExterieur.php';
+    		include V . 'verification/critereExterieur.php';
         ?>
 	</div>
 
 	<div class="tab-pane fade <?php echo ($_SESSION['critere']=='exempter') ? 'in active':''; ?>" id="exempter">
 		<?php
-    		include V . 'critereExempter.php';
+    		include V . 'verification/critereExempter.php';
         ?>
 	</div>
 
