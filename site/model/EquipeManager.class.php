@@ -60,6 +60,59 @@ class EquipeManager{
 		return $equipes;
 	}
 
+
+	//retourne la liste des equipes qualifier pour ce tour
+	public function equipesPoules($tour)
+	{
+		$equipes = array();
+
+		//requete SQL avec argument :tour
+		$q = $this->_db->prepare('SELECT cb.`nom`, pl.`nom` as `nomPoule` FROM `equipe` 
+			JOIN `club` cb ON `id_club` = `club`
+			JOIN `jouer` ON `equipe` = `id_equipe`
+			JOIN `poule` pl ON `id_poule` = `poule`   
+			WHERE `tour` = :tour');
+
+		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
+
+		$q->execute();
+
+		//recupération des valeurs et création des objets
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$equipes[$donnees['nomPoule']][] = $donnees['nom'];
+		}
+
+
+		return $equipes;
+	}
+
+
+	//retourne la liste des noms des equipes exemptées pour ce tour
+	public function equipesExemptesNom($tour)
+	{
+		$equipes = array();
+
+		//requete SQL avec argument :tour
+		$q = $this->_db->prepare('SELECT `nom` FROM `exempter` 
+			JOIN `equipe` ON `id_equipe` = `equipe` 
+			JOIN `club` ON `id_club` = `club` 
+			WHERE `tour` = :tour 
+			ORDER BY `nom`');
+
+		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
+		$q->execute();
+
+		//recupération des valeurs et création des objets
+		while ($donnees = $q->fetch(PDO::FETCH_ASSOC))
+		{
+			$equipes[] = $donnees['nom'];
+		}
+
+
+		return $equipes;
+	}
+
 	
 	public function tourPrecedent($tour)
 	{
@@ -445,7 +498,7 @@ class EquipeManager{
 			if ($critere->id() == 5) $q->bindValue(':nbEquipe', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 6) $q->bindValue(':nbDomicile', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 16) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
-if 			if ($critere->id() == 17) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
+ 			if ($critere->id() == 17) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
 		}
 		
 		$q->execute();
@@ -521,7 +574,7 @@ if 			if ($critere->id() == 17) $q->bindValue(':nbKm', $critere->valeur(), PDO::
 					$q->bindValue(':commite' . $key, $equipes[0]->club()->commite(), PDO::PARAM_INT);
 				}
 			}
-			if ($critere->id() == 11) {$q->bindValue(':distanceClub', $critere->valeur(), PDO::PARAM_INT);
+			if ($critere->id() == 11) $q->bindValue(':distanceClub', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 18) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 19) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
 		}
@@ -572,7 +625,7 @@ if 			if ($critere->id() == 17) $q->bindValue(':nbKm', $critere->valeur(), PDO::
 			}
 			if ($critere->id() == 15) $q->bindValue(':distanceMin', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 20) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
-if 			if ($critere->id() == 21) $q->bindValue(':coupe', $tour->coupe()->id(), PDO::PARAM_INT);
+ 			if ($critere->id() == 21) $q->bindValue(':coupe', $tour->coupe()->id(), PDO::PARAM_INT);
 		}
 		
 		$q->execute();

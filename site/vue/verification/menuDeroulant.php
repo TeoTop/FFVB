@@ -32,7 +32,6 @@
         
 
     $manager = new PouleManager();
-    $equipesPoules = array();
 
     // on récupère les équipes qualifiées pour le tour de coupe
     $manager = new EquipeManager();
@@ -44,7 +43,7 @@
 
 
 
-     // echo $manager->verifierDomicile($critereDomicile, $_SESSION['tour']);
+    // echo $manager->verifierDomicile($critereDomicile, $_SESSION['tour']);
     $_SESSION['equipesCritere'] = array_merge($_SESSION['equipesCritere'],
         $manager->verifierDomicile($critereDomicile, $_SESSION['tour'])); 
 
@@ -54,10 +53,10 @@
 
     $exemptees = $manager->equipesExempte($_SESSION['tour']->id()); 
 
-    if(count($exemptees) == count($_SESSION['equipesCritere'][' '])){
-        $_SESSION['equipesCritere'][' ']['nbEquipe'] = false;
+    if(isset($_SESSION['equipesCritere'][' ']) && count($exemptees) == count($_SESSION['equipesCritere'][' '])){
+        $_SESSION['equipesCritere'][' ']['erreur'] = false;
     } else {
-        $_SESSION['equipesCritere'][' ']['nbEquipe'] = true;
+        $_SESSION['equipesCritere'][' ']['erreur'] = true;
     }
     
 
@@ -65,19 +64,26 @@
 
         $equipesPoule = $manager->equipesPoule($poule->id());
 
-        if(!isset($_SESSION['equipesCritere'][' '.$poule->id()])) $_SESSION['equipesCritere'][' '.$poule->id()] = array();
-       
+        if(!empty($equipesPoule)){
 
-        $_SESSION['equipesCritere'][' '.$poule->id()] = array_merge($_SESSION['equipesCritere'][' '.$poule->id()],
-            $manager->verifierExterieur($critereExterieur, $_SESSION['tour'], $poule->id(), $equipesPoule));
+            if(!isset($_SESSION['equipesCritere'][' '.$poule->id()])) $_SESSION['equipesCritere'][' '.$poule->id()] = array();
+           
+
+            $_SESSION['equipesCritere'][' '.$poule->id()] = array_merge($_SESSION['equipesCritere'][' '.$poule->id()],
+                $manager->verifierExterieur($critereExterieur, $_SESSION['tour'], $poule->id(), $equipesPoule));
 
 
-        if( count($equipesPoule) == count($_SESSION['equipesCritere'][' '.$poule->id()]) && count($equipesPoule) > 2 ){
-            $_SESSION['equipesCritere'][' '.$poule->id()]['nbEquipe'] = false;
+            if( count($equipesPoule) == count($_SESSION['equipesCritere'][' '.$poule->id()]) && count($equipesPoule) > 2 ){
+                $_SESSION['equipesCritere'][' '.$poule->id()]['erreur'] = false;
+            } else {
+                $_SESSION['equipesCritere'][' '.$poule->id()]['erreur'] = true;
+            }
+
         } else {
-            $_SESSION['equipesCritere'][' '.$poule->id()]['nbEquipe'] = true;
-        }
 
+            $_SESSION['equipesCritere'][' '.$poule->id()]['erreur'] = true;
+
+        }
     }
 
 ?>
@@ -126,12 +132,12 @@
                 <?php
                 
                     echo '<span onclick="chargerPoule(\'\')" '
-                                .( ($_SESSION['equipesCritere'][' ']['nbEquipe']) ? 'style="color:red;"':'' ).'>'.
+                                .( ($_SESSION['equipesCritere'][' ']['erreur']) ? 'style="color:red;"':'' ).'>'.
                                     'Exemptée</span>';
                 
                     foreach ($poules as $key => $poule) {
                         echo '<span onclick="chargerPoule('.$poule->id().')" '
-                                .( ($_SESSION['equipesCritere'][' '.$poule->id()]['nbEquipe']) ? 'style="color:red;"':'' ).'>'
+                                .( ($_SESSION['equipesCritere'][' '.$poule->id()]['erreur']) ? 'style="color:red;"':'' ).'>'
                                         .$poule->nom().'</span>';
                     }
                 ?>

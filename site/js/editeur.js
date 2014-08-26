@@ -169,6 +169,16 @@ $('#content').on('click', '#supprimerPoule', function() {
 });
 
 
+//fonction permettant d'afficher un fenetre présentant toutes les poules
+$('#content').on('click', '#afficherPoules', function() {
+
+    $('#poulesCompletes').load('site/ajax/edition/afficherPoules.php');
+
+    $('#modalPoules').modal();  
+});
+
+
+
 
 
 /********************** Critères ***************************/

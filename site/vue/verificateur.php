@@ -56,7 +56,6 @@
 
     // si coupe n'est pas numeric et qu'elle ne figure pas dans la base, on affice la page d'erreur
     if( !(is_numeric($coupe) && $manager->existe($coupe)) ){
-        unset($_SESSION);
         include V . 'erreur.php';
         die();
     }
@@ -78,7 +77,6 @@
 
         //on ne peut pas avoir de tour si la coupe n'est pas sélectionner avec GET
         if(!isset($_GET['c'])){     
-            unset($_SESSION);
             include V . 'erreur.php';
             die();
         }
@@ -100,7 +98,6 @@
 
     // si coupe n'est pas un int et qu'elle ne figure pas dans la base, on affice la page d'erreur
     if( !(is_numeric($tour) && $manager->existe($coupe, $tour)) ){
-        unset($_SESSION);
         include V . 'erreur.php';
         die();
     }

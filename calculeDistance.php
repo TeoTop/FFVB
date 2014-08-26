@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	function chargerClasseEditeur($classe)
     {
         require 'site/model/' . $classe . '.class.php'; // On inclut la classe correspondante au paramètre passé.
@@ -11,6 +11,8 @@
     $bdd = ouvre_base();
 
 
+    start:
+
 
     $clubs = array();
 
@@ -22,8 +24,6 @@
 	{
 		$clubs[] = new Club($donnees['id_club'], $donnees['ville'], $donnees['commite']);
 	}
-
-
 
 	$distances = array();
 
@@ -40,6 +40,7 @@
 	}
 
 
+
 	$ok = true;
 	$sec = 0;
 	$recherche = array();
@@ -47,6 +48,8 @@
 	foreach ($clubs as $key1 => $club1) {
 		foreach ($clubs as $key2 => $club2) {
 			if($key2 > $key1){
+
+				if(empty($distances)) $ok = false;
 
 				foreach ($distances as $cle => $distance) {
 					
@@ -88,8 +91,9 @@
 		if($sec >= 90)  break;
 	}
 	
-	//sleep ( 11 );
+
 	$inc = 0;
+	$stop = 0;
 
 	foreach ($recherche as $key => $value) {
 		$url = 'http://maps.googleapis.com/maps/api/distancematrix/json?origins='.$value["origine"].
@@ -123,5 +127,18 @@
 	}
 
 	echo $inc.' lignes ont été insérées dans la table parcourir';
+	
+	if($inc >= 89){
+		$stop += $inc;
+
+		echo 'Attendez pour la suite des insertions';
+		sleep ( 11 );
+
+		if($stop <= 2403){
+			goto start;
+		}
+
+		echo 'Attendez 24h pour exécuter la suite des insertions en relançant le script';
+	}
 
 ?>

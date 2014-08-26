@@ -47,7 +47,7 @@
     </div>
     
 
-    <div class="col-md-5">
+    <div class="col-md-3">
         <select name="selectPoule" class="form-control" id="selectPoule">
             <option value="" <?php echo ($_SESSION['poule'] == '' ) ? 'selected' : '' ; ?> >Exemptée</option>
             <?php
@@ -64,6 +64,9 @@
         </select>
     </div>
     <div class="col-md-1"></div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-info" id="afficherPoules">Apperçu</button>
+    </div>
 </div>
 
 <hr>

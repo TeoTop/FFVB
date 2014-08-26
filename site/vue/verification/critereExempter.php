@@ -45,27 +45,27 @@
 	</div>
 
 	<div class="form-group">
-		<label for="clsCoupe" class="col-md-3" title="<?php echo $manager->aide($aideExempter, 16); ?>">Cls coupe :</label>
+		<label for="clsCoupe" class="col-md-3" title="<?php echo $manager->aide($aideExempter, 12); ?>">Cls coupe :</label>
 		<div class="col-md-3">
-			<select name="clsCoupe" class="form-control cls" id="16">
-				<option value="-1" <?php echo ($manager->selectionnerOption($critereExempter, 16, -1)) ? 'selected' : '' ; ?> >
+			<select name="clsCoupe" class="form-control cls" id="12">
+				<option value="-1" <?php echo ($manager->selectionnerOption($critereExempter, 12, -1)) ? 'selected' : '' ; ?> >
 				</option>
-				<option value="300" <?php echo ($manager->selectionnerOption($critereExempter, 16, 300)) ? 'selected' : '' ; ?> >
+				<option value="300" <?php echo ($manager->selectionnerOption($critereExempter, 12, 300)) ? 'selected' : '' ; ?> >
 					300
 				</option>
-				<option value="500" <?php echo ($manager->selectionnerOption($critereExempter, 16, 500)) ? 'selected' : '' ; ?>>
+				<option value="500" <?php echo ($manager->selectionnerOption($critereExempter, 12, 500)) ? 'selected' : '' ; ?>>
 					500
 				</option>
-				<option value="600" <?php echo ($manager->selectionnerOption($critereExempter, 16, 600)) ? 'selected' : '' ; ?>>
+				<option value="600" <?php echo ($manager->selectionnerOption($critereExempter, 12, 600)) ? 'selected' : '' ; ?>>
 					600
 				</option>
-				<option value="700" <?php echo ($manager->selectionnerOption($critereExempter, 16, 700)) ? 'selected' : '' ; ?>>
+				<option value="700" <?php echo ($manager->selectionnerOption($critereExempter, 12, 700)) ? 'selected' : '' ; ?>>
 					700
 				</option>
-				<option value="800" <?php echo ($manager->selectionnerOption($critereExempter, 16, 800)) ? 'selected' : '' ; ?>>
+				<option value="800" <?php echo ($manager->selectionnerOption($critereExempter, 12, 800)) ? 'selected' : '' ; ?>>
 					800
 				</option>
-				<option value="900" <?php echo ($manager->selectionnerOption($critereExempter, 16, 900)) ? 'selected' : '' ; ?>>
+				<option value="900" <?php echo ($manager->selectionnerOption($critereExempter, 12, 900)) ? 'selected' : '' ; ?>>
 					900
 				</option>
 			</select>

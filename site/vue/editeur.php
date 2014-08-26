@@ -209,6 +209,16 @@
 </div>
 
 
+<!-- Modal permettant d'afficher les poules -->
+<div class="modal fade bs-example-modal-lg" role="dialog" id="modalPoules">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" id="poulesCompletes">
+        <!-- complété avec AJAX -->
+    </div>
+  </div>
+</div>
+
+
 
 <div class="haut">
 
