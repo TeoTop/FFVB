@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 25 Août 2014 à 11:32
+-- Généré le :  Mar 26 Août 2014 à 16:21
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -22,22 +22,6 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS FFVB_GPA;
 USE FFVB_GPA;
 
-
--- --------------------------------------------------------
-
---
--- Structure de la table `classifier`
---
-
-CREATE TABLE IF NOT EXISTS `classifier` (
-  `tour` int(11) NOT NULL,
-  `critere` int(11) NOT NULL,
-  `valeur` int(6) DEFAULT NULL,
-  PRIMARY KEY (`tour`,`critere`),
-  KEY `IDX_3F8005D215ED8D43` (`tour`),
-  KEY `IDX_3F8005D29E5F45AB` (`critere`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -51,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `club` (
   `commite` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `region` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_club`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=16 ;
 
 
 -- --------------------------------------------------------
@@ -82,36 +66,10 @@ CREATE TABLE IF NOT EXISTS `critere` (
   `nom` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `type` enum('domicile','exterieur','exempter') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'domicile',
+  `valeur` int(5) DEFAULT '-1',
   `requete` varchar(350) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_critere`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=22 ;
-
---
--- Contenu de la table `critere`
---
-
-INSERT INTO `critere` (`id_critere`, `nom`, `description`, `type`, `requete`) VALUES
-(1, 'Reçu tour précédent', 'Permet de retirer les équipes qui ont reçu au tour précédent', 'domicile', ' AND `id_equipe` NOT IN ( SELECT `equipe` FROM `jouer` WHERE `distance` IS NULL AND `poule` in ( SELECT `id_poule` FROM `poule` WHERE `tour` = :tourPrcd ) )'),
-(2, 'Club en réception', 'Permet de retirer les équipes appartenant à un club qui reçoit dans une autre catégorie', 'domicile', ' AND `club` NOT IN (SELECT `club` FROM `equipe` JOIN `jouer` ON `id_equipe` = `equipe` WHERE `coupe` IN ( SELECT `coupe` FROM `tour` WHERE `dateTour` = :dateTour) AND `distance` IS NULL)'),
-(3, 'Exempté tour précédent', 'Permet de retirer les équipes ayant été exemptées au tour précédent', 'domicile', ' AND `id_equipe` NOT IN (SELECT `equipe` FROM `exempter` WHERE `tour` = :tourPrcd)'),
-(4, 'Classement CFVB faible', 'Permet de sélectionner les équipes ayant un faible niveau global', 'domicile', ' AND `classementCFVB` <= :clmtCFVB'),
-(5, 'Nombre d''équipes engagées', 'Permet de sélectionner les équipes appartenant à un club qui possède le nombre indiqué, ou plus, d''équipes engagées', 'domicile', ' AND `club` IN (SELECT `club` FROM `equipe` GROUP BY `club` HAVING count(`id_equipe`) >= :nbEquipe)'),
-(6, 'Nombre de réception', 'Permet de retirer les équipes ayant déjà reçu le nombre indiqué de fois ou plus', 'domicile', ' AND `id_equipe` NOT IN (SELECT `equipe` FROM `jouer` WHERE `distance` IS NULL GROUP BY `equipe` HAVING count(`equipe`) >= :nbDomicile )'),
-(7, 'Position tour précédant', 'Permet de sélectionner les équipes qui ont terminé première/seconde au tour précédent', 'exterieur', ' AND `id_equipe` IN (SELECT `equipe` FROM `resultat` WHERE `tour` = :tourPrcd AND `classementPoule` = :position)'),
-(8, 'Classement coupe forte ', 'Permet de sélectionner les équipes ayant un bon niveau pendant cette coupe', 'exterieur', ' AND `classementCoupe` >= :clmtCoupe'),
-(9, 'Affrontement préalable', 'Permet de retirer les équipes qui ont déjà affronté une équipe présente dans la poule', 'exterieur', ' AND `id_equipe` NOT IN (SELECT `equipe` FROM `jouer` WHERE `poule` IN (SELECT `poule` FROM `jouer` WHERE `equipe` = '),
-(10, 'Même département', 'Permet de retirer les équipes qui sont du même département qu''une équipe présente dans la poule', 'exterieur', ' AND `commite` != '),
-(11, 'Distance à parcourir', 'Permet de sélectionner les équipes dont la distance à parcourir pour se rendre chez le receveur est inférieur ou égal à ce qui est indiqué', 'exterieur', ' AND `id_equipe` IN (SELECT `id_equipe` FROM `equipe` JOIN `club` ON `id_club` = `club` WHERE `id_club` IN (SELECT `clubDomicile` FROM `parcourir` WHERE `clubExterieur` = :club AND `distance` <= :distanceClub) OR `id_club` IN (SELECT `clubExterieur` FROM `parcourir` WHERE `clubDomicile` = :club AND `distance` <= :distanceClub))'),
-(12, 'Classement coupe forte ', 'Permet de sélectionner les équipes ayant un bon niveau pendant cette coupe', 'exempter', ' AND `classementCoupe` >= :clmtCoupe'),
-(13, 'Exempter vainqueur', 'Permet d''afficher l''équipe qui a gagné la compétition l''année précédante', 'exempter', ' AND `id_equipe` IN (SELECT `equipe` FROM `coupe` WHERE `age` = :age AND `sexe` = :sexe AND `annee` >= :anneeAnt)'),
-(14, 'Exempter vainqueur inf', 'Permet d''afficher l''équipe qui a gagné la compétition l''année précédante dans la catégorie inférieure', 'exempter', ' AND `id_equipe` IN (SELECT `id_equipe` FROM `equipe` WHERE `club` IN (SELECT `club` FROM `equipe` JOIN `coupe` ON `equipe` = `id_equipe` WHERE `age` = :ageInf AND `sexe` = :sexe AND `annee` >= :anneeAnt))'),
-(15, 'Exempter isolée', 'Permet d''afficher les équipes qui se retrouvent trop isolée, c-à-d les équipes dont la distance à parcourir avec l''équipe la plus proche est supérieur au nombre indiqué', 'exempter', ' AND `id_equipe` IN (SELECT `id_equipe` FROM `equipe` JOIN `club` ON `id_club` = `club` WHERE `id_club` NOT IN (SELECT `clubDomicile` FROM `parcourir` GROUP BY `clubDomicile` HAVING min(`distance`) <= :distanceMin) AND `id_club` NOT IN (SELECT `clubExterieur` FROM `parcourir` GROUP BY `clubExterieur` HAVING min(`distance`) <= :distanceMin))'),
-(16, 'Classement coupe forte', 'Permet de sélectionner les équipes ayant un bon niveau pendant cette coupe', 'domicile', ' AND `classementCoupe` >= :clmtCoupe'),
-(17, 'Distance parcouru', 'Permet d''afficher les équipes qui ont déjà parcouru le nombre de km indiqué ou plus', 'domicile', ' AND `nbKmParcouru` >= :nbKm'),
-(18, 'Classement CFVB faible', 'Permet de sélectionner les équipes ayant un faible niveau global', 'exterieur', ' AND `classementCFVB` <= :clmtCFVB'),
-(19, 'Distance parcouru', 'Permet d''afficher les équipes qui ont déjà parcouru le nombre de km indiqué ou moins', 'exterieur', ' AND `nbKmParcouru` <= :nbKm'),
-(20, 'Classement CFVB forte', 'Permet de sélectionner les équipes ayant un bon niveau global', 'exempter', ' AND `classementCFVB` >= :clmtCFVB'),
-(21, 'Déjà exempté', 'Permet de retirer les équipes qui ont déjà été exemptées, excepté au tour 1', 'exempter', ' AND `id_equipe` NOT IN (SELECT `equipe` FROM `exempter` WHERE `tour` IN (SELECT `id_tour` FROM `tour` WHERE `coupe` = :coupe AND `numero` != 1))');
 
 -- --------------------------------------------------------
 
@@ -146,7 +104,6 @@ CREATE TABLE IF NOT EXISTS `exempter` (
   KEY `IDX_11C75DFF6D861B89` (`equipe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 -- --------------------------------------------------------
 
 --
@@ -161,7 +118,6 @@ CREATE TABLE IF NOT EXISTS `jouer` (
   KEY `IDX_439F75E96D861B89` (`equipe`),
   KEY `IDX_439F75E926596FD8` (`poule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 --
 -- Déclencheurs `jouer`
@@ -203,7 +159,6 @@ CREATE TABLE IF NOT EXISTS `parcourir` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-
 -- --------------------------------------------------------
 
 --
@@ -216,8 +171,7 @@ CREATE TABLE IF NOT EXISTS `poule` (
   `nom` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_poule`),
   KEY `IDX_3BDEC44415ED8D43` (`tour`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -269,7 +223,6 @@ CREATE TABLE IF NOT EXISTS `resultat` (
   KEY `IDX_1EAD3FB415ED8D43` (`tour`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 -- --------------------------------------------------------
 
 --
@@ -285,29 +238,9 @@ CREATE TABLE IF NOT EXISTS `tour` (
   KEY `IDX_CAE35657717D2393` (`coupe`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
 
-
---
--- Déclencheurs `tour`
---
-DROP TRIGGER IF EXISTS `ajout_classifier`;
-DELIMITER //
-CREATE TRIGGER `ajout_classifier` AFTER INSERT ON `tour`
- FOR EACH ROW INSERT INTO classifier(tour,critere,valeur) 
-  SELECT NEW.id_tour, id_critere, -1 FROM critere
-//
-DELIMITER ;
-
-
 --
 -- Contraintes pour les tables exportées
 --
-
---
--- Contraintes pour la table `classifier`
---
-ALTER TABLE `classifier`
-  ADD CONSTRAINT `FK_3F8005D29E5F45AB` FOREIGN KEY (`critere`) REFERENCES `critere` (`id_critere`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_3F8005D215ED8D43` FOREIGN KEY (`tour`) REFERENCES `tour` (`id_tour`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `coupe`

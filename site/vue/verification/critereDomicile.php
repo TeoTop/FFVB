@@ -17,7 +17,7 @@
 */
 
 	$manager = new CritereManager();
-    $aideDomicile = $manager->criteresTypeAll($_SESSION['tour']->id(), 'domicile');
+    $aideDomicile = $manager->criteresTypeAll('domicile');
 
 ?>
 

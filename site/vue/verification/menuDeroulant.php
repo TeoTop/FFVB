@@ -23,11 +23,11 @@
 
 
     $manager = new CritereManager();
-    $critereDomicile = $manager->criteresType($_SESSION['tour']->id(), 'domicile');
+    $critereDomicile = $manager->criteresType('domicile');
 
-    $critereExterieur = $manager->criteresType($_SESSION['tour']->id(), 'exterieur');
+    $critereExterieur = $manager->criteresType('exterieur');
 
-    $critereExempter = $manager->criteresType($_SESSION['tour']->id(), 'exempter');
+    $critereExempter = $manager->criteresType('exempter');
 
         
 

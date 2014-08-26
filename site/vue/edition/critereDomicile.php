@@ -19,8 +19,8 @@
 
 	// on récupère les critères utilsées pour ce tour de coupe et ce type de critère
     $manager = new CritereManager();
-    $critereDomicile = $manager->criteresType($_SESSION['tour']->id(), 'domicile');
-    $aideDomicile = $manager->criteresTypeAll($_SESSION['tour']->id(), 'domicile');
+    $critereDomicile = $manager->criteresType('domicile');
+    $aideDomicile = $manager->criteresTypeAll('domicile');
 
 ?>
 

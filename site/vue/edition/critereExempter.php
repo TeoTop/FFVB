@@ -19,8 +19,8 @@
 
 	// on récupère les critères utilsées pour ce tour de coupe et ce type de critère
     $manager = new CritereManager();
-    $critereExempter = $manager->criteresType($_SESSION['tour']->id(), 'exempter');
-    $aideExempter = $manager->criteresTypeAll($_SESSION['tour']->id(), 'exempter');
+    $critereExempter = $manager->criteresType('exempter');
+    $aideExempter = $manager->criteresTypeAll('exempter');
 ?>
 
 <form class="form-horizontal" role="form" id="exempterForm">

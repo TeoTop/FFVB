@@ -31,50 +31,47 @@ class CritereManager{
 		$this->_db = $db;
 	}
 
-	//permet de récupérer les criteres et leur valeur selon le tour et le type
-	public function criteresType($tour, $type)
+
+	//permet de récupérer les criteres et leur valeur selon le type
+	public function criteresType($type)
 	{
 		$criteres = array();
 
 		//requete SQL, valeur != -1 => critère actif
-		$q = $this->_db->prepare('SELECT `critere`, `valeur`, `requete` FROM `classifier` 
-				JOIN `critere` ON `id_critere` = `critere` 
-				WHERE `type` LIKE :type AND `tour` = :tour AND `valeur` != -1');
+		$q = $this->_db->prepare('SELECT `id_critere`, `valeur`, `requete` FROM `critere` 
+				WHERE `type` LIKE :type AND `valeur` != -1');
 		
 		$q->bindValue(':type', $type, PDO::PARAM_STR);
-		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
 		$q->execute();
 
 
 		//recupération des données et création des objets
 		while($donnee = $q->fetch(PDO::FETCH_ASSOC))
 		{	
-			$criteres[] = new Critere($donnee['critere'], $donnee['valeur'], $donnee['requete']);
+			$criteres[] = new Critere($donnee['id_critere'], $donnee['valeur'], $donnee['requete']);
 		}
 
 		return $criteres;
 	}
 
 
-	//permet de récupérer les criteres et leur valeur selon le tour et le type
-	public function criteresTypeAll($tour, $type)
+	//permet de récupérer les criteres et leur valeur selon le type
+	public function criteresTypeAll($type)
 	{
 		$criteres = array();
 
 		//requete SQL
-		$q = $this->_db->prepare('SELECT `critere`, `description` FROM `classifier` 
-				JOIN `critere` ON `id_critere` = `critere` 
-				WHERE `type` LIKE :type AND `tour` = :tour');
+		$q = $this->_db->prepare('SELECT `id_critere`, `description` FROM `critere` 
+				WHERE `type` LIKE :type');
 		
 		$q->bindValue(':type', $type, PDO::PARAM_STR);
-		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
 		$q->execute();
 
 
 		//recupération des données et création des objets
 		while($donnee = $q->fetch(PDO::FETCH_ASSOC))
 		{	
-			$criteres[] = new Critere($donnee['critere'], $donnee['description']);
+			$criteres[] = new Critere($donnee['id_critere'], $donnee['description']);
 		}
 
 		return $criteres;
@@ -82,13 +79,12 @@ class CritereManager{
 
 
 	//modifie la valeur d'un critere
-	public function modifierCritere($tour, $critere, $valeur)
+	public function modifierCritere($critere, $valeur)
 	{
 		//requete SQL
-		$q = $this->_db->prepare('UPDATE `classifier` SET `valeur`=:valeur WHERE `tour`=:tour AND`critere`=:critere');
+		$q = $this->_db->prepare('UPDATE `critere` SET `valeur`=:valeur WHERE `id_critere` = :critere');
 		
 		$q->bindValue(':valeur', $valeur, PDO::PARAM_INT);
-		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
 		$q->bindValue(':critere', $critere, PDO::PARAM_INT);
 		$q->execute();
 	}

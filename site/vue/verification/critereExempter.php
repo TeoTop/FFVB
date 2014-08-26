@@ -17,7 +17,7 @@
 */
 
 	$manager = new CritereManager();
-    $aideExempter = $manager->criteresTypeAll($_SESSION['tour']->id(), 'exempter');
+    $aideExempter = $manager->criteresTypeAll('exempter');
 ?>
 
 <form class="form-horizontal" role="form" id="exempterForm">

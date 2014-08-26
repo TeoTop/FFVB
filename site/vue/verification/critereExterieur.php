@@ -17,7 +17,7 @@
 */
 
 	$manager = new CritereManager();
-    $aideExterieur = $manager->criteresTypeAll($_SESSION['tour']->id(), 'exterieur');
+    $aideExterieur = $manager->criteresTypeAll('exterieur');
 ?>
 
 <form class="form-horizontal" role="form" id="exterieurForm">

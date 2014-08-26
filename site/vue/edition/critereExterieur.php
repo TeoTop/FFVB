@@ -19,8 +19,8 @@
 
 	// on récupère les critères utilsées pour ce tour de coupe et ce type de critère
     $manager = new CritereManager();
-    $critereExterieur = $manager->criteresType($_SESSION['tour']->id(), 'exterieur');
-    $aideExterieur = $manager->criteresTypeAll($_SESSION['tour']->id(), 'exterieur');
+    $critereExterieur = $manager->criteresType('exterieur');
+    $aideExterieur = $manager->criteresTypeAll('exterieur');
 ?>
 
 <form class="form-horizontal" role="form" id="exterieurForm">

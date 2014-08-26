@@ -38,17 +38,17 @@
     
     if($_SESSION['critere'] == 'domicile'){
 
-    	$critereDomicile = $manager->criteresType($_SESSION['tour']->id(), 'domicile');
+    	$critereDomicile = $manager->criteresType('domicile');
     	include V . 'edition/equipeCritereDomicile.php';
 
 	} else if($_SESSION['critere'] == 'exterieur'){
 
-    	$critereExterieur = $manager->criteresType($_SESSION['tour']->id(), 'exterieur');
+    	$critereExterieur = $manager->criteresType('exterieur');
     	include V . 'edition/equipeCritereExterieur.php';
 
 	} else {
 
-		$critereExempter = $manager->criteresType($_SESSION['tour']->id(), 'exempter');
+		$critereExempter = $manager->criteresType('exempter');
 		include V . 'edition/equipeCritereExempter.php';
 
 	}
