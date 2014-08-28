@@ -33,7 +33,7 @@
 
 	// on modifie le critère en fonction du tour, du critère et de ça valeur
     $manager = new CritereManager();
-	$manager->modifierCritere($_SESSION['tour']->id(), $_POST['critere'], $_POST['valeur']);
+	$manager->modifierCritere($_POST['critere'], $_POST['valeur']);
 	    
 
 ?>

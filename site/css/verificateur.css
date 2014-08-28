@@ -60,6 +60,7 @@
 span {
 	display:block;
 	color: #0000FF;
+	border-bottom: 1px solid black;
 }
 
 input, select, span, tr {
@@ -151,9 +152,7 @@ hr {
 	margin-bottom: 10px !important;
 }
 
-/*width: 925px;*/
-
-.equipe thead{
+.equipe thead, .poule thead{
 	display: block;
 }
 
@@ -163,8 +162,10 @@ hr {
 	overflow: auto;
 }
 
-.equipe tr{
-	height: 50px;
+.poule tbody{
+	display: block;
+	height: 175px;
+	overflow: auto;
 }
 
 .t-equipe{
@@ -195,6 +196,23 @@ hr {
 	width: 91px;
 }
 
+
+/* ================ Indicateur d'erreurs ==================*/
+
+.titreIndic{
+	border: none;
+}
+
+.titreIndic h3{
+	margin-top: 10px;
+	margin-bottom: 20px;
+	color:black;
+	cursor: text;
+}
+
+pre{
+	margin-left: 50px;
+}
 
 
 /* ================ Modaux ==================*/

@@ -2,7 +2,7 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2014
+* Date de money_format(format, number)dification : 06/08/2014
 *
 */
 
@@ -39,19 +39,11 @@
 	</div>
 
 	<div class="form-group">
-		<label for="posPrcd" class="col-md-4" title="<?php echo $manager->aide($aideExterieur, 7); ?>">Position tour prcd :</label>
-		<div class="col-md-2">
-			<select name="posPrcd" class="form-control posPrcd" id="7">
-				<option value="-1" <?php echo ($manager->selectionnerOption($critereExterieur, 7, -1)) ? 'selected' : '' ; ?> >
-				</option>
-				<option value="1" <?php echo ($manager->selectionnerOption($critereExterieur, 7, 1)) ? 'selected' : '' ; ?> >
-					1
-				</option>
-				<option value="2" <?php echo ($manager->selectionnerOption($critereExterieur, 7, 2)) ? 'selected' : '' ; ?> >
-					2
-				</option>
-
-			</select>
+		<div class="col-md-6">
+			<label class="checkbox-inline" title="<?php echo $manager->aide($aideExterieur, 7); ?>">
+				<input type="checkbox" name="posPrcd" id="7" value="true"
+					<?php echo ($manager->selectionner($critereExterieur, 7)) ? 'checked' : '' ; ?> > Position tour prcd
+			</label>
 		</div>
 		
 		<label for="nbKm" class="col-md-3" title="<?php echo $manager->aide($aideExterieur, 19); ?>">Km parcouru :</label>

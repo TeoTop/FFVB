@@ -18,70 +18,77 @@
  
 ///////////////// verification ////////////////////////////
 
-    unset($_SESSION['equipesCritere']);
-    $_SESSION['equipesCritere'] = array();
+    unset($_SESSION['erreurEquipes']);
+    $_SESSION['erreurEquipes'] = array();
 
 
     $manager = new CritereManager();
-    $critereDomicile = $manager->criteresType('domicile');
+    $critereDomicile = $manager->criteresTypeVerif('domicile');
 
-    $critereExterieur = $manager->criteresType('exterieur');
+    $critereExterieur = $manager->criteresTypeVerif('exterieur');
 
-    $critereExempter = $manager->criteresType('exempter');
+    $critereExempter = $manager->criteresTypeVerif('exempter');
 
-        
 
-    $manager = new PouleManager();
-
+    
     // on récupère les équipes qualifiées pour le tour de coupe
     $manager = new EquipeManager();
     $equipes = $manager->equipesTour($_SESSION['tour']->id());
 
 
 
+/////////////// vérification equipe du tour //////////////////////
+
     $nonClasses = $manager->equipeNonClassee($_SESSION['tour']->id());
 
 
 
+/////////////// vérification poule du tour //////////////////////
+
     // echo $manager->verifierDomicile($critereDomicile, $_SESSION['tour']);
-    $_SESSION['equipesCritere'] = array_merge($_SESSION['equipesCritere'],
+    $_SESSION['erreurEquipes'] = array_merge($_SESSION['erreurEquipes'],
         $manager->verifierDomicile($critereDomicile, $_SESSION['tour'])); 
 
 
-    $_SESSION['equipesCritere'] = array_merge($_SESSION['equipesCritere'],
+    $_SESSION['erreurEquipes'] = array_merge($_SESSION['erreurEquipes'],
         $manager->verifierExempter($critereExempter, $_SESSION['tour']));
 
     $exemptees = $manager->equipesExempte($_SESSION['tour']->id()); 
 
-    if(isset($_SESSION['equipesCritere'][' ']) && count($exemptees) == count($_SESSION['equipesCritere'][' '])){
-        $_SESSION['equipesCritere'][' ']['erreur'] = false;
-    } else {
-        $_SESSION['equipesCritere'][' ']['erreur'] = true;
-    }
-    
 
+    if(!isset($_SESSION['erreurEquipes'][' '])) $_SESSION['erreurEquipes'][' '] = array();
+
+
+    if( count($_SESSION['erreurEquipes'][' ']) == 0 ){
+        $_SESSION['erreurEquipes'][' ']['erreur'] = false;
+    } else {
+        $_SESSION['erreurEquipes'][' ']['erreur'] = true;
+    }
+
+    
+    //poules provient soit de verificateur.php, soit la requete AJAX (chargerMenuDeroulant.php)
     foreach ($poules as $key => $poule) {
 
         $equipesPoule = $manager->equipesPoule($poule->id());
 
         if(!empty($equipesPoule)){
 
-            if(!isset($_SESSION['equipesCritere'][' '.$poule->id()])) $_SESSION['equipesCritere'][' '.$poule->id()] = array();
+            if(!isset($_SESSION['erreurEquipes'][' '.$poule->id()])) $_SESSION['erreurEquipes'][' '.$poule->id()] = array();
            
 
-            $_SESSION['equipesCritere'][' '.$poule->id()] = array_merge($_SESSION['equipesCritere'][' '.$poule->id()],
+            $_SESSION['erreurEquipes'][' '.$poule->id()] = array_merge($_SESSION['erreurEquipes'][' '.$poule->id()],
                 $manager->verifierExterieur($critereExterieur, $_SESSION['tour'], $poule->id(), $equipesPoule));
 
 
-            if( count($equipesPoule) == count($_SESSION['equipesCritere'][' '.$poule->id()]) && count($equipesPoule) > 2 ){
-                $_SESSION['equipesCritere'][' '.$poule->id()]['erreur'] = false;
+            if( count($_SESSION['erreurEquipes'][' '.$poule->id()]) == 0 && count($equipesPoule) > 2 ){
+                $_SESSION['erreurEquipes'][' '.$poule->id()]['erreur'] = false;
             } else {
-                $_SESSION['equipesCritere'][' '.$poule->id()]['erreur'] = true;
+                $_SESSION['erreurEquipes'][' '.$poule->id()]['erreur'] = true;
             }
 
         } else {
 
-            $_SESSION['equipesCritere'][' '.$poule->id()]['erreur'] = true;
+            $_SESSION['erreurEquipes'][' '.$poule->id()]['erreur'] = true;
 
         }
     }
@@ -132,12 +139,12 @@
                 <?php
                 
                     echo '<span onclick="chargerPoule(\'\')" '
-                                .( ($_SESSION['equipesCritere'][' ']['erreur']) ? 'style="color:red;"':'' ).'>'.
+                                .( ($_SESSION['erreurEquipes'][' ']['erreur']) ? 'style="color:red;"':'' ).'>'.
                                     'Exemptée</span>';
                 
                     foreach ($poules as $key => $poule) {
                         echo '<span onclick="chargerPoule('.$poule->id().')" '
-                                .( ($_SESSION['equipesCritere'][' '.$poule->id()]['erreur']) ? 'style="color:red;"':'' ).'>'
+                                .( ($_SESSION['erreurEquipes'][' '.$poule->id()]['erreur']) ? 'style="color:red;"':'' ).'>'
                                         .$poule->nom().'</span>';
                     }
                 ?>

@@ -162,7 +162,9 @@ function modifierCritere(id, valeur) {
         success: function(data) {
             chargerMenu();
 
-            chargerPoule($( '#selectPoule' ).val());
+            setTimeout(function(){
+                chargerPoule($( '#selectPoule' ).val());
+            }, 300);
         },
 
         error: function() {

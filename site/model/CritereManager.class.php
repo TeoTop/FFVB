@@ -78,6 +78,29 @@ class CritereManager{
 	}
 
 
+	//permet de récupérer les criteres et leur valeur selon le type
+	public function criteresTypeVerif($type)
+	{
+		$criteres = array();
+
+		//requete SQL, valeur != -1 => critère actif
+		$q = $this->_db->prepare('SELECT `id_critere`, `valeur`, `requeteVerif` FROM `critere` 
+				WHERE `type` LIKE :type AND `valeur` != -1');
+		
+		$q->bindValue(':type', $type, PDO::PARAM_STR);
+		$q->execute();
+
+
+		//recupération des données et création des objets
+		while($donnee = $q->fetch(PDO::FETCH_ASSOC))
+		{	
+			$criteres[] = new Critere($donnee['id_critere'], $donnee['valeur'], $donnee['requeteVerif']);
+		}
+
+		return $criteres;
+	}
+
+
 	//modifie la valeur d'un critere
 	public function modifierCritere($critere, $valeur)
 	{

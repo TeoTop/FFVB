@@ -152,7 +152,6 @@
 
 <!-- pour le javascript -->
 <input type="hidden" id="affCritere" value="<?php echo $_SESSION['critere'] ?>">
-<input type="hidden" id="numeroTour" value="<?php echo $_SESSION['tour']->numero() ?>">
 
 <!-- Modal permettant de signaler la suppression d'une poule non vide -->
 <div class="modal fade" id="supprimerPouleModal" role="dialog">

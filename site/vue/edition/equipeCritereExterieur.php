@@ -31,6 +31,8 @@
             $equipesCritere = $manager->equipesSelonCritere(array(), $_SESSION['tour']);
         }
     }
+
+
     
 ?>
 

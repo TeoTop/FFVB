@@ -263,7 +263,6 @@ function actionAjouterEquipe(equipe_id, chargement) {
     var lignes = $("#tablePoule > tbody > tr").length + 1;
     var critere = $('#affCritere').val();
     var poule = $( '#selectPoule' ).val();
-    var numero = $( '#numeroTour' ).val();
 
     //l'ajout provient des équipes triées
     if(typeof(chargement)==='undefined'){
@@ -275,7 +274,7 @@ function actionAjouterEquipe(equipe_id, chargement) {
                 $( '#informationBody' ).text( "Vous ne pouvez ajouter d'équipe dans la poule éxempté à partir des critères DOMICILE" );
                 $( '#informationModal' ).modal();
             } else {
-                if(numero == 7 || lignes == 1){
+                if(lignes == 1){
                     ajouterEquipe(equipe_id);
                 } else {
                     remplacerEquipe(equipe_id);
@@ -288,15 +287,11 @@ function actionAjouterEquipe(equipe_id, chargement) {
                 $( '#informationBody' ).text( "Vous ne pouvez ajouter d'équipe dans la poule éxempté à partir des critères EXTERIEUR" );
                 $( '#informationModal' ).modal();
             } else {
-                if(numero != 7 && lignes == 5){
+                if(lignes == 5){
                     $( "#informationTitle" ).text( "Poule complète" );
                     $( "#informationBody" ).text( "Une poule ne peut pas contenir plus de quatre equipes." );
                     $('#informationModal').modal();
-                } else if(numero == 7 && lignes == 7){
-                    $( "#informationTitle" ).text( "Poule complète" );
-                    $( "#informationBody" ).text( "Une poule de final ne peut pas contenir plus de six equipes." );
-                    $('#informationModal').modal();
-                } else if (numero != 7 && lignes == 1){
+                } else if (lignes == 1){
                     $( "#informationTitle" ).text( "Poule non domiciliée" );
                     $( "#informationBody" ).text( "Cette poule ne possède pas encore d\'équipe devant jouer à domicile. Veuillez choisir une équipe à partir des critères DOMICILE" );
                     $('#informationModal').modal();
@@ -320,13 +315,9 @@ function actionAjouterEquipe(equipe_id, chargement) {
 
         if(lignes < 5){
             ajouterEquipe(equipe_id);
-        } else if(numero != 7 && lignes == 5){
+        } else {
             $( "#informationTitle" ).text( "Poule complète" );
             $( "#informationBody" ).text( "Une poule ne peut pas contenir plus de quatre equipes." );
-            $('#informationModal').modal();
-        } else if(numero == 7 && lignes == 7){
-            $( "#informationTitle" ).text( "Poule complète" );
-            $( "#informationBody" ).text( "Une poule de final ne peut pas contenir plus de six equipes." );
             $('#informationModal').modal();
         }
     }

@@ -59,6 +59,7 @@
 span {
 	display:block;
 	color: #0000FF;
+	border-bottom: 1px solid black;
 }
 
 input, select, span, tr {
@@ -148,7 +149,6 @@ hr {
 	margin-bottom: 10px !important;
 }
 
-/*width: 925px;*/
 
 .equipe thead, .poule thead{
 	display: block;
@@ -245,7 +245,9 @@ hr {
 	text-decoration: none;
 	cursor: text;
 	margin: 10px;
+	border: none;
 }
+
 
 .pouleAffiche h3{
 	margin-top: 0px;

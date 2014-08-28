@@ -110,9 +110,7 @@
                 timeout: 3000,
                 
                 success: function(json) {
-                    if(json.reponse){
-                        $("#" + categorie).css("background-color", "red");
-                    };
+                        $("#" + categorie).css("background-color", json.reponse);
                 },
 
                 error: function() {

@@ -115,15 +115,9 @@
 
     //récupération de la poule à afficher, si il n'y en a pas, on affiche la poule exempté
     if(!isset($_SESSION['poule']) || $change){
-        if(!empty($poules)){
-
-            $_SESSION['poule'] = reset($poules);
-
-        } else {
 
             $_SESSION['poule'] = '';
 
-        }
     }
 
 
@@ -166,6 +160,7 @@
         
         <div class="critere">
         	<?php
+                //var_dump($equipes);
                 include V . 'verification/criteres.php';
             ?>
         </div>
@@ -179,8 +174,8 @@
     ?>
 </div>
 
-<!--<div class="indicateur" id="indicateur">
+<div class="indicateur" id="indicateur">
     <?php
-        //include V . 'verification/indicateur.php';
+        include V . 'verification/indicateur.php';
     ?>
-</div>-->
+</div>
