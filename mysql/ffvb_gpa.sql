@@ -215,21 +215,6 @@ CREATE TABLE IF NOT EXISTS `poulesupprimer` (
   PRIMARY KEY (`id_poule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `recevoir`
---
-
-CREATE TABLE IF NOT EXISTS `recevoir` (
-  `club` int(11) NOT NULL,
-  `equipe` int(11) NOT NULL,
-  `tour` int(11) NOT NULL,
-  PRIMARY KEY (`club`,`equipe`,`tour`),
-  KEY `IDX_73F67EFA61190A32` (`club`),
-  KEY `IDX_73F67EFA6D861B89` (`equipe`),
-  KEY `IDX_73F67EFA15ED8D43` (`tour`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
