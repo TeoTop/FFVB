@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 18/08/2014
 *
 **/
 
@@ -32,7 +31,7 @@
 	// ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
 	session_start();
 
-	// on récupère les poules du tour de coupe
+	// on récupère les poules du tour de coupe, les équipes et les exemptés
     $manager = new PouleManager();
     $poules = $manager->poules($_SESSION['tour']->id());
 

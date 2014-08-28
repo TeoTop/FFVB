@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2013
 *
 **/
 
@@ -37,10 +36,12 @@
 
 	$manager = new EquipeManager();
 	
+	// si c'est une poule, on récupère les équipes déjà présente
     if($_SESSION['poule'] != ''){
         $equipesPoule = $manager->equipesPoule($_SESSION['poule']->id());
     }
 
+    // si elle possède une équipe évoluant à domicile, on récupère la distance avec l'équipe à ajouter
     if(!empty($equipesPoule)){
     	$distance = $manager->recupererDistance($equipesPoule[0]->club()->id(), $_POST['equipe']);
     }
@@ -48,6 +49,7 @@
 
 	$manager = new PouleManager();
 
+	// si c'est une poule
 	if($_SESSION['poule'] != ''){
 		
 		// on ajoute l'équipe à la poule

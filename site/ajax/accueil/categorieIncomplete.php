@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 14/08/2014
 *
 **/
 
@@ -11,7 +10,7 @@
 * Information sur la page :
 * Nom : categorieIncomplete.php
 * Chemin abs : site/ajax/accueil
-* Information : page permettant de modifier la valeur d'un critère
+* Information : page permettant de vérifier les poules de chaque catégorie
 *
 **/
 
@@ -31,7 +30,6 @@
 	//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
 	session_start();
 
-	// on modifie le critère en fonction du tour, du critère et de ça valeur
     // on modifie le critère en fonction du tour, du critère et de ça valeur
     $manager = new EquipeManager();
 	$equipesNonClassees = $manager->equipeNonClassee($_POST['categorie']);
@@ -46,8 +44,8 @@
 
     $exemptees = $manager->equipesExempte($_POST['categorie']); 
 
-
-	$nbEquipe = count($equipes);
+    // on récupère le nombre d'équipe, de poule et d'exempté	
+    $nbEquipe = count($equipes);
     $nbPouleCree = count($poules);
     $nbExempteCree = count($exemptees);
 
@@ -55,6 +53,8 @@
     $nbPouleNecessaire = 0;
     $repeche = 0;
 
+
+    // on récupère le nombre nécessaire d'équipe et de poule en fonction du nombre d'équipe présente
     if($nbEquipe <= 8){
         $nbEquipeNecessaire = 6;
     } 
@@ -96,12 +96,14 @@
     $nbPoule4 = 0;
     $nbExempte = 0;
 
+    // on regarde si aucune équipe n'a été classée
 	if(count($equipesNonClassees) == $nbEquipe){
 		echo json_encode(['reponse' => "red"]);
 	} else {
 
 		$verifExempte = false;
 
+        // si le nombre d'équipe est inférieur au nombre d'équipe nécessaire, on calcule le nombre d'exempté
 		if( $nbEquipe < $nbEquipeNecessaire ){
 	        
 	        $nbExempte = (($nbEquipeNecessaire - $nbEquipe) * 2);
@@ -117,6 +119,7 @@
 	    
 	    } 
 
+        // si le nombre de poule, d'éxempté ou d'équipe qui ne sont pas classées n'est pas bon
 	    $verifPoule = $nbPoule - $nbPouleCree;
         if( $verifPoule != 0 || $verifExempte || count($equipesNonClassees) != 0 ){
         	echo json_encode(['reponse' => "orange"]);

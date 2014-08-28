@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2014
 *
 */
 
@@ -13,6 +12,8 @@
 * Chemin abs : site\vue\verification
 * Information : page permettant d'afficher l'éditeur de poule sans pouvoir faire de modification
 *
+* TOUTES LES VARIABLES $coupes, $tours, $poules ET VARIABLES DE SESSION SONT CHARGEES SOIT DEPUIS editeur.php SOIT DEPUIS
+* LA REQUETE AJAX PERMETTANT DE LE RECHARGEMENT DE CETTE PAGE (charger'Page'.php)
 *
 */
 ?>
@@ -22,6 +23,7 @@
     $equipesPoule = array();
     $manager = new EquipeManager();
 
+    // on regarde si l'on doit afficher une poule ou les exemptés 
     if($_SESSION['poule'] != ''){
         $equipesPoule = $manager->equipesPoule($_SESSION['poule']->id());
     } else {
@@ -54,42 +56,44 @@
 <hr>
 
 <table class="table table-striped" id="tablePoule">
-<thead>
-<tr>
-<th class="t-equipe">Equipe</th>
-<th class="t-lieu">Lieu/Distance</th>
-<th class="t-commite">Commité</th>
-<th class="t-region">Region</th>
-<th class="t-km">Km</th>
-<th class="t-coupe">CFVB</th>
-<th class="t-cfvb">Coupe</th>
-</tr>
-</thead>
-<tbody>
-    <?php
-        foreach ($equipesPoule as $key => $equipe) {
-            $poule = '';
-            if($_SESSION['poule'] != ''){
-                $poule = $_SESSION['poule']->id();
+    <thead>
+        <tr>
+            <th class="t-equipe">Equipe</th>
+            <th class="t-lieu">Lieu/Distance</th>
+            <th class="t-commite">Commité</th>
+            <th class="t-region">Region</th>
+            <th class="t-km">Km</th>
+            <th class="t-coupe">CFVB</th>
+            <th class="t-cfvb">Coupe</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+            foreach ($equipesPoule as $key => $equipe) {
+                $poule = '';
+
+                // on charge l'id de la poule si elle est en session
+                if($_SESSION['poule'] != ''){
+                    $poule = $_SESSION['poule']->id();
+                }
+
+                // on affiche en rouge les équipes présentes dans le tableau d'erreurs
+                if( isset($_SESSION['erreurEquipes'][' '.$poule][' '.$equipe->id()]) ){
+                    echo '<tr style="color:red">';
+                } else {
+                    echo '<tr>';
+                }
+
+                echo'
+                    <td class="t-equipe">'.$equipe->club()->nom().'</td>
+                    <td class="t-lieu">'.$equipe->club()->ville().'</td>
+                    <td class="t-commite">'.$equipe->club()->commite().'</td>
+                    <td class="t-region">'.$equipe->club()->region().'</td>
+                    <td align="center" class="t-km">'.$equipe->nbKmParcouru().'</td>
+                    <td align="center" class="t-coupe">'.$equipe->classementCFVB().'</td>
+                    <td align="center" class="t-cfvb">'.$equipe->classementCoupe().'</td>
+                </tr>';
             }
-
-
-            if( isset($_SESSION['erreurEquipes'][' '.$poule][' '.$equipe->id()]) ){
-                echo '<tr style="color:red">';
-            } else {
-                echo '<tr>';
-            }
-
-            echo'
-                <td class="t-equipe">'.$equipe->club()->nom().'</td>
-                <td class="t-lieu">'.$equipe->club()->ville().'</td>
-                <td class="t-commite">'.$equipe->club()->commite().'</td>
-                <td class="t-region">'.$equipe->club()->region().'</td>
-                <td align="center" class="t-km">'.$equipe->nbKmParcouru().'</td>
-                <td align="center" class="t-coupe">'.$equipe->classementCFVB().'</td>
-                <td align="center" class="t-cfvb">'.$equipe->classementCoupe().'</td>
-            </tr>';
-        }
-    ?>
-</tbody>
+        ?>
+    </tbody>
 </table>

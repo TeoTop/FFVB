@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 08/08/2013
 *
 **/
 
@@ -11,7 +10,7 @@
 * Information sur la page :
 * Nom : creerPoule.php
 * Chemin abs : siteajax
-* Information : page permttant de creer une poule à 
+* Information : page permttant de creer une poule 
 *
 **/
 

@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2014
 *
 */
 
@@ -11,14 +10,18 @@
 * Information sur la page :
 * Nom : critereDomicile.php
 * Chemin abs : site\vue\verification
-* Information : page permettant d'afficher les critères pour sélectionner l'équipe qui va jouer à domicile
+* Information : page permettant d'afficher les critères pour vérifier les équipes évoluant à domicile
 *
+* TOUTES LES VARIABLES $coupes, $tours, $poules ET VARIABLES DE SESSION SONT CHARGEES SOIT DEPUIS editeur.php SOIT DEPUIS
+* LA REQUETE AJAX PERMETTANT DE LE RECHARGEMENT DE CETTE PAGE (charger'Page'.php)
 *
 */
-
+	
+	//on récupère l'aide pour les critères
 	$manager = new CritereManager();
     $aideDomicile = $manager->criteresTypeAll('domicile');
 
+    // pour chaque critère, on vérifie si il est sélectionné
 ?>
 
 <form class="form-horizontal" role="form" id="domicileForm">

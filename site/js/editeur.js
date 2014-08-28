@@ -1,7 +1,6 @@
 /**
 *
 * Créer par : CHAPON Théo
-* Date de modification : 09/08/2013
 *
 **/
 
@@ -47,6 +46,7 @@ $('#content').on('change', '#selectTour', function() {
 
 
 //cette fonction est activé lorsque l'on clique sur un poule située dans le menu déroulant (onclick="chargerEditionPoule(poule_id)")
+//fonction permettant de recharger le contenue de l'éditeur de poule et les équipes classées
 function chargerPoule(poule_id) {
     
     $('#poule').load('site/ajax/edition/chargerEditionPoule.php', { poule: poule_id });
@@ -108,7 +108,7 @@ function changerMenu(type) {
 /********************* Editeur de poule *******************************/
 
 
-//fonction permettant de recharger la page si une poule est sélectionnée
+//fonction permettant de recharger l'éditeur de poule et les équipes classées si une poule est sélectionnée
 $('#content').on('change', '#selectPoule', function() {
 
     chargerPoule($( '#selectPoule' ).val());
@@ -209,7 +209,7 @@ function changerCriteres(type) {
 
 
 
-// fonction permattant de modifier la valeur d'un critere
+// fonction permettant de modifier la valeur d'un critere
 function modifierCritere(id, valeur) {
     // requete HTML à partir d'AJAX : method post vers la page php modifierCritere situé dans le dossier ajax.
     $.ajax({
@@ -323,7 +323,7 @@ function actionAjouterEquipe(equipe_id, chargement) {
     }
 }
 
-//permet d'ajouter une équipe à une poule ou à la catégorie exempté
+//permet d'ajouter une équipe à une poule ou à la catégorie exemptée
 function ajouterEquipe(equipe_id){
 
     // requete HTML à partir d'AJAX : method post vers la page php ajouterEquipe situé dans le dossier ajax.

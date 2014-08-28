@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -13,6 +12,8 @@
 * Chemin abs : site\vue\
 * Information : page permettant d'afficher les critères pour sélectionner les équipes qui seront exemptées
 *
+* TOUTES LES VARIABLES $coupes, $tours, $poules ET VARIABLES DE SESSION SONT CHARGEES SOIT DEPUIS editeur.php SOIT DEPUIS
+* LA REQUETE AJAX PERMETTANT DE LE RECHARGEMENT DE CETTE PAGE (charger'Page'.php)
 *
 */
 
@@ -21,6 +22,8 @@
     $manager = new CritereManager();
     $critereExempter = $manager->criteresType('exempter');
     $aideExempter = $manager->criteresTypeAll('exempter');
+
+    //pour chaque critère, on regarde si celui-ci est sélectionné
 ?>
 
 <form class="form-horizontal" role="form" id="exempterForm">

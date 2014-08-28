@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 12/08/2013
 *
 */
 
@@ -32,7 +31,9 @@ class CritereManager{
 	}
 
 
-	//permet de récupérer les criteres et leur valeur selon le type
+
+	//permet de récupérer les criteres et leur valeur selon le type si ceux-ci sont sélectionnés
+	//utilisé pour l'édition (retourne requete)
 	public function criteresType($type)
 	{
 		$criteres = array();
@@ -55,7 +56,8 @@ class CritereManager{
 	}
 
 
-	//permet de récupérer les criteres et leur valeur selon le type
+
+	//permet de récupérer TOUS les criteres et leur valeur selon le type
 	public function criteresTypeAll($type)
 	{
 		$criteres = array();
@@ -78,7 +80,9 @@ class CritereManager{
 	}
 
 
-	//permet de récupérer les criteres et leur valeur selon le type
+
+	//permet de récupérer les criteres et leur valeur selon le type si ceux-ci sont sélectionnés 
+	//utilisé pour la vérification (retourne requeteVerif)
 	public function criteresTypeVerif($type)
 	{
 		$criteres = array();
@@ -101,6 +105,7 @@ class CritereManager{
 	}
 
 
+
 	//modifie la valeur d'un critere
 	public function modifierCritere($critere, $valeur)
 	{
@@ -113,6 +118,8 @@ class CritereManager{
 	}
 
 
+
+	// permet de savoir si un critère est sélectionné
 	public function selectionner($criteres, $id)
 	{
 		foreach ($criteres as $key => $critere) {
@@ -124,6 +131,9 @@ class CritereManager{
 		return false;
 	}
 
+
+
+	// permet de savoir si le critère est sélectionné et quelle sa valeur
 	public function selectionnerOption($criteres, $id, $value)
 	{
 		foreach ($criteres as $key => $critere) {
@@ -136,6 +146,7 @@ class CritereManager{
 	}
 
 
+	// permet d'afficher l'aide correspondant au critère
 	public function aide($criteres, $id)
 	{
 		foreach ($criteres as $key => $critere) {

@@ -3,7 +3,6 @@
 /**
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2014
 *
 **/
 
@@ -17,10 +16,12 @@
 *
 **/
 
+//on ouvre une connexion à la base
 function ouvre_base() {
 	
 	$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 	try{
+		// à modifier selon la base utilisée
 		$bdd = new PDO('mysql:host=localhost;dbname=ffvb_gpa', 'root', '', $pdo_options);
 	}
 	catch(PDOException $e)
@@ -32,7 +33,7 @@ function ouvre_base() {
 	return $bdd;
 }
 
-
+//si on a besoin de redéfinir un tableau avec 0 comme index de départ
 function reArrayFiles(&$file_post) {
 
 	$file_ary = array();

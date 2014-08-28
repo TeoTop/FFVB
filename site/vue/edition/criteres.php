@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -13,10 +12,12 @@
 * Chemin abs : site\vue\
 * Information : page permettant de gérer l'affichage des critères
 *
+* TOUTES LES VARIABLES $coupes, $tours, $poules ET VARIABLES DE SESSION SONT CHARGEES SOIT DEPUIS editeur.php SOIT DEPUIS
+* LA REQUETE AJAX PERMETTANT DE LE RECHARGEMENT DE CETTE PAGE (charger'Page'.php)
 *
 */
 
-
+//l'affichage des critères est placé en SESSION afin que celui si puisse passé d'une page à l'autre
 ?>
 
 <!-- Nav tabs -->

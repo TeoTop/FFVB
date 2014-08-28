@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2014
 *
 **/
 
@@ -11,7 +10,7 @@
 * Information sur la page :
 * Nom : changerCriteres.php
 * Chemin abs : site/ajax/verification
-* Information : page permettant de recharger la partie critère de l'affichage à partir du critère passé en POST
+* Information : page permettant de modifier l'affichage de type de critères
 *
 **/
 

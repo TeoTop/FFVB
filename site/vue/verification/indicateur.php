@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2014
 *
 */
 
@@ -11,13 +10,16 @@
 * Information sur la page :
 * Nom : indicateur.php
 * Chemin abs : site\vue\verification
-* Information : page permettant d'afficher les erreurs de compostion de poule en fonction des critères utilisés
+* Information : page permettant d'afficher les erreurs de composition de poule en fonction des critères utilisés
 *
+* TOUTES LES VARIABLES $coupes, $tours, $poules ET VARIABLES DE SESSION SONT CHARGEES SOIT DEPUIS editeur.php SOIT DEPUIS
+* LA REQUETE AJAX PERMETTANT DE LE RECHARGEMENT DE CETTE PAGE (charger'Page'.php)
 *
 */
 
 //////////////// vérification général /////////////////
 
+    // on récupère le nombre d'équipe, de poule et d'exempté
     $nbEquipe = count($equipes);
     $nbPouleCree = count($poules);
     $nbExempteCree = count($exemptees);
@@ -26,6 +28,8 @@
     $nbPouleNecessaire = 0;
     $repeche = 0;
 
+
+    // on récupère le nombre nécessaire d'équipe et de poule en fonction du nombre d'équipe présente
     if($nbEquipe <= 8){
         $nbEquipeNecessaire = 6;
     } 
@@ -67,6 +71,8 @@
     $nbPoule4 = 0;
     $nbExempte = 0;
 
+    // si on a moins d'équipe que prévu, on calcule de le nombre d'exemptés et de poules nécessaire pour être bon au
+    // prochain tour
     if( $nbEquipe < $nbEquipeNecessaire ){
         $nbExempte = (($nbEquipeNecessaire - $nbEquipe) * 2);
         $nbPoule = ($nbEquipe - $nbExempte) / 3;
@@ -81,6 +87,8 @@
         }
     
     }
+    // si on a plus d'équipe que prévu, on calcule de le nombre de poules de 4 pour être bon au
+    // prochain tour
     else if( $nbEquipe > $nbEquipeNecessaire ){
 
         $nbPoule4 = $nbEquipe - $nbEquipeNecessaire;
@@ -93,7 +101,7 @@
 
     }
 
-
+    // on vérifie si le nombre de poules et d'équipes exemptées créées par rapport aux besoins pour ce tour
     $verifPoule = $nbPoule - $nbPouleCree;
     if( $verifPoule < 0 ){
     	$general = $general . "<pre>- Il y a <b>".$verifPoule." poule(s)</b> créée(s) en trop.</pre>\n";
@@ -107,11 +115,13 @@
 <div id="text">
 
 <?php
+// si on affiche les exemptés, alors on montre les erreurs sur les exemptés et de manière général
 if($_SESSION['poule'] == ''){
     echo "<span class=\"titreIndic\"><h3> &nbsp&nbsp Critères généraux : </h3></span>\n";
     echo $general;
     echo "<br/><span class=\"titreIndic\"><h3> &nbsp&nbsp Critères exemptés : </h3></span>\n";
     
+    // on boucle sur le tableau d'erreur pour afficher les erreurs correspondantes
     foreach ($_SESSION['erreurEquipes'][' '] as $keyE => $equipe) {
     	
     	if($keyE != 'erreur'){
@@ -132,8 +142,10 @@ if($_SESSION['poule'] == ''){
     }
     
 } else {
+    // si on affiche une poule, alors on montre les erreurs de la poule
     echo "<span class=\"titreIndic\"><h3> &nbsp&nbsp Critères domiciles : </h3></span>\n";
     
+    // on boucle sur le tableau d'erreur pour afficher les erreurs correspondantes
     foreach ($_SESSION['erreurEquipes'][' '.$_SESSION['poule']->id()] as $keyE => $equipe) {
     	
     	if($keyE != 'erreur'){
@@ -157,6 +169,7 @@ if($_SESSION['poule'] == ''){
 
     echo "<br/><span class=\"titreIndic\"><h3> &nbsp&nbsp Critères exterieurs : </h3></span>\n";
     
+    // on boucle sur le tableau d'erreur pour afficher les erreurs correspondantes
     foreach ($_SESSION['erreurEquipes'][' '.$_SESSION['poule']->id()] as $keyE => $equipe) {
     	
     	if($keyE != 'erreur'){

@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -89,6 +88,7 @@ class Critere{
 	}
 
 
+	//renvoie true si l'id et la valeur correpondent aux paramètres
 	public function comparer($id, $value)
 	{
 		if($this->_id == $id && $this->_valeur == $value){

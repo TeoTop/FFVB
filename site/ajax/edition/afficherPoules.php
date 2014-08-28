@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 22/08/2013
 *
 **/
 
@@ -11,7 +10,7 @@
 * Information sur la page :
 * Nom : afficherPoules.php
 * Chemin abs : site/ajax
-* Information : page permettant de recharger le modal des poules
+* Information : page permettant de charger le modal des poules générales
 *
 **/
 
@@ -31,10 +30,11 @@
 	//ouverture d'un session ATTENTION : le session start DOIT être placé APRES le chargement des classes
 	session_start();
 
-
+    // on récupères toutes les équipes dans les poules
 	$manager = new EquipeManager();
 	$equipesPoules = $manager->equipesPoules($_SESSION['tour']->id());
 
+    //on récupère les exemptés
 	$equipesExemptees = $manager->equipesExemptesNom($_SESSION['tour']->id());
 
 
@@ -51,8 +51,7 @@ echo '</h2>
 
     $loop = 0;
 
-    //on affiche les catégories, si un des bouttons d'une catégorie est utilisé, 2 nouveaux paramètres sont passés en GET :
-    // c->coupe et t->tour
+    //on affiche les poules et leurs équipes :
     foreach ($equipesPoules as $key => $poule) {
 
         if( $loop%2 == 0 ) echo '<tr>';
@@ -75,6 +74,8 @@ echo '</h2>
     }
 
     $loop = 1;
+
+    //on affiche les exemptés
 
     echo '<tr><td colspan="2">';
 

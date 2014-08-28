@@ -3,7 +3,6 @@
 /**
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2014
 *
 **/
 
@@ -11,11 +10,13 @@
 *
 * Information sur la page :
 * Nom : index.php
-* Chemin abs : site\
+* Chemin abs : 
 * Information : page permettant la génération du code correspondant à l'adresse demandé dans le navigateur
 **/
 
-ini_set('display_errors', 'on');
+//pour le développement
+//ini_set('display_errors', 'on');
+
 // définition des constantes permettant de naviguer vers un dossier
 // (utile la création de chemin d'accées vers un fichier)
 define('C', 'site/controleur/');	
@@ -36,6 +37,7 @@ error_reporting(-1);
 		<meta http-equiv="Content-Language" content="fr">
 	    <title>FFVB - Coupe de France Jeune</title>
 	    
+	    <!-- On charge les fichiers CSS et JS nécessaire -->
 	    <link href="site/css/main.css" rel="stylesheet">
 	    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	    <link rel="stylesheet" href="site/css/theme.bootstrap.css">

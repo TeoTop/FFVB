@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2013
 *
 **/
 
@@ -11,7 +10,7 @@
 * Information sur la page :
 * Nom : chargerEditeur.php
 * Chemin abs : site/ajax
-* Information : page permettant de recharger le contenue de la page à partir de la coupe et du tour passés en POST
+* Information : page permettant de recharger le contenue de la page editeur
 *
 **/
 

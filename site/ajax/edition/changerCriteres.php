@@ -11,7 +11,7 @@
 * Information sur la page :
 * Nom : changerCriteres.php
 * Chemin abs : site/ajax
-* Information : page permettant de recharger la partie critère de l'affichage à partir du critère passé en POST
+* Information : page permettant de modifier la valeur du type des critères à afficher en SESSION
 *
 **/
 

@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -98,7 +97,7 @@ class Coupe{
 	}
 
 
-	//cette fonction true si l'id correspond
+	//cette fonction renvoie true si l'id correspond
 	public function memeId(Coupe $coupe){
 		return ($this->_id == $coupe->_id) ? true : false;
 	}

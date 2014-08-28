@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2013
 *
 **/
 
@@ -11,7 +10,7 @@
 * Information sur la page :
 * Nom : changerMenu.php
 * Chemin abs : site/ajax
-* Information : page permettant de recharger la partie menu déroulant
+* Information : page permettant de modifier la position du menu en SESSION
 *
 **/
 
