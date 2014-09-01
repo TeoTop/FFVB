@@ -28,7 +28,7 @@
     </li>
 
 	<li <?php echo ($_SESSION['critere']=='exterieur') ? 'class="active"':''; ?> onclick="changerCriteres('exterieur')">
-        <a href="#exterieur" role="tab" data-toggle="tab">Exterieur</a>
+        <a href="#exterieur" role="tab" data-toggle="tab">Extérieur</a>
     </li>
 
 	<li <?php echo ($_SESSION['critere']=='exempter') ? 'class="active"':''; ?> onclick="changerCriteres('exempter')">

@@ -167,7 +167,7 @@ if($_SESSION['poule'] == ''){
     }
 
 
-    echo "<br/><span class=\"titreIndic\"><h3> &nbsp&nbsp Critères exterieurs : </h3></span>\n";
+    echo "<br/><span class=\"titreIndic\"><h3> &nbsp&nbsp Critères extérieurs : </h3></span>\n";
     
     // on boucle sur le tableau d'erreur pour afficher les erreurs correspondantes
     foreach ($_SESSION['erreurEquipes'][' '.$_SESSION['poule']->id()] as $keyE => $equipe) {

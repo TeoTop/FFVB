@@ -209,6 +209,28 @@ function changerCriteres(type) {
 
 
 
+//cette fonction est activé lorsque l'on clique la chackbox inverser critères
+function inverserCriteres() {
+    
+    $.ajax({
+        type: 'POST',
+        url: 'site/ajax/edition/inverserCriteres.php',
+        timeout: 3000,
+        
+        success: function(data) {
+            setTimeout(function(){
+                $('#equipe').load('site/ajax/edition/chargerEquipesCritere.php');
+            }, 300);
+        },
+
+        error: function() {
+            console.log('La requête de modification de critère n\'a pas abouti'); 
+        },
+    });
+}
+
+
+
 // fonction permettant de modifier la valeur d'un critere
 function modifierCritere(id, valeur) {
     // requete HTML à partir d'AJAX : method post vers la page php modifierCritere situé dans le dossier ajax.
@@ -235,6 +257,8 @@ function modifierCritere(id, valeur) {
 $('#content').on('change', '.form-horizontal :checkbox', function(e) {
 
     var valeur;
+
+    console.log('test');
 
     ($("#" + e.target.id).is(":checked")) ? valeur = 1 : valeur = -1; 
 

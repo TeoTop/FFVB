@@ -19,7 +19,7 @@
 	
 	//on récupère l'aide pour les critères
 	$manager = new CritereManager();
-    $aideDomicile = $manager->criteresTypeAll('exempter');
+    $aideExempter = $manager->criteresTypeAll('exempter');
 
     // pour chaque critère, on vérifie si il est sélectionné
 ?>

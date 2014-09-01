@@ -34,13 +34,23 @@ class CritereManager{
 
 	//permet de récupérer les criteres et leur valeur selon le type si ceux-ci sont sélectionnés
 	//utilisé pour l'édition (retourne requete)
-	public function criteresType($type)
+	public function criteresType($type, $inverser)
 	{
 		$criteres = array();
 
 		//requete SQL, valeur != -1 => critère actif
-		$q = $this->_db->prepare('SELECT `id_critere`, `valeur`, `requete` FROM `critere` 
+		if($inverser){
+			//on orend les requetes inversées
+			$q = $this->_db->prepare('SELECT `id_critere`, `valeur`, `requeteInv` as `requete` FROM `critere` 
 				WHERE `type` LIKE :type AND `valeur` != -1');
+
+		} else {
+			//on prend les requetes normales
+			$q = $this->_db->prepare('SELECT `id_critere`, `valeur`, `requete` FROM `critere` 
+				WHERE `type` LIKE :type AND `valeur` != -1');
+
+		}
+
 		
 		$q->bindValue(':type', $type, PDO::PARAM_STR);
 		$q->execute();

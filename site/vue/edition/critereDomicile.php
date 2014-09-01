@@ -20,7 +20,7 @@
 
 	// on récupère les critères utilsées pour ce tour de coupe et ce type de critère
     $manager = new CritereManager();
-    $critereDomicile = $manager->criteresType('domicile');
+    $critereDomicile = $manager->criteresType('domicile', $_SESSION['inverser']);
     $aideDomicile = $manager->criteresTypeAll('domicile');
 
 

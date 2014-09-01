@@ -20,7 +20,7 @@
 
 	// on récupère les critères utilsées pour ce tour de coupe et ce type de critère
     $manager = new CritereManager();
-    $critereExterieur = $manager->criteresType('exterieur');
+    $critereExterieur = $manager->criteresType('exterieur', $_SESSION['inverser']);
     $aideExterieur = $manager->criteresTypeAll('exterieur');
 
 

@@ -20,7 +20,7 @@
 
 	// on récupère les critères utilsées pour ce tour de coupe et ce type de critère
     $manager = new CritereManager();
-    $critereExempter = $manager->criteresType('exempter');
+    $critereExempter = $manager->criteresType('exempter', $_SESSION['inverser']);
     $aideExempter = $manager->criteresTypeAll('exempter');
 
     //pour chaque critère, on regarde si celui-ci est sélectionné

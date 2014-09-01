@@ -28,12 +28,17 @@
     </li>
 
 	<li <?php echo ($_SESSION['critere']=='exterieur') ? 'class="active"':''; ?> onclick="changerCriteres('exterieur')">
-        <a href="#exterieur" role="tab" data-toggle="tab">Exterieur</a>
+        <a href="#exterieur" role="tab" data-toggle="tab">Extérieur</a>
     </li>
 
 	<li <?php echo ($_SESSION['critere']=='exempter') ? 'class="active"':''; ?> onclick="changerCriteres('exempter')">
         <a href="#exempter" role="tab" data-toggle="tab">Exempter</a>
     </li>
+
+    <label class="checkbox-inline inverseur" title="Permet d'inverser la sélection des critères.">
+        <input type="checkbox" name="inverseur" value="true" onclick="inverserCriteres()"
+            <?php echo ($_SESSION['inverser']) ? 'checked' : '' ; ?> > Inverser critères
+    </label>
 
 </ul>
 

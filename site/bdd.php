@@ -21,8 +21,11 @@ function ouvre_base() {
 	
 	$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 	try{
-		// à modifier selon la base utilisée
+		// base de données en localhost
 		$bdd = new PDO('mysql:host=localhost;dbname=ffvb_gpa', 'root', '', $pdo_options);
+
+		// base de données sur serveur (à modifier et décommenter selon les cas)
+		//$bdd = new PDO('mysql:host=--ADRESSE_HOTE--;dbname=ffvb_gpa', '--USERNAME--', '--PASSWORD--', $pdo_options);
 	}
 	catch(PDOException $e)
 	{

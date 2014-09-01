@@ -141,6 +141,12 @@
     }
 
 
+    //permet de savoir s'il faut inverser les critères
+    if(!isset($_SESSION['inverser'])){
+        $_SESSION['inverser'] = false;
+    }
+
+
 
     //récupération de l'affichage au niveau du menu déroulant
     if(!isset($_SESSION['liste'])){

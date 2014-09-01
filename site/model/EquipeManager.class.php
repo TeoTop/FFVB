@@ -194,7 +194,7 @@ class EquipeManager{
 			}
 			if ($critere->id() == 6){
 				$q->bindValue(':nbDomicile', $critere->valeur(), PDO::PARAM_INT);
-				$q->bindValue(':annee', $tour->coupe()->annee(), PDO::PARAM_INT);
+				$q->bindValue(':idCoupe', $tour->coupe()->id(), PDO::PARAM_INT);
 			}
 			if ($critere->id() == 12 || $critere->id() == 16) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 13){
@@ -537,12 +537,12 @@ class EquipeManager{
 			if ($critere->id() == 4) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 5){
 				$q->bindValue(':nbEquipe', $critere->valeur(), PDO::PARAM_INT);
-				$q->bindValue(':tour', $tour->id(), PDO::PARAM_INT);
 				$q->bindValue(':annee', $tour->coupe()->annee(), PDO::PARAM_INT);
 			}
 			if ($critere->id() == 6){
 				$q->bindValue(':nbDomicile', $critere->valeur(), PDO::PARAM_INT);
-				$q->bindValue(':annee', $tour->coupe()->annee(), PDO::PARAM_INT);
+				$q->bindValue(':tour', $tour->id(), PDO::PARAM_INT);
+				$q->bindValue(':idCoupe', $tour->coupe()->id(), PDO::PARAM_INT);
 			}
 			if ($critere->id() == 16) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
  			if ($critere->id() == 17) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
