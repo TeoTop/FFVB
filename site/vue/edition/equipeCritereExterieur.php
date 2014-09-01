@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -13,6 +12,8 @@
 * Chemin abs : site\vue\
 * Information : page permettant d'afficher les équipes répondants aux critères EXTERIEUR
 *
+* TOUTES LES VARIABLES $coupes, $tours, $poules ET VARIABLES DE SESSION SONT CHARGEES SOIT DEPUIS editeur.php SOIT DEPUIS
+* LA REQUETE AJAX PERMETTANT DE LE RECHARGEMENT DE CETTE PAGE (charger'Page'.php)
 *
 */
 ?>
@@ -21,10 +22,15 @@
     // on récupère les équipes qualifiées pour le tour de coupe
     $manager = new EquipeManager();
     
+    // on regarde si c'est un poule ou non
     if($_SESSION['poule'] == ''){
         $equipesCritere = $manager->equipesSelonCritere(array(), $_SESSION['tour']);
     } else {
+        // on récupère les équipes déjà présentes dans la poule
         $equipesPoule = $manager->equipesPoule($_SESSION['poule']->id());
+
+        //si il n'y a pas d'équipe dans la poule on applique des critères ne figurant pas dans le tableau
+        //donc on récupère toutes les équipes
         if(count($equipesPoule) != 0){
             $equipesCritere = $manager->equipesSelonCritereExt($critereExterieur, $_SESSION['tour'], $equipesPoule);
         } else {
@@ -32,40 +38,41 @@
         }
     }
 
-
-    
 ?>
 
+
+<!-- on affiche les équipes qui correspondes -->
 <table class="tablesorter" id="tableEquipe">
-<thead>
-<tr>
-<th class="t-equipe">Equipe</th>
-<th class="t-lieu">Lieu/Distance</th>
-<th class="t-commite">Commité</th>
-<th class="t-region">Region</th>
-<th class="t-km">Km</th>
-<th class="t-coupe">CFVB</th>
-<th class="t-cfvb">Coupe</th>
-</tr>
-</thead>
-<tbody>
-    <?php
-        foreach ($equipesCritere as $key => $equipe) {
-            echo '<tr onclick="actionAjouterEquipe('.$equipe->id().')">
-                <td class="t-equipe">'.$equipe->club()->nom().'</td>
-                <td class="t-lieu">'.$equipe->club()->ville().'</td>
-                <td class="t-commite">'.$equipe->club()->commite().'</td>
-                <td class="t-region">'.$equipe->club()->region().'</td>
-                <td align="center" class="t-km">'.$equipe->nbKmParcouru().'</td>
-                <td align="center" class="t-coupe">'.$equipe->classementCFVB().'</td>
-                <td align="center" class="t-cfvb">'.$equipe->classementCoupe().'</td>
-            </tr>';
-        }
-    ?>
-</tbody>
+    <thead>
+        <tr>
+            <th class="t-equipe">Equipe</th>
+            <th class="t-lieu">Lieu/Distance</th>
+            <th class="t-commite">Commité</th>
+            <th class="t-region">Region</th>
+            <th class="t-km">Km</th>
+            <th class="t-coupe">CFVB</th>
+            <th class="t-cfvb">Coupe</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+            foreach ($equipesCritere as $key => $equipe) {
+                echo '<tr onclick="actionAjouterEquipe('.$equipe->id().')">
+                    <td class="t-equipe">'.$equipe->club()->nom().'</td>
+                    <td class="t-lieu">'.$equipe->club()->ville().'</td>
+                    <td class="t-commite">'.$equipe->club()->commite().'</td>
+                    <td class="t-region">'.$equipe->club()->region().'</td>
+                    <td align="center" class="t-km">'.$equipe->nbKmParcouru().'</td>
+                    <td align="center" class="t-coupe">'.$equipe->classementCFVB().'</td>
+                    <td align="center" class="t-cfvb">'.$equipe->classementCoupe().'</td>
+                </tr>';
+            }
+        ?>
+    </tbody>
 </table>
 
 <script>
+//permet de trier les équipes selon les colonnes
 $(function() {
 
     $.extend($.tablesorter.themes.bootstrap, {

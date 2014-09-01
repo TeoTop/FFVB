@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -31,7 +30,9 @@ class CoupeManager{
 		$this->_db = $db;
 	}
 
-	//permet de récupérer les années de coupes dans la base
+
+
+	//permet de récupérer la coupe spécifiée par l'id
 	public function coupe($id)
 	{
 		$coupe = NULL;
@@ -51,6 +52,8 @@ class CoupeManager{
 
 		return $coupe;
 	}
+
+
 
 	//permet de récupérer toutes les coupes de l'année passée en parametre
 	public function coupes($annee)
@@ -76,6 +79,7 @@ class CoupeManager{
 	}
 
 
+
 	//permet de récupérer les années de coupes dans la base
 	public function annees()
 	{
@@ -92,6 +96,7 @@ class CoupeManager{
 
 		return $annees;
 	}
+
 
 
 	//permet de vérifier si l'id de coupe existe et si un tour est créé pour cette coupe

@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 20/08/2013
 *
 */
 
@@ -16,6 +15,7 @@
 *
 */
     
+    // on supprime les variables de session 
     unset($_SESSION);
 
 ?>

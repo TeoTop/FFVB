@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -11,7 +10,7 @@
 * Information sur la page :
 * Nom : pouleManager.php
 * Chemin abs : site\modele\
-* Information : page permettant de gérer les objets poule dans la base de données
+* Information : page permettant de gérer les objets poule et poules supprimées dans la base de données
 *
 */
 
@@ -55,7 +54,9 @@ class PouleManager{
 		return $poule;
 	}
 
-	//permet de récupérer toutes les poules à partir du tour
+
+
+	//permet de récupérer toutes les poules d'un tour
 	public function poules($tour)
 	{
 		$poules = array();
@@ -78,6 +79,8 @@ class PouleManager{
 	}
 
 
+
+
 	//on crée une nouvelle poule
 	public function creerPoule($nom, $tour){
 		$q = $this->_db->prepare('INSERT INTO `poule`(`tour`, `nom`) VALUES (:tour,:nom)');
@@ -86,6 +89,8 @@ class PouleManager{
 		$q->bindValue(':nom', $nom, PDO::PARAM_STR);
 		$q->execute();
 	}
+
+
 
 	//on remet dans la table des poules, la poule que l'on a récupéré à partir de la table des poules manquantes
 	public function creerPouleId($id, $nom, $tour){
@@ -96,6 +101,8 @@ class PouleManager{
 		$q->bindValue(':nom', $nom, PDO::PARAM_STR);
 		$q->execute();
 	}
+
+
 
 	//on ajoute la poule que l'on veut de supprimer à la table des poules manquantes
 	public function creerPouleManquante($id, $nom, $tour){
@@ -110,6 +117,8 @@ class PouleManager{
 
 
 
+
+
 	//on supprime la poule indiquée par id
 	public function supprimerPoule($id){
 		
@@ -118,6 +127,8 @@ class PouleManager{
 		$q->bindValue(':id_poule', $id, PDO::PARAM_INT);
 		$q->execute();
 	}
+
+
 
 	//on supprime la poule indiquée par id dans la table des poules manquantes
 	public function supprimerPouleManquante($id){
@@ -128,6 +139,8 @@ class PouleManager{
 		$q->execute();
 	}
 
+
+
 	//on supprime toutes les poules manquantes qui ont un id superieur à la dernière poule existante
 	public function supprimerPoulesManquantesSuperieur($id){
 		
@@ -136,6 +149,9 @@ class PouleManager{
 		$q->bindValue(':id_poule', $id, PDO::PARAM_INT);
 		$q->execute();
 	}
+
+
+
 
 
 
@@ -176,6 +192,7 @@ class PouleManager{
 	}
 
 
+
 	//retourne la derniere poule manquante du tour. NULL si aucune poule ne manque dans ce tour
 	public function premierePouleManquante($tour){
 		$poule = NULL;
@@ -191,6 +208,8 @@ class PouleManager{
 
 		return $poule;
 	}
+
+
 
 
 
@@ -218,6 +237,7 @@ class PouleManager{
 	}
 
 
+
 	//retire l'équipe de la poule
 	public function retirerEquipe($equipe, $poule){
 	
@@ -229,6 +249,7 @@ class PouleManager{
 	}
 
 
+
 	//retire toutes les équipes de la poule
 	public function retirerEquipes($poule){
 	
@@ -237,6 +258,7 @@ class PouleManager{
 		$q->bindValue(':poule', $poule, PDO::PARAM_INT);
 		$q->execute();
 	}
+
 
 
 	//ajoute l'équipe à la poule
@@ -251,6 +273,8 @@ class PouleManager{
 
 
 
+
+
 	//retire l'équipe des exemptées
 	public function retirerExempte($equipe, $tour){
 	
@@ -260,6 +284,7 @@ class PouleManager{
 		$q->bindValue(':tour', $tour, PDO::PARAM_INT);
 		$q->execute();
 	}
+
 
 
 	//retire toutes les équipes exemptées du tour

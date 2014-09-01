@@ -2,14 +2,13 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 18/08/2014
 *
 **/
 
 /*
 *
 * Information sur la page :
-* Nom : chargerAffichagePoule.php
+* Nom : chargerEditionPoule.php
 * Chemin abs : site/ajax/verification
 * Information : page permettant de recharger l'éditeur de poule à partir de la poule passé en POST
 *

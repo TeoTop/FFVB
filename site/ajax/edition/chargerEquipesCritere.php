@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2013
 *
 **/
 
@@ -38,17 +37,17 @@
     
     if($_SESSION['critere'] == 'domicile'){
 
-    	$critereDomicile = $manager->criteresType('domicile');
+    	$critereDomicile = $manager->criteresType('domicile', $_SESSION['inverser']);
     	include V . 'edition/equipeCritereDomicile.php';
 
 	} else if($_SESSION['critere'] == 'exterieur'){
 
-    	$critereExterieur = $manager->criteresType('exterieur');
+    	$critereExterieur = $manager->criteresType('exterieur', $_SESSION['inverser']);
     	include V . 'edition/equipeCritereExterieur.php';
 
 	} else {
 
-		$critereExempter = $manager->criteresType('exempter');
+		$critereExempter = $manager->criteresType('exempter', $_SESSION['inverser']);
 		include V . 'edition/equipeCritereExempter.php';
 
 	}

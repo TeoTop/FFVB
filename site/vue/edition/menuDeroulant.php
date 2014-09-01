@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -13,12 +12,16 @@
 * Chemin abs : site\vue\
 * Information : page permettant d'afficher les equipes et les poules sélectionnables sous forme de menu déroulant
 *
+* TOUTES LES VARIABLES $coupes, $tours, $poules ET VARIABLES DE SESSION SONT CHARGEES SOIT DEPUIS editeur.php SOIT DEPUIS
+* LA REQUETE AJAX PERMETTANT DE LE RECHARGEMENT DE CETTE PAGE (charger'Page'.php)
 *
 */
 
     // on récupère les équipes qualifiées pour le tour de coupe
     $manager = new EquipeManager();
     $equipes = $manager->equipesTour($_SESSION['tour']->id());
+
+    //les poules sont déjà charger depuis la page editeur.php ou par AJAX dans chargerMenu.php
 ?>
 
 
@@ -71,5 +74,6 @@
 </div>
 
 <script>
+    //on applique la recherche rapide
     $('#search').quicksearch('#equipeSearch span');
 </script>

@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2014
 *
 **/
 
@@ -37,15 +36,22 @@
     $manager = new EquipeManager();
     $resultat = $manager->dansPoule($_POST['equipe'], $_SESSION['tour']->id());
     
+	
+	//si l'équipe est dans une poule on retourne la poule
 	if(isset($resultat)){
+
 		echo json_encode(['action' => true, 'poule' => $resultat]);
+	
 	} else {
+
+		//si l'équipe est exempté, on retourne la valeur de la poule exempté
 		$resultat = $manager->dansExempter($_POST['equipe'], $_SESSION['tour']->id());
 		if($resultat){
 			echo json_encode(['action' => true, 'poule' => '']);
 		} else {
 			echo json_encode(['action' => false]);
 		}
+		
 	}
 	    
 

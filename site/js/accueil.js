@@ -1,7 +1,6 @@
 /**
 *
 * Créer par : CHAPON Théo
-* Date de modification : 09/08/2013
 *
 **/
 
@@ -14,7 +13,7 @@
 *
 **/
 
-//fonction permettant de recharger les catégories si l'année est modifié
+//fonction permettant de recharger la page d'accueil si l'année est modifiée
 $('#content').on('change', '#selectAnnee', function() {
 	$('#content').load('site/ajax/accueil/chargerAccueil.php', { annee: $( '#selectAnnee' ).val() });
 });

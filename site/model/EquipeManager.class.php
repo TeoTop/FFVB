@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -11,7 +10,9 @@
 * Information sur la page :
 * Nom : equipeManager.php
 * Chemin abs : site\modele\
-* Information : page permettant de gérer les objets equipe et equipe supprimée provenant de la base de données
+* Information : page permettant de gérer les objets equipe provenant de la base de données
+*
+* ATTENTION : CETTE CLASSE EST EXTREMENT COMPLEXE, PASSER PAR LES AUTRES DU MEME GENRE AVANT CELLE-CI
 *
 */
 
@@ -31,6 +32,7 @@ class EquipeManager{
 	{
 		$this->_db = $db;
 	}
+
 
 
 	//retourne la liste des equipes qualifier pour ce tour
@@ -61,7 +63,8 @@ class EquipeManager{
 	}
 
 
-	//retourne la liste des equipes qualifier pour ce tour
+
+	//retourne la liste des equipes appartenant à une poule
 	public function equipesPoules($tour)
 	{
 		$equipes = array();
@@ -86,6 +89,9 @@ class EquipeManager{
 
 		return $equipes;
 	}
+
+
+
 
 
 	//retourne la liste des noms des equipes exemptées pour ce tour
@@ -113,7 +119,9 @@ class EquipeManager{
 		return $equipes;
 	}
 
-	
+
+
+	// retourne le tour précendant celui passé en paramètre	
 	public function tourPrecedent($tour)
 	{
 		$tourPrc = -1;
@@ -138,12 +146,16 @@ class EquipeManager{
 	}
 
 
+
+
+
 	//permet de retourner les équipes correspond aux critères transmis (pour DOMICILE et EXEMPTER)
 	public function equipesSelonCritere($criteres, $tour)
 	{
 		$equipesCritere = array();
 		$tourPrcd = $this->tourPrecedent($tour->id());
 
+		// équipes n'appartenant pas à une poule ou étant exempté
 		$requete = 'SELECT `id_equipe`,`club`, `nbKmParcouru`, `classementCFVB`, `classementCoupe`, `nom`, `ville`, `commite`, `region` FROM `equipe` 
 			JOIN `club` ON `id_club` = `club`
 			WHERE `id_equipe` IN (
@@ -157,6 +169,8 @@ class EquipeManager{
 				)
 			)';
 
+
+		// on construit la requète à partir des critères
 		foreach ($criteres as $key => $critere) {
 			$requete = $requete . $critere->requete();
 		}
@@ -168,6 +182,8 @@ class EquipeManager{
 		
 		$q->bindValue(':tour', $tour->id(), PDO::PARAM_INT);
 
+
+		// on complète la requete avec les valeurs
 		foreach ($criteres as $key => $critere) {
 			if ($critere->id() == 1 || $critere->id() == 3) $q->bindValue(':tourPrcd', $tourPrcd, PDO::PARAM_INT);
 			if ($critere->id() == 2) $q->bindValue(':dateTour', $tour->dateTour(), PDO::PARAM_STR);
@@ -178,7 +194,7 @@ class EquipeManager{
 			}
 			if ($critere->id() == 6){
 				$q->bindValue(':nbDomicile', $critere->valeur(), PDO::PARAM_INT);
-				$q->bindValue(':annee', $tour->coupe()->annee(), PDO::PARAM_INT);
+				$q->bindValue(':idCoupe', $tour->coupe()->id(), PDO::PARAM_INT);
 			}
 			if ($critere->id() == 12 || $critere->id() == 16) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 13){
@@ -215,6 +231,7 @@ class EquipeManager{
 		$equipesCritere = array();
 		$tourPrcd = $this->tourPrecedent($tour->id());
 
+		// équipes n'appartenant pas à une poule ou étant exempté
 		$requete = 'SELECT `id_equipe`,`club`, `nbKmParcouru`, `classementCFVB`, `classementCoupe`, `nom`, `ville`, `distance`, `commite`, `region` FROM `equipe` 
 			JOIN `club` ON `id_club` = `club`
 			JOIN `parcourir` ON ( (`clubDomicile` = `id_club` AND `clubExterieur` = :club) OR (`clubExterieur` = `id_club` AND `clubDomicile` = :club)) 
@@ -230,8 +247,10 @@ class EquipeManager{
 			)';
 
 
+		// on construit la requète à partir des critères
 		foreach ($criteres as $key => $critere) {
 		
+			// critère complexe
 			if ($critere->id() == 9) {
 				
 				$requete = $requete . $critere->requete();
@@ -247,6 +266,7 @@ class EquipeManager{
 				
 			} else if ($critere->id() == 10) {
 				
+				// critère complexe
 				foreach ($equipes as $key => $equipe) {
 					$requete = $requete . $critere->requete() . ' :commite' . $key;
 				}
@@ -264,6 +284,7 @@ class EquipeManager{
 		$q->bindValue(':club', $equipes[0]->club()->id(), PDO::PARAM_INT);
 		$q->bindValue(':tour', $tour->id(), PDO::PARAM_INT);
 
+		// on complète la requete avec les valeurs
 		foreach ($criteres as $key => $critere) {
 			if ($critere->id() == 7) {
 				$q->bindValue(':tourPrcd', $tourPrcd, PDO::PARAM_INT);
@@ -298,7 +319,10 @@ class EquipeManager{
 	}
 
 
-	//retourne la liste des equipes qualifier pour ce tour
+
+
+
+	//retourne la liste des equipes dans la poule
 	public function equipesPoule($poule)
 	{
 		$equipes = array();
@@ -330,6 +354,7 @@ class EquipeManager{
 	}
 
 
+
 	//retourne la liste des equipes exempter pour ce tour
 	public function equipesExempte($tour)
 	{
@@ -355,6 +380,9 @@ class EquipeManager{
 
 		return $equipes;
 	}
+
+
+
 
 
 	//retourne la distance entre les deux équipes.
@@ -395,6 +423,9 @@ class EquipeManager{
 	}
 
 
+
+
+
 	//retourne la poule si l'équipe figure dans une poule, NULL sinon.
 	public function dansPoule($equipe, $tour)
 	{
@@ -421,6 +452,7 @@ class EquipeManager{
 	}
 
 
+
 	//retourne vrai si l'équipe figure parmis les exemptées, faux sinon.
 	public function dansExempter($equipe, $tour)
 	{
@@ -440,7 +472,6 @@ class EquipeManager{
 
 		return false;
 	}
-
 
 
 
@@ -477,7 +508,7 @@ class EquipeManager{
 
 
 
-	//permet de retourner les équipes correspond aux critères transmis (pour DOMICILE et EXEMPTER)
+	//permet de retourner les équipes correspond aux critères transmis pour DOMICILE
 	public function verifierDomicile($criteres, $tour)
 	{
 		$erreurEquipes = array();
@@ -506,12 +537,12 @@ class EquipeManager{
 			if ($critere->id() == 4) $q->bindValue(':clmtCFVB', $critere->valeur(), PDO::PARAM_INT);
 			if ($critere->id() == 5){
 				$q->bindValue(':nbEquipe', $critere->valeur(), PDO::PARAM_INT);
-				$q->bindValue(':tour', $tour->id(), PDO::PARAM_INT);
 				$q->bindValue(':annee', $tour->coupe()->annee(), PDO::PARAM_INT);
 			}
 			if ($critere->id() == 6){
 				$q->bindValue(':nbDomicile', $critere->valeur(), PDO::PARAM_INT);
-				$q->bindValue(':annee', $tour->coupe()->annee(), PDO::PARAM_INT);
+				$q->bindValue(':tour', $tour->id(), PDO::PARAM_INT);
+				$q->bindValue(':idCoupe', $tour->coupe()->id(), PDO::PARAM_INT);
 			}
 			if ($critere->id() == 16) $q->bindValue(':clmtCoupe', $critere->valeur(), PDO::PARAM_INT);
  			if ($critere->id() == 17) $q->bindValue(':nbKm', $critere->valeur(), PDO::PARAM_INT);
@@ -653,7 +684,7 @@ class EquipeManager{
 	}
 
 
-	//permet de retourner les équipes correspond aux critères transmis (pour DOMICILE et EXEMPTER)
+	//permet de retourner les équipes correspond aux critères transmis pour EXTERIEUR
 	public function verifierExempter($criteres, $tour)
 	{
 		$erreurEquipes = array();

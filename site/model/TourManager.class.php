@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -58,6 +57,7 @@ class TourManager{
 	}
 
 
+
 	//retourne la liste des tours d'une coupe
 	public function tours(Coupe $coupe)
 	{
@@ -82,6 +82,7 @@ class TourManager{
 
 		return $tours;
 	}
+
 
 
 	//retourne la liste des tours les plus avancés dans chaque coupe
@@ -111,6 +112,7 @@ class TourManager{
 
 		return $tours;
 	}
+
 
 
 	//permet de vérifier si l'association id coupe et id tour existe

@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -97,6 +96,7 @@
 
 
 <script>
+    // pour chaque catégorie on vérifier si les régles de base sont respectées
     $(function() {
         $(".categorie").each(function() {
 
@@ -110,6 +110,7 @@
                 timeout: 3000,
                 
                 success: function(json) {
+                        // on modifie la couleur de la catégorie en fonction de la réponse
                         $("#" + categorie).css("background-color", json.reponse);
                 },
 

@@ -94,6 +94,12 @@ label {
 	font-weight: 300;
 }
 
+.inverseur{
+	position: relative;
+	top: 8px;
+	left:120px;
+}
+
 
 /*on courcuite bootstrap*/
 .critere .form-group {

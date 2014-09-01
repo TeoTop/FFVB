@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 18/08/2014
 *
 **/
 
@@ -11,7 +10,7 @@
 * Information sur la page :
 * Nom : chargerVerificateur.php
 * Chemin abs : site/ajax/verification
-* Information : page permettant de recharger le contenue de la page vérificateur à partir de la coupe et du tour passés en POST
+* Information : page permettant de recharger le contenue de la page vérificateur
 *
 **/
 

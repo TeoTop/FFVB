@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2014
 *
 */
 
@@ -13,6 +12,8 @@
 * Chemin abs : site\vue\verification
 * Information : page permettant de gérer l'affichage des critères
 *
+* TOUTES LES VARIABLES $coupes, $tours, $poules ET VARIABLES DE SESSION SONT CHARGEES SOIT DEPUIS editeur.php SOIT DEPUIS
+* LA REQUETE AJAX PERMETTANT DE LE RECHARGEMENT DE CETTE PAGE (charger'Page'.php)
 *
 */
 
@@ -27,7 +28,7 @@
     </li>
 
 	<li <?php echo ($_SESSION['critere']=='exterieur') ? 'class="active"':''; ?> onclick="changerCriteres('exterieur')">
-        <a href="#exterieur" role="tab" data-toggle="tab">Exterieur</a>
+        <a href="#exterieur" role="tab" data-toggle="tab">Extérieur</a>
     </li>
 
 	<li <?php echo ($_SESSION['critere']=='exempter') ? 'class="active"':''; ?> onclick="changerCriteres('exempter')">

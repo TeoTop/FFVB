@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -142,6 +141,12 @@
     }
 
 
+    //permet de savoir s'il faut inverser les critères
+    if(!isset($_SESSION['inverser'])){
+        $_SESSION['inverser'] = false;
+    }
+
+
 
     //récupération de l'affichage au niveau du menu déroulant
     if(!isset($_SESSION['liste'])){
@@ -208,11 +213,11 @@
 </div>
 
 
-<!-- Modal permettant d'afficher les poules -->
+<!-- Modal permettant d'afficher les poules dans leur ensemble -->
 <div class="modal fade bs-example-modal-lg" role="dialog" id="modalPoules">
   <div class="modal-dialog modal-lg">
     <div class="modal-content" id="poulesCompletes">
-        <!-- complété avec AJAX -->
+        <!-- complété avec AJAX  (afficherPoules.php) -->
     </div>
   </div>
 </div>

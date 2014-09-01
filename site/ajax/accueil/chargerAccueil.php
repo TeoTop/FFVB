@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Theo
-* Date de modification : 09/08/2013
 *
 **/
 
@@ -10,7 +9,7 @@
 *
 * Information sur la page :
 * Nom : chargerAccueil.php
-* Chemin abs : site/ajax
+* Chemin abs : site/ajax/accueil
 * Information : page permettant de recharger la page d'accueil
 *
 **/

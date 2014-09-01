@@ -2,7 +2,6 @@
 /*
 *
 * Créer par : CHAPON Théo
-* Date de modification : 06/08/2013
 *
 */
 
@@ -90,15 +89,6 @@ class Equipe{
 		$this->_classementCoupe = (int) $classementCoupe;
 	}
 
-
-	//permet de faire la comparaison les ID entre deux tableaux d'objets equipe
-	// permet la suppression des ID du premier tableau si ceux-ci sont dans le deuxieme (voir array_udiff()
-	static public function comp_func_equipe($a, $b){
-		
-		if ($a->_id == $b->_id)	return 0;
-        
-        return ($a->_id > $b->_id) ? 1 : -1;
-	}
 }
 
 ?>

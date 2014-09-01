@@ -1,7 +1,6 @@
 /**
 *
 * Créer par : CHAPON Théo
-* Date de modification : 09/08/2013
 *
 **/
 
@@ -50,6 +49,7 @@ $('#content').on('change', '#selectTour', function() {
 
 
 //cette fonction est activé lorsque l'on clique sur un poule située dans le menu déroulant (onclick="chargerEditionPoule(poule_id)")
+//fonction permettant de recharger le contenue de l'éditeur de poule et de l'indicateur
 function chargerPoule(poule_id) {
     
     $('#poule').load('site/ajax/verification/chargerEditionPoule.php', { poule: poule_id });
@@ -105,7 +105,7 @@ function changerMenu(type) {
 }
 
 
-//cette fonction est activé lorsque l'on clique sur un onglet du menu déroulant
+//fonction permettant de recharger le contenue de le menu des équipes et poules
 function chargerMenu() {
     
     $('#liste').load('site/ajax/verification/chargerMenu.php');
@@ -116,7 +116,7 @@ function chargerMenu() {
 /********************* Editeur de poule *******************************/
 
 
-//fonction permettant de recharger la page si une poule est sélectionnée
+//fonction permettant de recharger la poule et l'indicateur si une poule est sélectionnée
 $('#content').on('change', '#selectPoule', function() {
 
     chargerPoule($( '#selectPoule' ).val());
