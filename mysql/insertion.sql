@@ -99,3 +99,18 @@ INSERT INTO `equipe` (`id_equipe`, `club`, `coupe`, `nbKmParcouru`, `classementC
 (37, 5, 5, 0, 0, NULL),
 (39, 5, 7, 0, 0, NULL),
 (40, 5, 8, 0, 0, NULL);
+
+
+--
+-- Contenu de la table `tour`
+--
+
+INSERT INTO `tour` (`id_tour`, `coupe`, `numero`, `dateTour`) VALUES
+(1, 1, 1, '2014-10-19'),
+(2, 2, 1, '2014-10-19'),
+(3, 3, 1, '2014-10-26'),
+(4, 4, 1, '2014-10-26'),
+(5, 5, 1, '2014-10-19'),
+(6, 6, 1, '2014-10-19'),
+(7, 7, 1, '2014-12-07'),
+(8, 8, 1, '2014-12-07');
